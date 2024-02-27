@@ -1,0 +1,9 @@
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QDisplay the age of car that was caught speeding more times than\\E$"}
+{"rule":"MOST_COMPARATIVE","sentence":"^\\QHow will I account for the fact that there may be many more older cars passing than newer cars, or vice-versa?\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qlisting name=Source Code\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_RULE","sentence":"^\\QIdentifier Data Structure Data Type Reason Validation (if applicable) car_age Integer Integer So that comparative operators such as < and > can be used to compare when a given car is older or younger than another.\\E$"}
+{"rule":"TO_NON_BASE","sentence":"^\\QThis modular approach also allows for changes to formatting being easy to make as the code doesn't have to be changed everywhere.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_GB","sentence":"^\\QBeginning of analysedata procedure\\E$"}
+{"rule":"POSSESSIVE_APOSTROPHE","sentence":"^\\QIn \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q the program makes use of a Pandas data frame that makes it possible to access data in a \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q file in a way that is similar to dictionary and lists in python.\\E$"}
+{"rule":"SOME_OF_THE","sentence":"^\\Q\\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is in charge of formatting some of the attributes of the graph properly.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QDisplay the age of car that was caught speeding more times than any other age of car.\\E$"}
