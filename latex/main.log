@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.12.24)  3 MAR 2024 19:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.12.24)  3 MAR 2024 19:14
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -478,30 +478,38 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 {C:/Users/nathan/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] (main.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 2.
-)
+ [2])
 \tf@toc=\write6
 \openout6 = `main.toc'.
 
- [2] [3] (main.aux)
+ [3]
+Overfull \hbox (10.17104pt too wide) in paragraph at lines 67--67
+[]\OT1/cmr/bx/n/12 Annotated "De-sign Views" show-ing de-tails of application-generated forms,
+ []
+
+[4]
+Overfull \vbox (349.72859pt too high) has occurred while \output is active []
+
+ [5] (main.aux)
  ***********
 LaTeX2e <2023-11-01>
 L3 programming layer <2023-12-11>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 36486AAE7A49D02D5DE6BE4865A390EF;6411.
+(rerunfilecheck)             Checksum: FBAA1748D2351489CD9E32369E931614;10658.
  ) 
 Here is how much of TeX's memory you used:
- 17204 strings out of 474494
- 304683 string characters out of 5753725
- 1937460 words of memory out of 5000000
- 39269 multiletter control sequences out of 15000+600000
+ 17246 strings out of 474494
+ 305265 string characters out of 5753725
+ 1944460 words of memory out of 5000000
+ 39289 multiletter control sequences out of 15000+600000
  563593 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 77i,11n,79p,717b,474s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 77i,12n,79p,802b,509s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsl10.pfb>
-Output written on main.pdf (3 pages, 112695 bytes).
+Output written on main.pdf (5 pages, 132462 bytes).
 PDF statistics:
- 193 PDF objects out of 1000 (max. 8388607)
- 32 named destinations out of 1000 (max. 500000)
- 217 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 307 PDF objects out of 1000 (max. 8388607)
+ 54 named destinations out of 1000 (max. 500000)
+ 377 words of extra memory for PDF output out of 10000 (max. 10000000)
 
