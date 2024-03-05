@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.12.24)  5 MAR 2024 15:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.12.24)  5 MAR 2024 15:17
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -491,12 +491,12 @@ l.46 ...tations of the Product}{5}{subsection.5.4}
 \openout6 = `main.toc'.
 
  [2]
-Overfull \hbox (10.17104pt too wide) in paragraph at lines 87--87
+Overfull \hbox (10.17104pt too wide) in paragraph at lines 92--92
 []\OT1/cmr/bx/n/12 Annotated "De-sign Views" show-ing de-tails of application-generated forms,
  []
 
 [3] [4]
-Overfull \vbox (261.66951pt too high) has occurred while \output is active []
+Overfull \vbox (240.59766pt too high) has occurred while \output is active []
 
  [5] (main.aux)
  ***********
@@ -507,17 +507,17 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: FBAA1748D2351489CD9E32369E931614;10658.
  ) 
 Here is how much of TeX's memory you used:
- 17252 strings out of 474494
- 307045 string characters out of 5743913
+ 17257 strings out of 474494
+ 307142 string characters out of 5743913
  1944460 words of memory out of 5000000
- 39296 multiletter control sequences out of 15000+600000
- 563891 words of font info for 55 fonts, out of 8000000 for 9000
+ 39300 multiletter control sequences out of 15000+600000
+ 564232 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  77i,12n,79p,959b,509s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsl10.pfb>
-Output written on main.pdf (6 pages, 158910 bytes).
+ <C:\Users\Lilly\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsl10.pfb>
+Output written on main.pdf (6 pages, 160299 bytes).
 PDF statistics:
- 318 PDF objects out of 1000 (max. 8388607)
+ 323 PDF objects out of 1000 (max. 8388607)
  54 named destinations out of 1000 (max. 500000)
  388 words of extra memory for PDF output out of 10000 (max. 10000000)
 
