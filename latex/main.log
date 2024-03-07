@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.12.24)  7 MAR 2024 11:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.12.24)  7 MAR 2024 12:18
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -150,12 +150,13 @@ File: puenc.def 2023-11-26 v7.01g Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
+Package hyperref Info: Option `implicit' set `false' on input line 4064.
 Package hyperref Info: Hyper figures OFF on input line 4181.
 Package hyperref Info: Link nesting OFF on input line 4186.
 Package hyperref Info: Hyper index ON on input line 4189.
 Package hyperref Info: Plain pages OFF on input line 4196.
 Package hyperref Info: Backreferencing OFF on input line 4201.
-Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Implicit mode OFF; no redefinition of LaTeX internals.
 Package hyperref Info: Bookmarks ON on input line 4448.
 \c@Hy@tempcnt=\count271
  (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
@@ -184,8 +185,10 @@ Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
 \Hy@abspage=\count273
-\c@Item=\count274
-\c@Hfootnote=\count275
+
+
+Package hyperref Message: Stopped early.
+
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
  (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
@@ -194,75 +197,73 @@ File: hpdftex.def 2023-11-26 v7.01g Hyperref driver for pdfTeX
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
 with kernel methods
 )
-\Fld@listcount=\count276
-\c@bookmark@seq@number=\count277
+\Fld@listcount=\count274
+\c@bookmark@seq@number=\count275
  (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
  (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
-)
-\Hy@SectionHShift=\skip61
-) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/minted\minted.sty
+)) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/minted\minted.sty
 Package: minted 2023/12/18 v2.9 Yet another Pygments shim for LaTeX
  (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/fvextra\fvextra.sty
 Package: fvextra 2023/11/28 v1.6.1 fvextra - extensions and patches for fancyvrb
  (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/fancyvrb\fancyvrb.sty
 Package: fancyvrb 2023/11/06 4.5b verbatim text (tvz,hv)
-\FV@CodeLineNo=\count278
+\FV@CodeLineNo=\count276
 \FV@InFile=\read2
 \FV@TabBox=\box53
-\c@FancyVerbLine=\count279
-\FV@StepNumber=\count280
+\c@FancyVerbLine=\count277
+\FV@StepNumber=\count278
 \FV@OutFile=\write3
 ) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/upquote\upquote.sty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
 ) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/lineno\lineno.sty
 Package: lineno 2023/05/20 line numbers on paragraphs v5.3
-\linenopenalty=\count281
+\linenopenalty=\count279
 \output=\toks20
-\linenoprevgraf=\count282
+\linenoprevgraf=\count280
 \linenumbersep=\dimen165
 \linenumberwidth=\dimen166
-\c@linenumber=\count283
-\c@pagewiselinenumber=\count284
-\c@LN@truepage=\count285
-\c@internallinenumber=\count286
-\c@internallinenumbers=\count287
+\c@linenumber=\count281
+\c@pagewiselinenumber=\count282
+\c@LN@truepage=\count283
+\c@internallinenumber=\count284
+\c@internallinenumbers=\count285
 \quotelinenumbersep=\dimen167
 \bframerule=\dimen168
 \bframesep=\dimen169
 \bframebox=\box54
 LaTeX Info: Redefining \\ on input line 3180.
 )
-\c@FancyVerbWriteLine=\count288
-\c@FancyVerbBufferIndex=\count289
-\c@FancyVerbBufferLength=\count290
-\c@FancyVerbBufferLine=\count291
-\c@FV@oldbufferlength=\count292
-\c@FV@TrueTabGroupLevel=\count293
-\c@FV@TrueTabCounter=\count294
+\c@FancyVerbWriteLine=\count286
+\c@FancyVerbBufferIndex=\count287
+\c@FancyVerbBufferLength=\count288
+\c@FancyVerbBufferLine=\count289
+\c@FV@oldbufferlength=\count290
+\c@FV@TrueTabGroupLevel=\count291
+\c@FV@TrueTabCounter=\count292
 \FV@TabBox@Group=\box55
-\FV@TmpLength=\skip62
-\c@FV@HighlightLinesStart=\count295
-\c@FV@HighlightLinesStop=\count296
-\FV@LoopCount=\count297
+\FV@TmpLength=\skip61
+\c@FV@HighlightLinesStart=\count293
+\c@FV@HighlightLinesStop=\count294
+\FV@LoopCount=\count295
 \FV@NCharsBox=\box56
 \FV@BreakIndent=\dimen170
-\FV@BreakIndentNChars=\count298
+\FV@BreakIndentNChars=\count296
 \FV@BreakSymbolSepLeft=\dimen171
-\FV@BreakSymbolSepLeftNChars=\count299
+\FV@BreakSymbolSepLeftNChars=\count297
 \FV@BreakSymbolSepRight=\dimen172
-\FV@BreakSymbolSepRightNChars=\count300
+\FV@BreakSymbolSepRightNChars=\count298
 \FV@BreakSymbolIndentLeft=\dimen173
-\FV@BreakSymbolIndentLeftNChars=\count301
+\FV@BreakSymbolIndentLeftNChars=\count299
 \FV@BreakSymbolIndentRight=\dimen174
-\FV@BreakSymbolIndentRightNChars=\count302
-\c@FancyVerbLineBreakLast=\count303
+\FV@BreakSymbolIndentRightNChars=\count300
+\c@FancyVerbLineBreakLast=\count301
 \FV@LineBox=\box57
 \FV@LineIndentBox=\box58
-\c@FV@BreakBufferDepth=\count304
+\c@FV@BreakBufferDepth=\count302
 \FV@LineWidth=\dimen175
 ) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
 Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
@@ -278,13 +279,13 @@ Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifluatex.sty
 Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 )) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/xstring\xstring.sty (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/generic/xstring\xstring.tex
-\xs_counta=\count305
-\xs_countb=\count306
+\xs_counta=\count303
+\xs_countb=\count304
 )
 Package: xstring 2023/08/22 v1.86 String manipulations (CT)
 ) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/framed\framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip63
+\OuterFrameSep=\skip62
 \fb@frw=\dimen176
 \fb@frh=\dimen177
 \FrameRule=\dimen178
@@ -293,18 +294,18 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 Package: newfloat 2023/10/01 v1.2 Defining new floating environments (AR)
 Package newfloat Info: Unsupported document class, or \@chapter 
 (newfloat)             was already redefined by another package.
-Package newfloat Info: \@chapter = macro:->\def \Hy@next {\Hy@MakeCurrentHrefAuto {\Hy@chapapp *}\Hy@raisedlink {\hyper@anchorstart {\@currentHref }\hyper@anchorend }}\ifnum \c@secnumdepth >\m@ne \@ifundefined {if@mainmatter}\iftrue {\csname if@mainmatter\endcsname }\let \Hy@next \relax \fi \fi \Hy@next \Hy@org@chapter .
-Package newfloat Info: \Hy@org@chapter = macro:[#1]#2->\NR@gettitle {#1}\NR@chapter [{#1}]{#2}.
+Package newfloat Info: \@chapter = macro:[#1]#2->\NR@gettitle {#1}\NR@chapter [{#1}]{#2}.
+Package newfloat Info: \Hy@org@chapter = undefined.
 Package newfloat Info: \algocf@original@chapter = undefined.
 )
 \minted@appexistsfile=\read3
 \minted@bgbox=\box59
 \minted@code=\write4
-\c@minted@FancyVerbLineTemp=\count307
-\c@minted@pygmentizecounter=\count308
+\c@minted@FancyVerbLineTemp=\count305
+\c@minted@pygmentizecounter=\count306
 Package newfloat Info: New float `listing' with options `fileext=lol,placement=tbp' on input line 1221.
-\c@listing=\count309
-\newfloat@ftype=\count310
+\c@listing=\count307
+\newfloat@ftype=\count308
 Package newfloat Info: float type `listing'=8 on input line 1221.
 )
 runsystem(if not exist _minted-main mkdir _minted-main)...executed.
@@ -328,28 +329,28 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
 ) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/caption\subcaption.sty
 Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
 Package caption Info: New subtype `subfigure' on input line 238.
-\c@subfigure=\count311
+\c@subfigure=\count309
 Package caption Info: New subtype `subtable' on input line 238.
-\c@subtable=\count312
+\c@subtable=\count310
 Package caption Info: New subtype `sublisting' on input line 238.
-\c@sublisting=\count313
+\c@sublisting=\count311
 ) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
-\lst@mode=\count314
+\lst@mode=\count312
 \lst@gtempboxa=\box60
 \lst@token=\toks21
-\lst@length=\count315
+\lst@length=\count313
 \lst@currlwidth=\dimen180
-\lst@column=\count316
-\lst@pos=\count317
+\lst@column=\count314
+\lst@pos=\count315
 \lst@lostspace=\dimen181
 \lst@width=\dimen182
-\lst@newlines=\count318
-\lst@lineno=\count319
+\lst@newlines=\count316
+\lst@lineno=\count317
 \lst@maxwidth=\dimen183
  (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
 File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
-\c@lstnumber=\count320
-\lst@skipnumbers=\count321
+\c@lstnumber=\count318
+\lst@skipnumbers=\count319
 \lst@framebox=\box61
 ) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg
 File: listings.cfg 2023/02/27 1.9 listings configuration
@@ -357,18 +358,17 @@ File: listings.cfg 2023/02/27 1.9 listings configuration
 Package: listings 2023/02/27 1.9 (Carsten Heinz)
  (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/cleveref\cleveref.sty
 Package: cleveref 2018/03/27 v0.21.4 Intelligent cross-referencing
-Package cleveref Info: `hyperref' support loaded on input line 2370.
-LaTeX Info: Redefining \cref on input line 2370.
-LaTeX Info: Redefining \Cref on input line 2370.
-LaTeX Info: Redefining \crefrange on input line 2370.
-LaTeX Info: Redefining \Crefrange on input line 2370.
-LaTeX Info: Redefining \cpageref on input line 2370.
-LaTeX Info: Redefining \Cpageref on input line 2370.
-LaTeX Info: Redefining \cpagerefrange on input line 2370.
-LaTeX Info: Redefining \Cpagerefrange on input line 2370.
-LaTeX Info: Redefining \labelcref on input line 2370.
-LaTeX Info: Redefining \labelcpageref on input line 2370.
+
+
+Package cleveref Warning: hyperref package loaded with implicit=false option - disabling cleveref's hyperref support. This situation is not supported by cleveref, and there's no guarantee anything will work. You're on your own! on input line 2370.
+
 Package cleveref Info: `listings' support loaded on input line 3131.
+) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/beamer\multimedia.sty
+Package: multimedia 2012/05/02 ver 0.02
+ (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifpdf.sty
+Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+)
+\mm@movie=\count320
 )
 runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > main.aex <nul: /p x=^%~$PATH:i>> main.aex)...executed.
 
@@ -376,31 +376,33 @@ runsystem(del main.aex)...executed.
 
  (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2023-11-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count322
+\l__color_backend_stack_int=\count321
 \l__pdf_internal_box=\box62
 ) (main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
+Package caption Info: Hyperref support is turned off
+(caption)             because hyperref has stopped early.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
@@ -440,16 +442,16 @@ Package caption Info: End \AtBeginDocument code.
 
 (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count323
+\scratchcounter=\count322
 \scratchdimen=\dimen184
 \scratchbox=\box63
-\nofMPsegments=\count324
-\nofMParguments=\count325
+\nofMPsegments=\count323
+\nofMParguments=\count324
 \everyMPshowfont=\toks22
-\MPscratchCnt=\count326
+\MPscratchCnt=\count325
 \MPscratchDim=\dimen185
-\MPnumerator=\count327
-\makeMPintoPDFobject=\count328
+\MPnumerator=\count326
+\makeMPintoPDFobject=\count327
 \everyMPtoPDFconversion=\toks23
 ) (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -457,20 +459,16 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 22.
- (main.out) (main.out)
-\@outlinefile=\write5
-\openout5 = `main.out'.
-
+Package hyperref Info: Link coloring OFF on input line 23.
 Package newfloat Info: Trying Plan B...
  (C:\Users\Lilly\AppData\Local\Programs\MiKTeX\tex/latex/base\textcomp.sty
 Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
 )
-\c@lstlisting=\count329
-<figures/igsLogo.jpg, id=191, 513.92pt x 513.92pt>
+\c@lstlisting=\count328
+<figures/igsLogo.jpg, id=4, 513.92pt x 513.92pt>
 File: figures/igsLogo.jpg Graphic file (type jpg)
 <use figures/igsLogo.jpg>
-Package pdftex.def Info: figures/igsLogo.jpg  used on input line 36.
+Package pdftex.def Info: figures/igsLogo.jpg  used on input line 37.
 (pdftex.def)             Requested size: 181.18439pt x 181.18427pt.
  [1
 
@@ -481,43 +479,36 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 2.
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.46 ...tations of the Product}{6}{subsection.5.4}
-                                                  % [1])
-\tf@toc=\write6
-\openout6 = `main.toc'.
+ [1])
+\tf@toc=\write5
+\openout5 = `main.toc'.
 
  [2] [3]
-Overfull \hbox (10.17104pt too wide) in paragraph at lines 93--93
+Overfull \hbox (10.17104pt too wide) in paragraph at lines 107--107
 []\OT1/cmr/bx/n/12 Annotated "De-sign Views" show-ing de-tails of application-generated forms,
  []
 
-[4] [5]
-Overfull \vbox (240.59766pt too high) has occurred while \output is active []
+[4]
+Overfull \vbox (198.45395pt too high) has occurred while \output is active []
 
- [6] (main.aux)
+ [5] (main.aux)
  ***********
 LaTeX2e <2023-11-01>
 L3 programming layer <2023-12-11>
  ***********
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 559250D3521DB587DB3CA33D3E12EAEE;10640.
  ) 
 Here is how much of TeX's memory you used:
- 17258 strings out of 474494
- 307148 string characters out of 5743913
- 1944460 words of memory out of 5000000
- 39300 multiletter control sequences out of 15000+600000
+ 16985 strings out of 474494
+ 303270 string characters out of 5743913
+ 1942460 words of memory out of 5000000
+ 39080 multiletter control sequences out of 15000+600000
  564232 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 77i,12n,79p,959b,547s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 77i,12n,79p,959b,546s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Lilly\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Lilly/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsl10.pfb>
-Output written on main.pdf (7 pages, 163085 bytes).
+Output written on main.pdf (6 pages, 130803 bytes).
 PDF statistics:
- 330 PDF objects out of 1000 (max. 8388607)
- 55 named destinations out of 1000 (max. 500000)
- 388 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 69 PDF objects out of 1000 (max. 8388607)
+ 1 named destinations out of 1000 (max. 500000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
