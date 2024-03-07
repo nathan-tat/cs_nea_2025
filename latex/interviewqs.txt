@@ -1,0 +1,24 @@
+What do you/students find least intuitive in physics/lessons?
+
+How often do you do physics in your own time (ie out of own interest)
+	-What topics/fields do you usually look at?
+
+How often do you do physics in your own time (for revision/work)
+	-What topics/fields do you usually look at?
+
+Have you ever written your own program to simulate something you were looking into?
+	-How developed/finished was it?
+	-How did you use it?
+	-What did you use it for?
+
+Have you ever used an external program to simulate something you were looking into?
+	-How developed was it?
+	-How did you use it?
+	-Did it cost anything? Did any paid solutions put you off?
+
+Have you ever used analytical methods (equations) to model something you were looking into?
+	-How complex did you get? How long did it take?
+	-What was it?
+	-Would you have benefited from a visible model of what was happening?
+
+
