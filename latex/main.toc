@@ -6,7 +6,7 @@
 \contentsline {subsection}{\numberline {1.5}Identification of User Needs and Acceptable Limitations}{4}{}%
 \contentsline {subsection}{\numberline {1.6}Existing Solutions}{4}{}%
 \contentsline {subsubsection}{\numberline {1.6.1}Analytic Methods}{4}{}%
-\contentsline {subsubsection}{\numberline {1.6.2}MATLAB}{5}{}%
+\contentsline {subsubsection}{\numberline {1.6.2}Desmos}{5}{}%
 \contentsline {subsubsection}{\numberline {1.6.3}Kerbal Space Program}{5}{}%
 \contentsline {subsection}{\numberline {1.7}Success Criteria of the Proposed System}{6}{}%
 \contentsline {subsection}{\numberline {1.8}Data Source(s)}{6}{}%
