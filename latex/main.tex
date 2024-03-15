@@ -49,13 +49,13 @@
 
     \section{Analysis}
         \subsection{Problem Identification}
-            Often times during research it is important and very helpful to be able to visualise the events that are being analysed. When working with models in two dimensions, it is easy enough to be able to draw out an accurate diagram, even if it may be tedious. However, 2D models are nowhere near as applicable or useful as considering events in three dimensions, stemming from the fact that the world we live in is three-dimensional. Something that would aid intuition and help in problem-solving would be a way to have events modelled quickly, accurately, and clearly, given a set of initial conditions.
+            Often times in physics, complex circuit diagrams have to be drawn and understood, and the opportunity to actually build them is not always available. A solution that could handle custom circuits as well as model and log different attributes quickly, accurately, and efficiently in order to help with building intuition in regard to how complex electrical systems function would be a useful tool that could help solve this issue.
 
         \subsection{Identification of why this problem is solvable by computational methods}
             The key requirements stated above (accuracy, haste, and clarity) lend themselves very well to using computational methods. Computers are able to make calculations orders of magnitude faster than by hand or by analogue machine, and to a virtually arbitrary degree of accuracy. Many modern central processing units (CPUs) are also able capable of making use of concurrent processing, further increasing the advantage that a computer would have over a human. Graphical processing units (GPUs) are specifically designed for parallel processing, making them especially useful for graphics, which would allow for high quality renders for the user to be able to see. Any data that you would need to consider can be displayed in a clear and user-friendly fashion, making it highly customisable to fit the individual persons needs and for many attributes to be studied at the same time.
 
         \subsection{Description of the Current System}
-            Without using computer simulations, the usual process is to produce a handful of equations by hand that would model the attributes of an object, commonly the path it takes in three-dimensional space. This has the benefit of giving exact values and equations that are very useful when trying to understand the underlying reasons for an event happening. For example when considering a pendulum, it is clear from the equation $$ T = 2 \pi \sqrt{\frac{L}{g}} $$ that the period of the pendulum $T$ does not depend on the mass of the object doing the swinging. However, when running computer simulations, such relationships may not be as obvious, and as computers aren't able to analytically solve problems (i.e. through the use of rigorous mathematics), this is a drawback that I will have to consider.
+            Without using computer simulations, the usual process is to produce a handful of equations by hand that would model the attributes of an object, for example the path it takes in three-dimensional space. This has the benefit of giving exact values and equations that are very useful when trying to understand the underlying reasons for an event happening. For example when considering a pendulum, it is clear from the equation $$ T = 2 \pi \sqrt{\frac{L}{g}} $$ that the period of the pendulum $T$ does not depend on the mass of the object doing the swinging. However, when running computer simulations, such relationships may not be as obvious, and as computers aren't able to analytically solve problems (i.e. through the use of rigorous mathematics), this is a drawback that I will have to consider. A computer model of a circuit can only be so accurate, as there aren't enough resources or time in order to model every single electron, proton, and neutron and all the intricate interactions they have with each other in real time.
             
         \subsection{Identification of Stakeholders}
             After considering the problem I identified the following groups that could use a solution to this problem, as well as having useful insight on how a program like this should function.
@@ -66,7 +66,7 @@
             \end{itemize}
             
         \subsection{Identification of User Needs and Acceptable Limitations}
-            Summary of key take aways from interviews:
+            Summary of key takeaways from interviews:
             \begin{itemize}
                 \item My stakeholders are people who generally enjoy doing physics and find it enjoyable, although they all acknowledge how much work it can be. As such, decreasing workload without completely eliminating need for human input would be important, as that would make it less enjoyable.
                 \item People struggle with abstract concepts, and a common topic seems to be electricity and electricals systems, as well as visualising some key concepts in physics such as waves. Considering a way to visualise circuits and the physics going on in those would be useful all of my stakeholders.
@@ -100,10 +100,10 @@
 
                 \textbf{Disadvantages:}
                 \begin{itemize}
-                    \item Difficult to organise. You can't save paper notes in a way that is easily shareable and easy to organise on a computer (other than scanning them as pdf files which can take a lot of time and my clients find annoying). It may also be hard to stay consistent with formatting due to how versatile it is, as seen in Figure~\ref{fig:daniel_working}.
+                    \item Difficult to organise. You can't save paper notes in a way that is easily shareable and easy to organise on a computer (other than scanning them as PDF files which can take a lot of time and my clients find annoying). It may also be hard to stay consistent with formatting due to how versatile it is, as seen in Figure~\ref{fig:daniel_working}.
                     \item Getting accurate graphs beyond simple sketches is difficult. Performing numerical methods by hand is very time-consuming which decreases the amount of time that can be spent on doing actual work. 
                     \item Scope of problems that can be approached is limited. Not all systems can be solved using analytic methods and sometimes numerical methods are necessary, depending on how simple or complex you choose to make your model.
-                    \item Some problems are much harder to approach as the effectiveness of analytic methods is dependant on your ability to manipulate and work with equations, as well as general mathematical ability. Human's also make mistakes and are far less consistent than a computer at doing the same or similar calculations repeatedly.
+                    \item Some problems are much harder to approach as the effectiveness of analytic methods is dependent on your ability to manipulate and work with equations, as well as general mathematical ability. Human's also make mistakes and are far less consistent than a computer at doing the same or similar calculations repeatedly.
                 \end{itemize}
 
             \subsubsection{Desmos}
@@ -119,7 +119,7 @@
 
                 The simplicity of Desmos allows it to be very versatile, but that also means its more of a jack-of-all-trades and master of none, so it wouldn't be very good for a more specialised application (like the ones being considered).
 
-                \newpage
+
                 \textbf{Advantages:}
                 \begin{itemize}
                     \item Desmos is a very versatile software which means that it can be used for a wide variety of problems. 
@@ -131,60 +131,76 @@
 
                 \textbf{Disadvantages:}
                 \begin{itemize}
-                    \item The versatility of Desmos means that in the case of a more specialised system with specific needs, it would be more beneficial to create custom software for that specific system. However Desmos still manages to cover a wide variety of problems. 
+                    \item The versatility of Desmos means that in the case of a more specialised system with specific needs, it would be more beneficial to create custom software for that specific system. However, Desmos still manages to cover a wide variety of problems, just not in a lot of depth.
                     \item The accuracy of Desmos is not very customisable, usually giving answers to two or three decimal places, and it is only able to give exact answers in some circumstances (values are usually given in terms of $\pi$ when working with trigonometric functions).
                 \end{itemize}
 
 
-
-            \subsubsection{Kerbal Space Program}
-                Kerbal Space Program here
+            % do another one later
+            % \subsubsection{Kerbal Space Program}
+            %     Kerbal Space Program here
 
         \subsection{Success Criteria of the Proposed System}
-        \subsection{Data Source(s)}
-        \subsection{Volumetrics - Data Volumes}
-        \subsection{Analysis Data Dictionary}
-        \subsection{Data Flow Diagrams for Existing and Proposed System}
-        \subsection{Justification of Chosen Solution}
-        \subsection{Hardware and Software}
-        \subsection{Entity-Relationship Models}
-        \subsection{Identification of Objects and Object Analysis Diagrams}
+            The solution \textbf{should:}
+            \begin{enumerate}
+                \item Be able to handle \textbf{10 or fewer} components in a single circuit (excluding multimeters and wires)
+                \item Have \textbf{at least} the following components:
+                \begin{itemize}
+                    \item \textbf{Cell} with customisable E.M.F. and internal resistance
+                    \item \textbf{Wire} with customisable resistivity and diameter
+                    \item \textbf{Filament Bulb} with customisable resistance
+                    \item \textbf{Resistor} with customisable resistance
+                    \item \textbf{Multimeter} with customisable type
+                    \item \textbf{Switch}
+                \end{itemize}
+                \item Have general attributes of the circuit displayed, such as total resistance, current, potential difference, and electro-motive forces
+                \item 
+            \end{enumerate}
+            
+        % \subsection{Data Source(s)}
+        % \subsection{Volumetrics - Data Volumes}
+        % \subsection{Analysis Data Dictionary}
+        % \subsection{Data Flow Diagrams for Existing and Proposed System}
+        % \subsection{Justification of Chosen Solution}
+        % \subsection{Hardware and Software}
+        % \subsection{Entity-Relationship Models}
+        % \subsection{Identification of Objects and Object Analysis Diagrams}
 
-    \section{Design}
-        \subsection{Overall System Design}
-        \subsection{Description of Modular Structure of System}
-        \subsection{Definition of Data Requirements}
-        \subsection{Identification of Appropriate Storage Media}
-        \subsection{Identification of Processes and Suitable Algorithms for Data Transformation and Completion of the Solution}
-        \subsection{Sample of Algorithms}
-        \subsection{User Interface Design Rationale and Usability Features}
-        \subsection{Security and Integrity of Data}
-        \subsection{System Security (Access Control)}
-        \subsection{Overall Test Strategy}
+    % \section{Design}
+    %     \subsection{Overall System Design}
+    %     \subsection{Description of Modular Structure of System}
+    %     \subsection{Definition of Data Requirements}
+    %     \subsection{Identification of Appropriate Storage Media}
+    %     \subsection{Identification of Processes and Suitable Algorithms for Data Transformation and Completion of the Solution}
+    %     \subsection{Sample of Algorithms}
+    %     \subsection{User Interface Design Rationale and Usability Features}
+    %     \subsection{Security and Integrity of Data}
+    %     \subsection{System Security (Access Control)}
+    %     \subsection{Overall Test Strategy}
 
-    \section{Implementation}
-        \subsection{Annotated Listing of the Program(s)}
-        \subsection{Annotated "Design Views" showing details of application-generated forms, reports, queries, buttons, cross tabulations, etc.}
-        \subsection{Procedure and Variable List}
-        \subsection{Testing to inform development - Testing at each stage}
-        \subsection{Re-Testing}
+    % \section{Implementation}
+    %     \subsection{Annotated Listing of the Program(s)}
+    %     \subsection{Annotated "Design Views" showing details of application-generated forms, reports, queries, buttons, cross tabulations, etc.}
+    %     \subsection{Procedure and Variable List}
+    %     \subsection{Testing to inform development - Testing at each stage}
+    %     \subsection{Re-Testing}
 
-    % Join with previous section 
-    \section{Testing}
-        \subsection{Test Plan}
-        \subsection{Test Data}
-        \subsection{Areas to Test}
-        \subsection{Tables}
-        \subsection{Justification of Data Selection}
-        \subsection{Evidence of Testing}
-        \subsection{Program Listing}
+    % % Join with previous section 
+    % \section{Testing}
+    %     \subsection{Test Plan}
+    %     \subsection{Test Data}
+    %     \subsection{Areas to Test}
+    %     \subsection{Tables}
+    %     \subsection{Justification of Data Selection}
+    %     \subsection{Evidence of Testing}
+    %     \subsection{Program Listing}
     
-    \section{Evaluation}
-        \subsection{Comparison of Performance of your System against Success Criteria}
-        \subsection{Analysis of User Feedback}
-        \subsection{Evaluation of Usability Features}
-        \subsection{Maintenance Issues and Limitations of the Product}
-        \subsection{Improvements and Possible Extensions}
+    % \section{Evaluation}
+    %     \subsection{Comparison of Performance of your System against Success Criteria}
+    %     \subsection{Analysis of User Feedback}
+    %     \subsection{Evaluation of Usability Features}
+    %     \subsection{Maintenance Issues and Limitations of the Product}
+    %     \subsection{Improvements and Possible Extensions}
         
 
 \end{document}
