@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.12.24)  12 MAR 2024 10:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.12.24)  13 MAR 2024 16:47
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -493,17 +493,17 @@ Package pdftex.def Info: figures/daniel_working.jpeg  used on input line 84.
 <figures/desmos.png, id=32, 1445.4pt x 813.0375pt>
 File: figures/desmos.png Graphic file (type png)
 <use figures/desmos.png>
-Package pdftex.def Info: figures/desmos.png  used on input line 97.
+Package pdftex.def Info: figures/desmos.png  used on input line 112.
 (pdftex.def)             Requested size: 226.48395pt x 127.39656pt.
-
-Overfull \hbox (10.17104pt too wide) in paragraph at lines 136--136
+ [5]
+Overfull \hbox (10.17104pt too wide) in paragraph at lines 167--167
 []\OT1/cmr/bx/n/12 Annotated "De-sign Views" show-ing de-tails of application-generated forms,
  []
 
-[5 <./figures/desmos.png>]
+[6 <./figures/desmos.png>]
 Overfull \vbox (198.45395pt too high) has occurred while \output is active []
 
- [6] (main.aux)
+ [7] (main.aux)
  ***********
 LaTeX2e <2023-11-01>
 L3 programming layer <2023-12-11>
@@ -518,9 +518,9 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  77i,12n,79p,965b,546s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\nathan\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsl10.pfb>
-Output written on main.pdf (7 pages, 3849632 bytes).
+Output written on main.pdf (8 pages, 3853020 bytes).
 PDF statistics:
- 76 PDF objects out of 1000 (max. 8388607)
+ 80 PDF objects out of 1000 (max. 8388607)
  1 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 
