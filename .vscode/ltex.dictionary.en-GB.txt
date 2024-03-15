@@ -1,3 +1,7 @@
 Tatkowski
 TKinter
 Volumetrics
+Desmos
+astro-mechanics
+Invicta
+Kerbal

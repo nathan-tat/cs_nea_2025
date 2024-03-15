@@ -7,3 +7,4 @@
 {"rule":"POSSESSIVE_APOSTROPHE","sentence":"^\\QIn \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q the program makes use of a Pandas data frame that makes it possible to access data in a \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q file in a way that is similar to dictionary and lists in python.\\E$"}
 {"rule":"SOME_OF_THE","sentence":"^\\Q\\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is in charge of formatting some of the attributes of the graph properly.\\E$"}
 {"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QDisplay the age of car that was caught speeding more times than any other age of car.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_RULE","sentence":"^\\QThe colours and Easy to share and work on on multiple devices.\\E$"}
