@@ -5,13 +5,14 @@
 \usepackage{fancyhdr}
 \usepackage[a4paper, margin=1in]{geometry}
 \usepackage[final]{graphicx}
-\usepackage[hidelinks, implicit=false]{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage[newfloat]{minted}
 \usepackage{xcolor}
 \usepackage{subcaption}
 \usepackage{listings,cleveref}
 \usepackage{multimedia}
-% \graphicspath{{./figures/}}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
 
 \definecolor{LightGray}{gray}{0.9}
 
@@ -81,7 +82,7 @@
 
                 \begin{figure}[!ht]
                     \begin{center}
-                        \includegraphics[width=0.3\textwidth]{figures/daniel_working.jpeg}
+                        \includegraphics[width=0.25\textwidth]{figures/daniel_working.jpeg}
                     \end{center}
                     \caption{A sample of Daniel's working out}
                     \label{fig:daniel_working}
@@ -140,34 +141,31 @@
             % do another one later
             % \subsubsection{Kerbal Space Program}
             %     Kerbal Space Program here
-
+        
+        \newpage
         \subsection{Success Criteria of the Proposed System}
-            The solution \textbf{should:}
-            \begin{enumerate}
-                \item Model electricity accurately
-                \item Be able to handle \textbf{10 or fewer} components in a single circuit (excluding multimeters and wires)
-                \item Have \textbf{at least} the following components:
-                \begin{itemize}
-                    \item \textbf{Cell} with customisable E.M.F. and internal resistance
-                    \item \textbf{Wire} with customisable resistivity and diameter
-                    \item \textbf{Filament Bulb} with customisable resistance
-                    \item \textbf{Resistor} with customisable resistance
-                    \item \textbf{Multimeter} with customisable type
-                    \item \textbf{Switch}
-                \end{itemize}
-                \item Have general attributes of the circuit displayed, such as total resistance, current, potential difference, and electro-motive forces
-                \item Have a snapshot button that is able to log attributes of every multimeter and export to a CSV file or similar, which allows the user to perform the analysis individually
-                \item \textbf{Drag and drop} system for placement of components onto a grid 
-                \item \textbf{Charge flow indicators} for the direction of charge flow (toggle between electron flow and conventional current)
-                \item Nameable components (for easier management)
-            \end{enumerate}
-            The solution also \textbf{could:}
-            \begin{enumerate}
-                \item Have the capability to handle multiple \textbf{(two or three)} circuits simultaneously 
-                \item Have the previously mentioned snapshot button be more customisable, including an option to automatically perform snapshots after a given time interval
-                \item Have custom themes with accessebility options (for example, for colourblind users)
-                \item Have the ability to export circuit arrangements which can then be shared with other collaborators test
-            \end{enumerate}
+            This is a table of what the essential criteria for the solution are.
+
+            \begin{table}[!ht]
+                \footnotesize
+                \begin{tabular}{|m{0.02\textwidth}|m{0.42\textwidth}|m{0.42\textwidth}|m{0.03\textwidth}|}
+                \hline
+                ID & Feature & Justification & Ref. \\ \hline
+                A1 & Model electric circuits \textbf{accurately} & This is the main purpose of the system and is something many of the stakeholders said they struggled with. & 1.5 \\ \hline
+                A2 & Be able to handle \textbf{10 or fewer} components in a single circuit (excluding multimeters and wires) & It is very uncommon for circuits studied at GCSE and A-Level to exceed 10 components, and as most of my clients study at that level I felt this number was appropriate. & 1.4 \\ \hline
+                A3 & Have support for \textbf{at least} the following components: cell, wire, filament bulb, resistor, multimeter, switch. Each should have respective attributed be customisable (e.g. resistivity for wire, E.M.F. for cell) & This comes from analysis of common circuits seen at GCSE and A-Level circuits, which most commonly make use of these components. & 1.4 \\ \hline
+                A4 & Have general attributes of the circuit displayed, such as total resistance, current, potential difference, and electro-motive forces & These are all useful attributes to know about a circuit when analysing it. &  \\ \hline
+                A5 & Have a "snapshot" button that would be able to log attributes of all components at the time of the button press. This data could then be exported to a CSV file or similar for independent analysis by the user. & Allowing the user to easily collect data on components would make it easier for them to perform analysis on circuits and practice core skills that are a part of doing a practical at A-Level or GCSE. Building up these skills could allow for working with more complex systems to be easier. & 1.4 \\ \hline
+                A6 & An intuitive way to add components to a circuit, most likely being able to drag components onto the main stage using the mouse. & This way of interaction seems like the most intuitive way of adding new components. This would allow the user to easily interact with the software and be able to spend more time on learning the content rather than learning how to use the software. & 1.4 \\ \hline
+                A7 & \textbf{Charge flow indicators} to visualised charge flow around a circuit. Toggle between electron flow, conventional current, and off. & A concept that comes up in A-Level quite frequently is the conservation of charge and the actual movement of electrons and their interactions with circuit components. This feature would make it very easy to see how the electrons actually move about in the circuit, and make ideas like Kirchoff's Laws much easier to understand. & 1.4 \\ \hline
+                A8 & Nameable components, for easier management. & If working on more complicated circuits, a way to be able to label components and then search for them would be very beneficial, rather than "component 1", "component 2", and so on, especially for my client Hugo who often works on complex electrical systems. & 1.4 \\ \hline
+                \end{tabular}
+            \end{table}
+            \pagebreak
+
+            Here is a table of optional criteria for the solution, that would still benefit the users but aren't essential for it to be deemed functional.
+
+            
             
         % \subsection{Data Source(s)}
         % \subsection{Volumetrics - Data Volumes}
