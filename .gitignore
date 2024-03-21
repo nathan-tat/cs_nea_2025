@@ -2,3 +2,4 @@ nea_resources/
 interview_hugo.mp3
 latex/*
 !latex/main.tex
+!latex/todo.txt

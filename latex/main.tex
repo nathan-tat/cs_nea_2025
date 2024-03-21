@@ -142,20 +142,20 @@
             % \subsubsection{Kerbal Space Program}
             %     Kerbal Space Program here
 
-        \subsection{Proposed Solution}
-
+        % \subsection{Proposed Solution}
         
         \pagebreak
         \subsection{Success Criteria of the Proposed System}
             This is a table of what the essential criteria for the solution are.
 
             \begin{table}[!ht]
+                \begin{center}
                 \footnotesize
                 \begin{tabular}{|m{0.02\textwidth}|m{0.42\textwidth}|m{0.42\textwidth}|m{0.03\textwidth}|}
                 \hline
                 ID & Feature & Justification & Ref. \\ \hline
                 A1 & Model electric circuits \textbf{accurately} & This is the main purpose of the system and is something many of the stakeholders said they struggled with. & 1.5 \\ \hline
-                A2 & Be able to handle \textbf{10 or fewer} components in a single circuit (excluding multimeters and wires) & It is very uncommon for circuits studied at GCSE and A-Level to exceed 10 components, and as most of my clients study at that level I felt this number was appropriate. & 1.4 \\ \hline
+                A2 & Be able to handle \textbf{10 or fewer} components in a single circuit (excluding multimeters and wires). This requirement will be tested on my specific device, and possible on others if I get the access to them. & It is very uncommon for circuits studied at GCSE and A-Level to exceed 10 components, and as most of my clients study at that level I felt this number was appropriate. & 1.4 \\ \hline
                 A3 & Have support for \textbf{at least} the following components: cell, wire, filament bulb, resistor, multimeter, switch. Each should have respective attributed be customisable (e.g. resistivity for wire, E.M.F. for cell) & This comes from analysis of common circuits seen at GCSE and A-Level circuits, which most commonly make use of these components. & 1.4 \\ \hline
                 A4 & Have general attributes of the circuit displayed, such as total resistance, current, potential difference, and electro-motive forces & These are all useful attributes to know about a circuit when analysing it. &  \\ \hline
                 A5 & Have a "snapshot" button that would be able to log attributes of all components at the time of the button press. This data could then be exported to a CSV file or similar for independent analysis by the user. & Allowing the user to easily collect data on components would make it easier for them to perform analysis on circuits and practice core skills that are a part of doing a practical at A-Level or GCSE. Building up these skills could allow for working with more complex systems to be easier. & 1.4 \\ \hline
@@ -163,12 +163,15 @@
                 A7 & \textbf{Charge flow indicators} to visualised charge flow around a circuit. Toggle between electron flow, conventional current, and off. & A concept that comes up in A-Level quite frequently is the conservation of charge and the actual movement of electrons and their interactions with circuit components. This feature would make it very easy to see how the electrons actually move about in the circuit, and make ideas like Kirchoff's Laws much easier to understand. & 1.4 \\ \hline
                 A8 & Nameable components, for easier management. & If working on more complicated circuits, a way to be able to label components and then search for them would be very beneficial, rather than "component 1", "component 2", and so on, especially for my client Hugo who often works on complex electrical systems. & 1.4 \\ \hline
                 \end{tabular}
+                \end{center}
             \end{table}
             \pagebreak
 
             Here is a table of optional criteria for the solution, that would still benefit the users but aren't essential for it to be deemed functional and are mostly quality of life features.
-
+            
+            
             \begin{table}[!ht]
+                \begin{center}
                 \footnotesize
                 \begin{tabular}{|m{0.02\textwidth}|m{0.45\textwidth}|m{0.45\textwidth}|}
                 \hline
@@ -177,21 +180,30 @@
                 B2 & Have the snapshot button be more customisable, with snapshots possible occurring automatically after a given time period. Could also have the snapshot button only take in certain attributes of certain components rather than all of them. & This feature would allow for easier monitoring of data as well as not having to take in all of the data, which could be a lot if the circuit is complex enough. \\ \hline
                 B3 & Include customisable themes and/or accessibility features such as accounting for different types of colour blindness. & In order to make my solution as accessible as possible to help as many students as possible, being able to change the colour scheme would be a very useful feature. \\ \hline
                 B4 & Being able to export and import circuit arrangements. & This would allow for easier collaboration, also between students and teachers, which would help as it would be much easier to communicate ideas. \\ \hline
-                \end{tabular}
-            \end{table}
-
-            
-            
+                B5 & Adding keyboard shortcuts & Keyboard shortcuts would heavily streamline the use of a software like this, especially as the user gets more and more accustomed to them over time, as is common in many scientific programs. \\ \hline
+            \end{tabular}
+        \end{center}
+        \end{table}
+        
+        
+        
         % \subsection{Data Source(s)}
         % \subsection{Volumetrics - Data Volumes}
         % \subsection{Analysis Data Dictionary}
         % \subsection{Data Flow Diagrams for Existing and Proposed System}
+
         \subsection{Justification of Chosen Solution}
             My proposed solution is to create a piece of software that functions as a electrical circuit builder allowing the user to place different components on a main board and then connect them using wires. Then the software would simulate what is happening at each component as well as allow those attributes to be viewed and logged by the user within the software. Circuits wouldn't be able to be edited while they are being simulated, as the two modes would be completely seperate from eachother.
 
-            This solution would be very good as it would allow for a concept that a lot of students struggle with to be visualised. A lot of students do not have access to circuit components at home, and so trying to study circuits independently can be very challenging for some. A much larger proportion of students own a computer with a mouse and keyboard at their home, so a piece of software would be more accessible to most if not all students. Also as education shifts more and more into digital, a way of collaborating on circuit through the internet (with just being able to send an exported file to another person) greatly aids student understanding and ability to work.
+            This solution would be very good as it would allow for a concept that a lot of students struggle with to be visualised. A lot of students do not have access to circuit components at home, and so trying to study circuits independently can be very challenging for some. A much larger proportion of students own a computer with a mouse and keyboard at their home, so a piece of software would be more accessible to most if not all students. Also as education shifts more and more into digital, a way of collaborating on circuits through the internet (with just being able to send an exported file to another person) greatly aids student understanding and ability to learn.
 
-        % \subsection{Hardware and Software}
+        \subsection{Hardware and Software}
+            The system will only require a computer with a working mouse and display to work properly, but the functionality for keyboard shortcuts is a possibility in the future. Regarding software, only the actual program is necessary, and I could make use of a Github repository and an installer in order to install it onto the users computer. The option to manually compile the software will be available. 
+
+        \subsection{Limitations}
+            I only have experience with GUI elements while using Python, however the complexity and amount of processing needed for the project may exceed the capabilities of Python. As such I will consider using C++ and the UI libraries that are available for that language due to its higher efficiency. 
+            % Dude i am throwing so fucking hard rn it might just be joever
+
         % \subsection{Entity-Relationship Models}
         % \subsection{Identification of Objects and Object Analysis Diagrams}
 

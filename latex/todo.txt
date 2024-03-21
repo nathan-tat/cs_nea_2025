@@ -1,0 +1,14 @@
+Finish justifying chosen solution
+Hardware and Software
+Analysis Data Dictionary (???)
+Data flow diagrams (???)
+Volumetrics (???)
+Data Sources (???)
+Limitations
+
+do another existing solution 
+	- mario maker
+	- kerbal space program
+	- idk
+
+Discuss language type and way more existing solutions (even ones that are unrelated like the mandelbrot one) 
