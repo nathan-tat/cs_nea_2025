@@ -100,7 +100,7 @@
 
                 \textbf{Disadvantages:}
                 \begin{itemize}
-                    \item Difficult to organise. You can't save paper notes in a way that is easily shareable and easy to organise on a computer (other than scanning them as PDF files which can take a lot of time and my clients find annoying). It may also be hard to stay consistent with formatting due to how versatile it is, as seen in Figure~\ref{fig:daniel_working}.
+                    \item Difficult to organise. You can't save paper notes in a way that is easily shareable and easy to organise on a computer (other than scanning them as PDF files which can take a lot of time and my clients find annoying). It may also be hard to stay consistent with formatting due to how versatile it is, as seen in \autoref{fig:daniel_working}.
                     \item Getting accurate graphs beyond simple sketches is difficult. Performing numerical methods by hand is very time-consuming which decreases the amount of time that can be spent on doing actual work. 
                     \item Scope of problems that can be approached is limited. Not all systems can be solved using analytic methods and sometimes numerical methods are necessary, depending on how simple or complex you choose to make your model.
                     \item Some problems are much harder to approach as the effectiveness of analytic methods is dependent on your ability to manipulate and work with equations, as well as general mathematical ability. Human's also make mistakes and are far less consistent than a computer at doing the same or similar calculations repeatedly.
@@ -115,11 +115,11 @@
                     \label{fig:desmos}
                 \end{figure}
 
-                In Figure~\ref{fig:desmos} below, Desmos has been used in order to see how attributes of an object change (specifically the $x$ position and velocity with respect to time of an object experiencing drag). Desmos is great in order to aid intuition and view general trends, however you still need to work through equations in order to have something to graph, and Desmos won't give exact values for solutions, but the final visualisations are still very useful. 
+                In \autoref{fig:desmos} below, Desmos has been used in order to see how attributes of an object change (specifically the $x$ position and velocity with respect to time of an object experiencing drag). Desmos is great in order to aid intuition and view general trends, however you still need to work through equations in order to have something to graph, and Desmos won't give exact values for solutions, but the final visualisations are still very useful. 
 
                 The simplicity of Desmos allows it to be very versatile, but that also means its more of a jack-of-all-trades and master of none, so it wouldn't be very good for a more specialised application (like the ones being considered).
 
-
+                \pagebreak
                 \textbf{Advantages:}
                 \begin{itemize}
                     \item Desmos is a very versatile software which means that it can be used for a wide variety of problems. 
@@ -138,8 +138,41 @@
 
 
             % do another one later
-            % \subsubsection{Kerbal Space Program}
-            %     Kerbal Space Program here
+            \subsubsection{Online Circuit Builder}
+                I searched for some online JavaScript based circuit builders and I found this \href{https://www.falstad.com/circuit/}{Circuit Simulator Applet}. Although none of my clients have used this before, and I don't personally have a lot of experience with it, I can see that there are a lot of good features in this solution. The use of circuit symbols instead of renders of components allows students to familiarise themselves with them, as when actually drawing out circuit diagrams that's what they would use. Furthermore, as circuits get more and more complex and components get smaller, it may not even be practical or useful to look at a real life version of the circuit. 
+
+                \begin{figure}[!ht]
+                    \begin{center}
+                        \includegraphics[width=.5\textwidth]{figures/circuit_builder.png}
+                    \end{center}
+                    \caption{A simple circuit made on the circuit builder}
+                    \label{fig:builderss}
+                \end{figure}
+
+                \begin{figure}[!ht]
+                    \begin{center}
+                        \includegraphics[width=.5\textwidth]{figures/circuit_graphs.png}
+                    \end{center}
+                    \caption{Graphs of attributes changing with respect to time and each other}
+                    \label{fig:circuit_builder_existing_sol}
+                \end{figure}
+
+                \textbf{Advantages:}
+                \begin{itemize}
+                    \item The use of standard circuit symbols, which are 2D and quite simple shapes, instead of renders or images of actual components makes the program more efficient and increases performance, as no advanced rendering is necessary. 
+                    \item Charge flow indicators in the form of yellow circles that represent electrons help visualise the flow of charge around a circuit for students. 
+                    \item Including colour indicators do distinguish between places with negative and positive potential difference adds another level of interaction for the user, and this is something that could be quite hard to visualise and notice even with a real life version of the circuit available.
+                    \item The simulation can be freely paused and unpaused in order to be able to see how a circuit appears at a specific point in time, which would be difficult with a real life version. 
+                    \item The ability to plot real time graphs akin to an oscilloscope is as useful as having a real life oscilloscope, which is great when used to see how attributes change with respect to time and each other. See \autoref{fig:circuit_builder_existing_sol}.
+                    \item The ability to export and import circuit arrangements is very useful as it allows for easier collaboration.
+                \end{itemize}
+
+                \textbf{Disadvantages:}
+                \begin{itemize}
+                    \item Although it contains a myriad of different components and pre-made circuits, some "features" are missing. For example, you can't set the internal resistance of a cell, and you also can't choose custom wires where you can alter the resistivity and length more precisely, which would make the simulation more accurate.
+                    \item I found the system for placing new components in to be quite clunky and frustrating to get used to. Drawing the components is a good system, but the way it was implemented felt annoying to place in new components, it felt like you had to already know where you want to place components beforehand, which limits the freedom the user has to experiment with new arrangements. 
+                \end{itemize}
+
 
         % \subsection{Proposed Solution}
         
@@ -192,21 +225,21 @@
         % \subsection{Data Flow Diagrams for Existing and Proposed System}
 
         \subsection{Justification of Chosen Solution}
-            My proposed solution is to create a piece of software that functions as a electrical circuit builder allowing the user to place different components on a main board and then connect them using wires. Then the software would simulate what is happening at each component as well as allow those attributes to be viewed and logged by the user within the software. Circuits wouldn't be able to be edited while they are being simulated, as the two modes would be completely seperate from eachother.
+            My proposed solution is to create a piece of software that functions as a electrical circuit builder allowing the user to place different components on a main board and then connect them using wires. Then the software would simulate what is happening at each component as well as allow those attributes to be viewed and logged by the user within the software. Circuits wouldn't be able to be edited while they are being simulated, as the two modes would be completely separate from each other.
 
-            This solution would be very good as it would allow for a concept that a lot of students struggle with to be visualised. A lot of students do not have access to circuit components at home, and so trying to study circuits independently can be very challenging for some. A much larger proportion of students own a computer with a mouse and keyboard at their home, so a piece of software would be more accessible to most if not all students. Also as education shifts more and more into digital, a way of collaborating on circuits through the internet (with just being able to send an exported file to another person) greatly aids student understanding and ability to learn.
+            This solution would be very good as it would allow for a concept that a lot of students struggle with to be visualised. A lot of students do not have access to circuit components at home, and so trying to study circuits independently can be very challenging for some. A much larger proportion of students own a computer with a mouse and keyboard at their home, so a piece of software would be more accessible to most if not all students. Also, as education shifts more and more into digital, a way of collaborating on circuits through the internet (with just being able to send an exported file to another person) greatly aids student understanding and ability to learn.
 
         \subsection{Hardware and Software}
-            The system will only require a computer with a working mouse and display to work properly, but the functionality for keyboard shortcuts is a possibility in the future. Regarding software, only the actual program is necessary, and I could make use of a Github repository and an installer in order to install it onto the users computer. The option to manually compile the software will be available. 
+            The system will only require a computer with a working mouse and display to work properly, but the functionality for keyboard shortcuts is a possibility in the future. Regarding software, only the actual program is would be necessary, and distributing it to the end user would be a trivial task.
 
         \subsection{Limitations}
-            I only have experience with GUI elements while using Python, however the complexity and amount of processing needed for the project may exceed the capabilities of Python. As such I will consider using C++ and the UI libraries that are available for that language due to its higher efficiency. 
+            I only have experience with GUI elements while using Python, however the complexity and amount of processing needed for the project may exceed the capabilities of Python. As such careful consideration into how features are implemented would have to be taken as I need the program to be as efficient as possible. 
             % Dude i am throwing so fucking hard rn it might just be joever
 
         % \subsection{Entity-Relationship Models}
         % \subsection{Identification of Objects and Object Analysis Diagrams}
 
-    \section{Design}
+    % \section{Design}
     %     \subsection{Overall System Design}
     %     \subsection{Description of Modular Structure of System}
     %     \subsection{Definition of Data Requirements}
