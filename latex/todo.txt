@@ -11,4 +11,4 @@ do another existing solution
 	- kerbal space program
 	- idk
 
-Discuss language type and way more existing solutions (even ones that are unrelated like the mandelbrot one) 
+Discuss language type and way more existing solutions (even ones that are unrelated like the mandelbrot one)

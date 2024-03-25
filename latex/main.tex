@@ -1,10 +1,9 @@
-\documentclass[11pt]{article}
+\documentclass[tikz, 11pt]{article}
 
 \usepackage{array}
 \usepackage{caption}
 \usepackage{fancyhdr}
 \usepackage[a4paper, margin=1in]{geometry}
-\usepackage[final]{graphicx}
 \usepackage[hidelinks]{hyperref}
 \usepackage[newfloat]{minted}
 \usepackage{xcolor}
@@ -12,9 +11,12 @@
 \usepackage{listings,cleveref}
 \usepackage{multimedia}
 \usepackage[normalem]{ulem}
+\usepackage[edges]{forest}
+\usetikzlibrary{arrows.meta}
 \useunder{\uline}{\ul}{}
 
 \definecolor{LightGray}{gray}{0.9}
+% \usepackage[final]{graphicx}
 
 
 % \newenvironment{code}{\captionsetup{type=listing}}{}
@@ -141,21 +143,21 @@
             \subsubsection{Online Circuit Builder}
                 I searched for some online JavaScript based circuit builders and I found this \href{https://www.falstad.com/circuit/}{Circuit Simulator Applet}. Although none of my clients have used this before, and I don't personally have a lot of experience with it, I can see that there are a lot of good features in this solution. The use of circuit symbols instead of renders of components allows students to familiarise themselves with them, as when actually drawing out circuit diagrams that's what they would use. Furthermore, as circuits get more and more complex and components get smaller, it may not even be practical or useful to look at a real life version of the circuit. 
 
-                \begin{figure}[!ht]
-                    \begin{center}
-                        \includegraphics[width=.5\textwidth]{figures/circuit_builder.png}
-                    \end{center}
-                    \caption{A simple circuit made on the circuit builder}
-                    \label{fig:builderss}
-                \end{figure}
+                % \begin{figure}[!ht]
+                %     \begin{center}
+                %         \includegraphics[width=.5\textwidth]{figures/circuit_builder.png}
+                %     \end{center}
+                %     \caption{A simple circuit made on the circuit builder}
+                %     \label{fig:builderss}
+                % \end{figure}
 
-                \begin{figure}[!ht]
-                    \begin{center}
-                        \includegraphics[width=.5\textwidth]{figures/circuit_graphs.png}
-                    \end{center}
-                    \caption{Graphs of attributes changing with respect to time and each other}
-                    \label{fig:circuit_builder_existing_sol}
-                \end{figure}
+                % \begin{figure}[!ht]
+                %     \begin{center}
+                %         \includegraphics[width=.5\textwidth]{figures/circuit_graphs.png}
+                %     \end{center}
+                %     \caption{Graphs of attributes changing with respect to time and each other}
+                %     \label{fig:circuit_builder_existing_sol}
+                % \end{figure}
 
                 \textbf{Advantages:}
                 \begin{itemize}
@@ -239,8 +241,52 @@
         % \subsection{Entity-Relationship Models}
         % \subsection{Identification of Objects and Object Analysis Diagrams}
 
-    % \section{Design}
-    %     \subsection{Overall System Design}
+    \section{Design}
+        \subsection{Overall System Design}
+            I decided to split the system into three sections: project, simulating, building. Within the software, the user will initialise a "project" in a directory. 
+            \begin{center}
+                \footnotesize
+                \begin{forest}
+                    for tree={
+                        align=center,
+                        font=\sffamily,
+                    edge+={thick, -{Stealth[]}},
+                    l sep'+=10pt,
+                    fork sep'=10pt,
+                    },
+                    forked edges,
+                    if level=0{
+                        inner xsep=0pt,
+                        tikz={\draw [thick] (.children first) -- (.children last);}
+                        }{},
+                        [Circuit Builder
+                            [Project
+                                [Initialising
+                                    [Choose to\\make new or\\open file
+                                        [Importing\\all data and\\rendering]
+                                        [Initialising\\necessary files]
+                                    ]
+                                    [Choose working\\directory]
+                                ]
+                                [Exporting
+                                    [Data]
+                                    [Circuit\\arrangement]
+                                ]
+                            ]
+                            [Simulating
+                                [Updating\\attributes of\\components
+                                    [Rendering\\updates]
+                                    [Storing data]
+                                ]
+                                [Rendering graphs]
+                            ]
+                            [Building
+                                [Placing\\components]
+                                [Editing\\attributes]
+                            ]
+                        ]
+                    \end{forest}
+                \end{center}
     %     \subsection{Description of Modular Structure of System}
     %     \subsection{Definition of Data Requirements}
     %     \subsection{Identification of Appropriate Storage Media}
