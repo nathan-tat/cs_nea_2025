@@ -22,6 +22,7 @@
 % \newenvironment{code}{\captionsetup{type=listing}}{}
 % \SetupFloatingEnvironment{listing}{name=Source Code}
 
+% \textwidth = 415.36792 pt
 
 \begin{document}
     \pagestyle{fancy}
@@ -185,7 +186,7 @@
             \begin{table}[!ht]
                 \begin{center}
                 \footnotesize
-                \begin{tabular}{|m{0.02\textwidth}|m{0.42\textwidth}|m{0.42\textwidth}|m{0.03\textwidth}|}
+                \begin{tabular}{|m{12pt}|m{189pt}|m{189pt}|m{12pt}|}
                 \hline
                 ID & Feature & Justification & Ref. \\ \hline
                 A1 & Model electric circuits \textbf{accurately} & This is the main purpose of the system and is something many of the stakeholders said they struggled with. & 1.5 \\ \hline
@@ -207,7 +208,7 @@
             \begin{table}[!ht]
                 \begin{center}
                 \footnotesize
-                \begin{tabular}{|m{0.02\textwidth}|m{0.45\textwidth}|m{0.45\textwidth}|}
+                \begin{tabular}{|m{12pt}|m{200pt}|m{200pt}|}
                 \hline
                 ID & Feature & Justification \\ \hline
                 B1 & Be able to handle multiple (two or more) separate circuits running simultaneously. & This feature could be useful when studying more complex electrical systems, however it is more of a way to measure the performance and efficiency of the program, and this is a good target to work towards. \\ \hline
@@ -241,9 +242,8 @@
         % \subsection{Entity-Relationship Models}
         % \subsection{Identification of Objects and Object Analysis Diagrams}
 
-    \section{Design}
-        \subsection{Overall System Design}
-            I decided to split the system into three sections: project, simulating, building. Within the software, the user will initialise a "project" in a directory. 
+    \section{Overall System Design}
+            I decided to split the system into three sections: project, simulating, building. Within the software, the user will initialise a "project" in a directory. The program will frequently refer to a "source directory", which will be the user's program files by default. This source directory will be configurable by the user, but there is no guarantee that the user changing things on their own won't break some of the functionality.
             \begin{center}
                 \footnotesize
                 \begin{forest}
@@ -260,7 +260,7 @@
                         tikz={\draw [thick] (.children first) -- (.children last);}
                         }{},
                         [Circuit Builder
-                            [Project
+                            [Project/File Management
                                 [Initialising
                                     [Choose to\\make new or\\open file
                                         [Importing\\all data and\\rendering]
@@ -270,7 +270,7 @@
                                 ]
                                 [Exporting
                                     [Data]
-                                    [Circuit\\arrangement]
+                                    [Project/Circuit\\arrangement]
                                 ]
                             ]
                             [Simulating
@@ -278,24 +278,88 @@
                                     [Rendering\\updates]
                                     [Storing data]
                                 ]
-                                [Rendering graphs]
+                                [Rendering\\graphs]
                             ]
                             [Building
-                                [Placing\\components]
-                                [Editing\\attributes]
+                                [Placing\\components
+                                    [Choosing\\component]
+                                    [Choosing\\location]
+                                ]
+                                [Editing\\attributes
+                                    [Menu\\interactions]
+                                ]
                             ]
                         ]
                     \end{forest}
                 \end{center}
-    %     \subsection{Description of Modular Structure of System}
-    %     \subsection{Definition of Data Requirements}
-    %     \subsection{Identification of Appropriate Storage Media}
-    %     \subsection{Identification of Processes and Suitable Algorithms for Data Transformation and Completion of the Solution}
-    %     \subsection{Sample of Algorithms}
-    %     \subsection{User Interface Design Rationale and Usability Features}
-    %     \subsection{Security and Integrity of Data}
-    %     \subsection{System Security (Access Control)}
-    %     \subsection{Overall Test Strategy}
+                
+                Each cycle will be taken on individually. 
+            
+    \section{Cycle 1: Project and File Management}
+    Here is the hierarchy diagram from the previous section. It considers two tasks, exporting and initialising.
+    \begin{center}
+        \footnotesize
+        \begin{forest}
+            for tree={
+                align=center,
+                font=\sffamily,
+            edge+={thick, -{Stealth[]}},
+            l sep'+=10pt,
+            fork sep'=10pt,
+            },
+            forked edges,
+            if level=0{
+                inner xsep=0pt,
+                tikz={\draw [thick] (.children first) -- (.children last);}
+                }{},
+                [Project and File Management
+                    [Opening projects
+                        [Initialising\\new projects
+                            [Making sure\\all relevant\\files are present]
+                            [Choosing\\working directory]
+                            [Initialising all\\the files]
+                        ]
+                        [Opening existing\\projects
+                            [Choosing\\working directory]
+                            [Verifying files]
+                        ]
+                    ]
+                    [Exporting circuit\\arrangements
+                        [Choosing\\destination]
+                        [Compressing\\and exporting]
+                    ]
+                ]
+            \end{forest}
+        \end{center}
+
+        \subsection{Brief Outline}
+            In this cycle I will create the programming for some interactive UI that will allow the user to initialise or open a project as well as export the project so that it would be able to be accessed by other people.
+
+            \subsubsection{Success Criteria}
+                These are the success criteria that are going to be used. ID beginning with "X" indicates that it was specifically added for this cycle.
+                \begin{table}[!ht]
+                    \begin{center}
+                    \begin{tabular}{|m{16pt}|m{0.8\textwidth}|}
+                    \hline
+                    ID & Feature \\ \hline
+                    B4 & Being able to export and import circuit arrangements. \\ \hline
+                    X1 & Only open directories that include all relevant files, raising an exception when this isn't met. \\ \hline
+                    X2 & Copy relevant files from the source directory in order to initialise a project. \\ \hline
+                    X3 & Allow user to specify directory for exporting. \\ \hline
+                    X4 & Compress exported files intuitively. \\ \hline
+                    \end{tabular}
+                \end{center}
+                    
+                \end{table}
+        \subsection{User Interface}
+
+        \subsection{Data Structures}
+
+        \subsection{Algorithms}
+
+        \subsection{Test Data}
+
+
 
     % \section{Implementation}
     %     \subsection{Annotated Listing of the Program(s)}
