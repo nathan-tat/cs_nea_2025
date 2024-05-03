@@ -12,6 +12,8 @@
 \usepackage{multimedia}
 \usepackage[normalem]{ulem}
 \usepackage[edges]{forest}
+\usepackage[export]{adjustbox}
+\usepackage{wrapfig}
 \usetikzlibrary{arrows.meta}
 \useunder{\uline}{\ul}{}
 
@@ -186,7 +188,7 @@
             \begin{table}[!ht]
                 \begin{center}
                 \footnotesize
-                \begin{tabular}{|m{12pt}|m{189pt}|m{189pt}|m{12pt}|}
+                \begin{tabular}{|l|m{187pt}|m{188pt}|l|}
                 \hline
                 ID & Feature & Justification & Ref. \\ \hline
                 A1 & Model electric circuits \textbf{accurately} & This is the main purpose of the system and is something many of the stakeholders said they struggled with. & 1.5 \\ \hline
@@ -208,7 +210,7 @@
             \begin{table}[!ht]
                 \begin{center}
                 \footnotesize
-                \begin{tabular}{|m{12pt}|m{200pt}|m{200pt}|}
+                \begin{tabular}{|l|m{200pt}|m{200pt}|}
                 \hline
                 ID & Feature & Justification \\ \hline
                 B1 & Be able to handle multiple (two or more) separate circuits running simultaneously. & This feature could be useful when studying more complex electrical systems, however it is more of a way to measure the performance and efficiency of the program, and this is a good target to work towards. \\ \hline
@@ -339,14 +341,13 @@
                 These are the success criteria that are going to be used. ID beginning with "X" indicates that it was specifically added for this cycle.
                 \begin{table}[!ht]
                     \begin{center}
-                    \begin{tabular}{|m{16pt}|m{0.8\textwidth}|}
-                    \hline
+                    \begin{tabular}{m{16pt}m{0.8\textwidth}}
                     ID & Feature \\ \hline
-                    B4 & Being able to export and import circuit arrangements. \\ \hline
-                    X1 & Only open directories that include all relevant files, raising an exception when this isn't met. \\ \hline
-                    X2 & Copy relevant files from the source directory in order to initialise a project. \\ \hline
-                    X3 & Allow user to specify directory for exporting. \\ \hline
-                    X4 & Compress exported files intuitively. \\ \hline
+                    B4 & Being able to export and import circuit arrangements. \\ 
+                    X1 & Only open directories that include all relevant files, raising an exception when this isn't met. \\ 
+                    X2 & Copy relevant files from the source directory in order to initialise a project. \\ 
+                    X3 & Allow user to specify directory for exporting. \\ 
+                    X4 & Compress exported files intuitively. \\ 
                     \end{tabular}
                 \end{center}
                     
@@ -355,8 +356,30 @@
 
         \subsection{Data Structures}
 
-        \subsection{Algorithms}
+            \begin{table}[!ht]
+            \begin{center}
+                \begin{tabular}{llm{0.5\textwidth}}
+                Name & Data Type/Structure & Data \\ \hline
+                \verb|project_name| & String (var.) & Name of the project (will be used in displays and for organisational purposes) \\
+                \verb|working_dir| & String (var.) & The working directory of the project \\
+                \verb|source| & String (const.) & Where all the relevant files are initially stored \\
+                \verb|location| & String (var.) & Destination folder for exporting, inputted by user \\
+                \verb|permissions| & Bool (var.) & True if and only if the instance of the program has been run with administrator privilages. This limits the directories available.
+                \end{tabular}
+            \end{center}
+            \end{table}
 
+            The user may not always have permissions to save into/export into the directory they have selected. When doing file management using for example the file explorer on Windows 10, the operating system will handle telling the user that they have invalid permissions. However, when attempting operations on files with invalid permissions through a programming language such as Python, the error will be raised in the program. Due to this I have included a \verb|permissions| variable that checks whether the program has permissions to write to a given directory to prevent this.
+
+            \pagebreak
+        \subsection{Algorithms}
+            I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program. 
+            \begin{wrapfigure}{l}{.25\textwidth}
+                \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
+                \caption{Flow chart for exporting a project}
+            \end{wrapfigure}
+            
+            
         \subsection{Test Data}
 
 
