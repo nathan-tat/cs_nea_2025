@@ -374,14 +374,42 @@
             \pagebreak
         \subsection{Algorithms}
             I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program. 
-            \begin{wrapfigure}{l}{.25\textwidth}
-                \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
-                \caption{Flow chart for exporting a project}
-            \end{wrapfigure}
+            % \begin{wrapfigure}{l}{.25\textwidth}
+            %     \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
+            %     \caption{Flow chart for exporting a project}
+            % \end{wrapfigure}
             
-            
-        \subsection{Test Data}
+            \begin{figure}[!ht]
+                \begin{minted}[linenos]{python}
+import os
+source = "Source directory here"
+procedure init_files(target)
+    if target.permissions == False:
+        raise PermissionError
+    files = os.listdir(source)
+    for f in files:
+        f.copy(target)
+endprocedure
+                \end{minted}
+                \caption{Pseudocode to copy initial project files to a folder}
+                \label{pc:copy_to_folder}
+            \end{figure}
 
+            The file running the procedure above will need to be in the same location as the folder it is copying from. To make the file easier to access, the program could make a shortcut to this file and add it to the desktop for the user.
+            
+            \begin{figure}[!ht]
+               \begin{minted}[linenos]{python}
+url = 
+procedure install_software(target)
+    if target.permissions == False:
+        raise PermissionError
+    
+    download_from_github(link)
+               \end{minted}
+               \caption{Pseudocode to install the main program}
+               \label{pc:install_sw}
+            \end{figure}
+        \subsection{Test Data}
 
 
     % \section{Implementation}
