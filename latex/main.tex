@@ -1,4 +1,4 @@
-\documentclass[tikz, 11pt]{article}
+\documentclass[11pt]{article}
 
 \usepackage{array}
 \usepackage{caption}
@@ -378,6 +378,13 @@
             %     \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
             %     \caption{Flow chart for exporting a project}
             % \end{wrapfigure}
+            \begin{figure}[!ht]
+               \begin{center}
+                   \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
+               \end{center}
+               \caption{Flowchart for exporting a project}
+               \label{fig:export_flow}
+            \end{figure}
             
             \begin{figure}[!ht]
                 \begin{minted}[linenos]{python}
@@ -399,16 +406,18 @@ endprocedure
             
             \begin{figure}[!ht]
                \begin{minted}[linenos]{python}
-url = 
+url = https://github.com/nathan-tat/cs_nea_2025/tree/main/code/software
 procedure install_software(target)
     if target.permissions == False:
         raise PermissionError
     
-    download_from_github(link)
+    download_from_github(url, target)
                \end{minted}
                \caption{Pseudocode to install the main program}
                \label{pc:install_sw}
             \end{figure}
+
+            I am going to use a library in order to download the link from github.
         \subsection{Test Data}
 
 
