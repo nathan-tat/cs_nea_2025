@@ -7,27 +7,17 @@ from tkinter import filedialog
 
 
 
-# flat copy
-destination = Path.home() / "test_folder_copy"
-destination.mkdir(exist_ok=True, parents=True)
-fs = fsspec.filesystem("github", org="githubtraining", repo="hellogitworld")
-fs.get(fs.ls("src/"), destination.as_posix())
-
-# recursive copy
-destination = Path.home() / "test_recursive_folder_copy"
-destination.mkdir(exist_ok=True, parents=True)
-fs = fsspec.filesystem("github", org="githubtraining", repo="hellogitworld")
-fs.get(fs.ls("src/"), destination.as_posix(), recursive=True)
+def download_from_github(url: str, destination: str) -> None:
+    """ Downloads a given GitHub folder from 'url' to the 'destination' directory """
+    pass
 
 
-def download_from_github(dest: str) -> None:
-    os.system("")
-
-
-
-
-
-
+def install_requirements(url: str) -> None:
+    """ 
+    Installs the necessary python libraries from a 'requirements.txt' stored  
+    at 'url' using pip
+    """
+    pass
 
 
 
@@ -76,16 +66,16 @@ class App:
         root.destroy()
 
 
-    def btn_install_command(self):
+    def btn_install_command(self) -> None:
         """ Installs the software to the given directory. Probably very not secure. """
         target: str = self.filename
         
 
 
-    def btn_browse_command(self):
+    def btn_browse_command(self) -> None:
         """ Allows the user to select a directory to install the software into. Check permissions. """
         self.filename = filedialog.askdirectory()
-        self.lbl_welcome["text"] = self.filename
+        # self.lbl_welcome["text"] = self.filename
 
 
 
