@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import filedialog
 
-class App:
+class InstallApp:
     def __init__(self, root):
         #setting title
         root.title("undefined")
@@ -66,5 +66,5 @@ class App:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = App(root)
+    app = InstallApp(root)
     root.mainloop()
