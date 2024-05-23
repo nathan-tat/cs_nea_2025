@@ -33,11 +33,6 @@ def download_folder(repo: Repository, folder: str, out: str, recursive: bool):
         download(c, out)
 
 
-def download_file(repo: Repository, folder: str, out: str):
-    c = repo.get_contents(folder)
-    download(c, out)
-
-
 """ 
 ^^^ End of code from https://github.com/Nordgaren/Github-Folder-Downloader/tree/master
 """
@@ -45,7 +40,9 @@ def download_file(repo: Repository, folder: str, out: str):
 
 # the requirements.txt which has all the necessary pip libraries to run the program 
 REQ: str = "https://raw.githubusercontent.com/nathan-tat/cs_nea_2025/main/requirements.txt"
+# path to repository
 REPO_NAME: str = "nathan-tat/cs_nea_2025"
+# directory from which the software will be installed from 
 SW_DIR: str = "code/software"
 
 
@@ -73,6 +70,7 @@ def install_requirements(url: str) -> None:
     Installs the necessary python libraries from a 'requirements.txt' stored  
     at 'url' using pip
     """
+    # i dont think this actually works as of now
     os.system(f"py -m pip install {url}")
 
 
@@ -90,20 +88,21 @@ class App:
         root.geometry(alignstr)
         root.resizable(width=False, height=False)
 
-        btn_cancel=tk.Button(root)
-        btn_cancel["text"] = "Cancel"
-        btn_cancel.place(x=20,y=110,width=70,height=25)
-        btn_cancel["command"] = self.btn_cancel_command
+        self.btn_cancel=tk.Button(root)
+        self.btn_cancel["text"] = "Cancel"
+        self.btn_cancel.place(x=20,y=110,width=70,height=25)
+        self.btn_cancel["command"] = self.btn_cancel_command
 
-        btn_install=tk.Button(root)
-        btn_install["text"] = "Install"
-        btn_install.place(x=210,y=110,width=70,height=25)
-        btn_install["command"] = self.btn_install_command
+        self.btn_install=tk.Button(root)
+        self.btn_install["text"] = "Install"
+        self.btn_install.place(x=210,y=110,width=70,height=25)
+        self.btn_install["command"] = self.btn_install_command
+        self.btn_install["state"] = "disabled"
 
-        btn_browse=tk.Button(root)
-        btn_browse["text"] = "Browse"
-        btn_browse.place(x=200,y=60,width=79,height=30)
-        btn_browse["command"] = self.btn_browse_command
+        self.btn_browse=tk.Button(root)
+        self.btn_browse["text"] = "Browse"
+        self.btn_browse.place(x=200,y=60,width=79,height=30)
+        self.btn_browse["command"] = self.btn_browse_command
 
         self.ent_dir=tk.Entry(root)
         self.ent_dir["justify"] = "left"
@@ -114,36 +113,44 @@ class App:
         self.lbl_welcome["justify"] = "center"
         self.lbl_welcome["text"] = "this is the installer"
         self.lbl_welcome.place(x=20,y=20,width=170,height=30)
+        
+        self.filepath = None
 
 
     def btn_cancel_command(self) -> None:
-        """ Closes the UI window safely. """
+        """ Closes the UI window safely """
         print("Exiting...")
         root.destroy()
 
 
     def btn_install_command(self) -> None:
         """ Installs the software to the given directory. Probably very not secure. """
-        target: str = self.filename
+        if self.filepath is None:
+            return
         
-
+        # this probably works
+        install_requirements(REQ)
+        download_from_github(self.filepath)
+        
 
     def btn_browse_command(self) -> None:
         """ Allows the user to select a directory to install the software into. Check permissions. """
-        self.filename = filedialog.askdirectory()
-        # self.lbl_welcome["text"] = self.filename
+        self.filepath = filedialog.askdirectory()
+        self.lbl_welcome["text"] = self.filepath
+        self.btn_install["state"] = "active"
 
 
 
 
 if __name__ == "__main__":
-    if not is_admin():
-        # brings up UAC pop-up
-        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+    # if not is_admin():
+    #     # brings up UAC pop-up
+    #     ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
         
-        # if the user denied admin privilages
-        if not is_admin():
-            raise PermissionError("Program is not being run as Administrator")
+    #     # if the user denied admin privilages
+    #     if not is_admin():
+    #         # awkwarddd this doesnt work !!
+    #         raise PermissionError("Program is not being run as Administrator")
         
     root = tk.Tk()
     app = App(root)
