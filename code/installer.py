@@ -71,11 +71,12 @@ def install_requirements(url: str) -> None:
     at 'url' using pip
     """
     # i dont think this actually works as of now
-    os.system(f"py -m pip install {url}")
+    # os.system(f"py -m pip install {url}")
+    pass
 
 
 
-class App:
+class InstallGUI:
     def __init__(self, root):
         #setting title
         root.title("Installer")
@@ -125,18 +126,44 @@ class App:
 
     def btn_install_command(self) -> None:
         """ Installs the software to the given directory. Probably very not secure. """
-        if self.filepath is None:
-            return
+        # set it equal to eachother <3
+        if self.filepath != self.ent_dir["text"]:
+            self.filepath = self.ent_dir["text"]
+            
+        # if not a real directory
+        if not os.path.isdir(self.filepath):
+            pass
+        
+        # do some fancy shit
+        # like turning off some of the buttons
+        self.btn_browse["state"] = "disabled"
+        self.btn_cancel["state"] = "disabled"
+        self.btn_install["state"] = "disabled"
+        
+        self.lbl_welcome["text"] = "Please wait... Downloading..."
+        
         
         # this probably works
-        install_requirements(REQ)
-        download_from_github(self.filepath)
+        try:
+            install_requirements(REQ)
+            download_from_github(self.filepath)
+        except:
+            self.lbl_welcome["text"] = "something bad happened"
+        else:
+            self.lbl_welcome["text"] = "Thank you. Download. "
+        
+        self.btn_browse["state"] = "active"
+        self.btn_cancel["state"] = "active"
+        self.btn_install["state"] = "active"
+        
+        
         
 
     def btn_browse_command(self) -> None:
         """ Allows the user to select a directory to install the software into. Check permissions. """
         self.filepath = filedialog.askdirectory()
         self.lbl_welcome["text"] = self.filepath
+        self.ent_dir["text"] = self.filepath
         self.btn_install["state"] = "active"
 
 
@@ -153,5 +180,5 @@ if __name__ == "__main__":
     #         raise PermissionError("Program is not being run as Administrator")
         
     root = tk.Tk()
-    app = App(root)
+    app = InstallGUI(root)
     root.mainloop()
