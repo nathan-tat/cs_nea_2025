@@ -82,36 +82,36 @@ class InstallGUI:
         #setting title
         root.title("Installer")
         #setting window size
-        width=305
-        height=160
-        screenwidth = root.winfo_screenwidth()
-        screenheight = root.winfo_screenheight()
-        alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
+        w = 305
+        h = 160
+        sw = root.winfo_screenwidth()
+        sh = root.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (w, h, (sw - w) / 2, (sh - h) / 2)
         root.geometry(alignstr)
         root.resizable(width=False, height=False)
 
-        self.btn_cancel=tk.Button(root)
+        self.btn_cancel = tk.Button(root)
         self.btn_cancel["text"] = "Cancel"
         self.btn_cancel.place(x=20,y=110,width=70,height=25)
         self.btn_cancel["command"] = self.btn_cancel_command
 
-        self.btn_install=tk.Button(root)
+        self.btn_install = tk.Button(root)
         self.btn_install["text"] = "Install"
         self.btn_install.place(x=210,y=110,width=70,height=25)
         self.btn_install["command"] = self.btn_install_command
         self.btn_install["state"] = "disabled"
 
-        self.btn_browse=tk.Button(root)
+        self.btn_browse = tk.Button(root)
         self.btn_browse["text"] = "Browse"
         self.btn_browse.place(x=200,y=60,width=79,height=30)
         self.btn_browse["command"] = self.btn_browse_command
 
-        self.ent_dir=tk.Entry(root)
+        self.ent_dir = tk.Entry(root)
         self.ent_dir["justify"] = "left"
         self.ent_dir["text"] = "C:\\Program Files\\"
         self.ent_dir.place(x=20,y=60,width=183,height=30)
 
-        self.lbl_welcome=tk.Label(root)
+        self.lbl_welcome = tk.Label(root)
         self.lbl_welcome["justify"] = "center"
         self.lbl_welcome["text"] = "this is the installer"
         self.lbl_welcome.place(x=20,y=20,width=170,height=30)
@@ -135,7 +135,7 @@ class InstallGUI:
         if not os.path.isdir(self.filepath):
             pass
         
-        # do some fancy shit
+        # do some fancy stuffs
         # like turning off some of the buttons
         self.btn_browse["state"] = "disabled"
         self.btn_cancel["state"] = "disabled"
@@ -151,13 +151,11 @@ class InstallGUI:
         except:
             self.lbl_welcome["text"] = "something bad happened"
         else:
-            self.lbl_welcome["text"] = "Thank you. Download. "
+            self.lbl_welcome["text"] = "Thank you. Downloaded. "
         
         self.btn_browse["state"] = "active"
         self.btn_cancel["state"] = "active"
         self.btn_install["state"] = "active"
-        
-        
         
 
     def btn_browse_command(self) -> None:
@@ -166,8 +164,6 @@ class InstallGUI:
         self.lbl_welcome["text"] = self.filepath
         self.ent_dir["text"] = self.filepath
         self.btn_install["state"] = "active"
-
-
 
 
 if __name__ == "__main__":

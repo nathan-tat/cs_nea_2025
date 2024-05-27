@@ -295,7 +295,7 @@
                     \end{forest}
                 \end{center}
                 
-                Each cycle will be taken on individually. 
+                Each cycle will be taken on individually. I'll fix the formatting later.
             
     \section{Cycle 1: Project and File Management}
     Here is the hierarchy diagram from the previous section. It considers two tasks, exporting and initialising.
@@ -350,12 +350,14 @@
                     X4 & Compress exported files intuitively. \\ 
                     \end{tabular}
                 \end{center}
+                \caption{I'll decide on a consistent format later}
                     
                 \end{table}
-        \subsection{User Interface}
+        \subsection{Design}
+        \subsubsection{User Interface}
 
                 Will insert annotated drawings l8r
-        \subsection{Data Structures}
+        \subsubsection{Data Structures}
 
             \begin{table}[!ht]
             \begin{center}
@@ -373,7 +375,7 @@
             The user may not always have permissions to save into/export into the directory they have selected. When doing file management using for example the file explorer on Windows 10, the operating system will handle telling the user that they have invalid permissions. However, when attempting operations on files with invalid permissions through a programming language such as Python, the error will be raised in the program. Due to this I have included a \verb|permissions| variable that checks whether the program has permissions to write to a given directory to prevent this.
 
             \pagebreak
-        \subsection{Algorithms}
+        \subsubsection{Algorithms}
             I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program. 
             % \begin{wrapfigure}{l}{.25\textwidth}
             %     \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
@@ -419,10 +421,150 @@ procedure install_software(target)
             \end{figure}
 
             I am going to use a library in order to download the link from GitHub.
-        \subsection{Test Data}
+        \subsubsection{Test Data}
+            Need to write up test data
+
+        
+
+    \subsection{Implementation}
+            There are two files in this cycle, one for the installer and one for the opener of file projects.
+            \subsubsection{Installer}
+                The installer essentially copies files from a GitHub directory (where the files will be hosted) and copies them into a folder on the user's computer. The GUI element is implemented as a class with the functions of the buttons being methods of the class. 
+                \pagebreak
+                \begin{figure}[!ht]
+                   \begin{center}
+                       \includegraphics[width=.25\textwidth]{figures/install_gui_class_diagram.png}
+                   \end{center}
+                   \caption{Class diagram for the InstallGUI class}
+                   \label{fig:install_gui_class_diag}
+                \end{figure}
+
+                The buttons on the GUI element are attributes in the class which means I am able to access and edit their attributes within methods of the class. 
+
+                In \autoref{snip:install_gui_init}, the position, size, and text of the individual UI elements have been initialised as well as some of the attributes of the main window.
+
+\begin{figure}[!ht]
+   \begin{minted}[linenos]{python}
+    def btn_cancel_command(self) -> None:
+        """ Closes the UI window safely """
+        print("Exiting...")
+        root.destroy()
+
+    def btn_browse_command(self) -> None:
+        """ Allows the user to select a directory to 
+        install the software into. """
+        self.filepath = filedialog.askdirectory()
+        self.lbl_welcome["text"] = self.filepath
+        self.ent_dir["text"] = self.filepath
+        self.btn_install["state"] = "active"
+   \end{minted}
+   \caption{Code for cancel and browse}
+   \label{snip:buttons_browse_cancel_code}
+\end{figure}
+
+                In \autoref{snip:buttons_browse_cancel_code}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software.
+
+                \begin{figure}[!ht]
+                   \begin{minted}[linenos]{python}
+    def btn_install_command(self) -> None:
+        """ Installs the software to the given directory. Probably very not secure. """
+        # set it equal to eachother <3
+        if self.filepath != self.ent_dir["text"]:
+            self.filepath = self.ent_dir["text"]
+            
+        # if not a real directory
+        if not os.path.isdir(self.filepath):
+            pass
+        
+        # do some fancy stuffs
+        # like turning off some of the buttons
+        self.btn_browse["state"] = "disabled"
+        self.btn_cancel["state"] = "disabled"
+        self.btn_install["state"] = "disabled"
+        
+        self.lbl_welcome["text"] = "Please wait... Downloading..."
+        
+        
+        # this probably works
+        try:
+            install_requirements(REQ)
+            download_from_github(self.filepath)
+        except:
+            self.lbl_welcome["text"] = "something bad happened"
+        else:
+            self.lbl_welcome["text"] = "Thank you. Downloaded. "
+        
+        self.btn_browse["state"] = "active"
+        self.btn_cancel["state"] = "active"
+        self.btn_install["state"] = "active"
+                   \end{minted}
+                   \caption{Code for install button}
+                   \label{snip:btn_install_code}
+                \end{figure}
+
+                This button will disable all the buttons while the software is installing. I think I would like to add a progress indicator in the future.
+
+                \begin{figure}[!ht]
+                   \begin{minted}[linenos]{python}
+class InstallGUI:
+    def __init__(self, root):
+        #setting title
+        root.title("Installer")
+        #setting window size
+        w = 305
+        h = 160
+        sw = root.winfo_screenwidth()
+        sh = root.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (w, h, (sw - w) / 2, (sh - h) / 2)
+        root.geometry(alignstr)
+        root.resizable(width=False, height=False)
+
+        self.btn_cancel = tk.Button(root)
+        self.btn_cancel["text"] = "Cancel"
+        self.btn_cancel.place(x=20,y=110,width=70,height=25)
+        self.btn_cancel["command"] = self.btn_cancel_command
+
+        self.btn_install = tk.Button(root)
+        self.btn_install["text"] = "Install"
+        self.btn_install.place(x=210,y=110,width=70,height=25)
+        self.btn_install["command"] = self.btn_install_command
+        self.btn_install["state"] = "disabled"
+
+        self.btn_browse = tk.Button(root)
+        self.btn_browse["text"] = "Browse"
+        self.btn_browse.place(x=200,y=60,width=79,height=30)
+        self.btn_browse["command"] = self.btn_browse_command
+
+        self.ent_dir = tk.Entry(root)
+        self.ent_dir["justify"] = "left"
+        self.ent_dir["text"] = "C:\\Program Files\\"
+        self.ent_dir.place(x=20,y=60,width=183,height=30)
+
+        self.lbl_welcome = tk.Label(root)
+        self.lbl_welcome["justify"] = "center"
+        self.lbl_welcome["text"] = "this is the installer"
+        self.lbl_welcome.place(x=20,y=20,width=170,height=30)
+        
+        self.filepath = None
+                   \end{minted}
+                   \caption{init method for the installer}
+                   \label{snip:install_gui_init}
+                \end{figure}
+
+                \begin{figure}[!ht]
+                   \begin{center}
+                       \includegraphics[width=.5\textwidth]{figures/installer1.png}
+                   \end{center}
+                   \caption{Installer in action}
+                   \label{fig:installer_gui}
+                \end{figure}
+                The directory doesn't show on the entry box so I need to fix that (I'll take screenshots later).
+        \subsubsection{Opener}
+                This code isnt finished yet.
 
 
-    % \section{Implementation}
+
+
     %     \subsection{Annotated Listing of the Program(s)}
     %     \subsection{Annotated "Design Views" showing details of application-generated forms, reports, queries, buttons, cross tabulations, etc.}
     %     \subsection{Procedure and Variable List}
