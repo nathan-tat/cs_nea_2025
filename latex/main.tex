@@ -146,21 +146,21 @@
             \subsubsection{Online Circuit Builder}
                 I searched for some online JavaScript based circuit builders and I found this \href{https://www.falstad.com/circuit/}{Circuit Simulator Applet}. Although none of my clients have used this before, and I don't personally have a lot of experience with it, I can see that there are a lot of good features in this solution. The use of circuit symbols instead of renders of components allows students to familiarise themselves with them, as when actually drawing out circuit diagrams that's what they would use. Furthermore, as circuits get more and more complex and components get smaller, it may not even be practical or useful to look at a real life version of the circuit. 
 
-                % \begin{figure}[!ht]
-                %     \begin{center}
-                %         \includegraphics[width=.5\textwidth]{figures/circuit_builder.png}
-                %     \end{center}
-                %     \caption{A simple circuit made on the circuit builder}
-                %     \label{fig:builderss}
-                % \end{figure}
+                \begin{figure}[!ht]
+                    \begin{center}
+                        \includegraphics[width=.5\textwidth]{figures/circuit_builder.png}
+                    \end{center}
+                    \caption{A simple circuit made on the circuit builder}
+                    \label{fig:builderss}
+                \end{figure}
 
-                % \begin{figure}[!ht]
-                %     \begin{center}
-                %         \includegraphics[width=.5\textwidth]{figures/circuit_graphs.png}
-                %     \end{center}
-                %     \caption{Graphs of attributes changing with respect to time and each other}
-                %     \label{fig:circuit_builder_existing_sol}
-                % \end{figure}
+                \begin{figure}[!ht]
+                    \begin{center}
+                        \includegraphics[width=.5\textwidth]{figures/circuit_graphs.png}
+                    \end{center}
+                    \caption{Graphs of attributes changing with respect to time and each other}
+                    \label{fig:circuit_builder_existing_sol}
+                \end{figure}
 
                 \textbf{Advantages:}
                 \begin{itemize}
@@ -376,18 +376,20 @@
 
             \pagebreak
         \subsubsection{Algorithms}
-            I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program. 
+            I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program.
+
             % \begin{wrapfigure}{l}{.25\textwidth}
             %     \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
             %     \caption{Flow chart for exporting a project}
             % \end{wrapfigure}
-            % \begin{figure}[!ht]
-            %    \begin{center}
-            %        \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
-            %    \end{center}
-            %    \caption{Flowchart for exporting a project}
-            %    \label{fig:export_flow}
-            % \end{figure}
+
+            \begin{figure}[!ht]
+               \begin{center}
+                   \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
+               \end{center}
+               \caption{Flowchart for exporting a project}
+               \label{fig:export_flow}
+            \end{figure}
             
             \begin{figure}[!ht]
                 \begin{minted}[linenos]{python}
@@ -430,7 +432,6 @@ procedure install_software(target)
             There are two files in this cycle, one for the installer and one for the opener of file projects.
             \subsubsection{Installer}
                 The installer essentially copies files from a GitHub directory (where the files will be hosted) and copies them into a folder on the user's computer. The GUI element is implemented as a class with the functions of the buttons being methods of the class. 
-                \pagebreak
                 \begin{figure}[!ht]
                    \begin{center}
                        \includegraphics[width=.25\textwidth]{figures/install_gui_class_diagram.png}
