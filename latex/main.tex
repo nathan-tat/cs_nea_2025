@@ -26,10 +26,19 @@
 
 % \textwidth = 415.36792 pt
 
+
+% FIG - Figure or Image file
+% PC - Pseudocode snippet
+% SC - Sourcecode snippet
+% TBL - Table
+
+
+
 \begin{document}
     \pagestyle{fancy}
     \setlength{\headheight}{13.6pt}
 
+    % Title page
     \begin{titlepage}
         \begin{center}
             \vspace*{1cm}
@@ -65,6 +74,8 @@
             
         \subsection{Identification of Stakeholders}
             After considering the problem I identified the following groups that could use a solution to this problem, as well as having useful insight on how a program like this should function.
+
+            % Identified Groups
             \begin{itemize}
                 \item \textbf{University Students} often have to deal with complex systems and a way of visualising them would be very beneficial. I have been able to contact a student at the University of Aberdeen doing a masters in electrical and mechanical engineering. Their name is Hugo, and they are 21-years-old.
                 \item \textbf{A-Level Students}, specifically students taking physics,  would be able to greatly further their understanding of core concepts and be able to explore new ideas on their own. I have been able to communicate with Daniel, a year 12 physics student, about being a stakeholder for this project.
@@ -84,6 +95,8 @@
             \subsubsection{Analytic Methods}
                 Analytic methods are very common as they require little cost or set-up and their effectiveness only depends on how well you understand the physics that you are doing. Since my stakeholders enjoy doing physics and are also quite good at it, they are all well versed in spending time going through calculations in order to achieve a set of mathematical equations that describe the system being modelled. 
 
+
+                % Daniel's Working FIG
                 \begin{figure}[!ht]
                     \begin{center}
                         \includegraphics[width=0.25\textwidth]{figures/daniel_working.jpeg}
@@ -92,7 +105,10 @@
                     \label{fig:daniel_working}
                 \end{figure}
 
-                \newpage
+                
+                \pagebreak
+
+
                 \textbf{Advantages:}
                 \begin{itemize}
                     \item Very versatile. Paper and pen allows for great customisation in the layout of the work including diagrams and annotations, which allows the user to be able to do things the way they want to do.
@@ -103,6 +119,7 @@
                     \item Doing hard work to get to a result is rewarding and relaxing. Offloading a lot of that work to a computer would reduce the enjoyment from this process.
                 \end{itemize}
 
+
                 \textbf{Disadvantages:}
                 \begin{itemize}
                     \item Difficult to organise. You can't save paper notes in a way that is easily shareable and easy to organise on a computer (other than scanning them as PDF files which can take a lot of time and my clients find annoying). It may also be hard to stay consistent with formatting due to how versatile it is, as seen in \autoref{fig:daniel_working}.
@@ -111,7 +128,10 @@
                     \item Some problems are much harder to approach as the effectiveness of analytic methods is dependent on your ability to manipulate and work with equations, as well as general mathematical ability. Human's also make mistakes and are far less consistent than a computer at doing the same or similar calculations repeatedly.
                 \end{itemize}
 
+
             \subsubsection{Desmos}
+
+                % Desmos FIG
                 \begin{figure}[!ht]
                     \begin{center}
                         \includegraphics[width=.5\textwidth]{figures/desmos.png}
@@ -120,9 +140,11 @@
                     \label{fig:desmos}
                 \end{figure}
 
+
                 In \autoref{fig:desmos} below, Desmos has been used in order to see how attributes of an object change (specifically the $x$ position and velocity with respect to time of an object experiencing drag). Desmos is great in order to aid intuition and view general trends, however you still need to work through equations in order to have something to graph, and Desmos won't give exact values for solutions, but the final visualisations are still very useful. 
 
                 The simplicity of Desmos allows it to be very versatile, but that also means its more of a jack-of-all-trades and master of none, so it wouldn't be very good for a more specialised application (like the ones being considered).
+
 
                 \pagebreak
                 \textbf{Advantages:}
@@ -133,6 +155,7 @@
                     \item Easy to share and work on on multiple devices. After you make an account, you are able to save graphs that you've done and access them on whatever device you're signed in on. Graphs can also be shared with links once they're saved which allows for collaboration on projects.
                     \item As of quite recently, Desmos has released a beta for a 3D graphing mode, which is great for modelling some events happening in 3D, such as the trajectory of an object given some initial conditions.
                 \end{itemize}
+
 
                 \textbf{Disadvantages:}
                 \begin{itemize}
@@ -146,6 +169,8 @@
             \subsubsection{Online Circuit Builder}
                 I searched for some online JavaScript based circuit builders and I found this \href{https://www.falstad.com/circuit/}{Circuit Simulator Applet}. Although none of my clients have used this before, and I don't personally have a lot of experience with it, I can see that there are a lot of good features in this solution. The use of circuit symbols instead of renders of components allows students to familiarise themselves with them, as when actually drawing out circuit diagrams that's what they would use. Furthermore, as circuits get more and more complex and components get smaller, it may not even be practical or useful to look at a real life version of the circuit. 
 
+
+                % Circuit Builder SS FIG
                 \begin{figure}[!ht]
                     \begin{center}
                         \includegraphics[width=.5\textwidth]{figures/circuit_builder.png}
@@ -154,6 +179,8 @@
                     \label{fig:builderss}
                 \end{figure}
 
+
+                % Circuit Builder SS2 FIG
                 \begin{figure}[!ht]
                     \begin{center}
                         \includegraphics[width=.5\textwidth]{figures/circuit_graphs.png}
@@ -161,6 +188,7 @@
                     \caption{Graphs of attributes changing with respect to time and each other}
                     \label{fig:circuit_builder_existing_sol}
                 \end{figure}
+
 
                 \textbf{Advantages:}
                 \begin{itemize}
@@ -171,6 +199,7 @@
                     \item The ability to plot real time graphs akin to an oscilloscope is as useful as having a real life oscilloscope, which is great when used to see how attributes change with respect to time and each other. See \autoref{fig:circuit_builder_existing_sol}.
                     \item The ability to export and import circuit arrangements is very useful as it allows for easier collaboration.
                 \end{itemize}
+
 
                 \textbf{Disadvantages:}
                 \begin{itemize}
@@ -185,6 +214,7 @@
         \subsection{Success Criteria of the Proposed System}
             This is a table of what the essential criteria for the solution are.
 
+            % Essecital Success Criteria TBL
             \begin{table}[!ht]
                 \begin{center}
                 \footnotesize
@@ -206,7 +236,7 @@
 
             Here is a table of optional criteria for the solution, that would still benefit the users but aren't essential for it to be deemed functional and are mostly quality of life features.
             
-            
+            % Optional Success Criteria TBL
             \begin{table}[!ht]
                 \begin{center}
                 \footnotesize
@@ -218,16 +248,16 @@
                 B3 & Include customisable themes and/or accessibility features such as accounting for different types of colour blindness. & In order to make my solution as accessible as possible to help as many students as possible, being able to change the colour scheme would be a very useful feature. \\ \hline
                 B4 & Being able to export and import circuit arrangements. & This would allow for easier collaboration, also between students and teachers, which would help as it would be much easier to communicate ideas. \\ \hline
                 B5 & Adding keyboard shortcuts & Keyboard shortcuts would heavily streamline the use of a software like this, especially as the user gets more and more accustomed to them over time, as is common in many scientific programs. \\ \hline
-            \end{tabular}
-        \end{center}
-        \end{table}
-        
+                \end{tabular}
+                \end{center}
+            \end{table}
         
         
         % \subsection{Data Source(s)}
         % \subsection{Volumetrics - Data Volumes}
         % \subsection{Analysis Data Dictionary}
         % \subsection{Data Flow Diagrams for Existing and Proposed System}
+
 
         \subsection{Justification of Chosen Solution}
             My proposed solution is to create a piece of software that functions as a electrical circuit builder allowing the user to place different components on a main board and then connect them using wires. Then the software would simulate what is happening at each component as well as allow those attributes to be viewed and logged by the user within the software. Circuits wouldn't be able to be edited while they are being simulated, as the two modes would be completely separate from each other.
@@ -239,13 +269,14 @@
 
         \subsection{Limitations}
             I only have experience with GUI elements while using Python, however the complexity and amount of processing needed for the project may exceed the capabilities of Python. As such careful consideration into how features are implemented would have to be taken as I need the program to be as efficient as possible. 
-            % Dude i am throwing so fucking hard rn it might just be joever
 
         % \subsection{Entity-Relationship Models}
         % \subsection{Identification of Objects and Object Analysis Diagrams}
 
     \section{Overall System Design}
             I decided to split the system into three sections: project, simulating, building. Within the software, the user will initialise a "project" in a directory. The program will frequently refer to a "source directory", which will be the user's program files by default. This source directory will be configurable by the user, but there is no guarantee that the user changing things on their own won't break some of the functionality.
+
+            % Overall Hierarchy Diagram FRST
             \begin{center}
                 \footnotesize
                 \begin{forest}
@@ -293,50 +324,54 @@
                             ]
                         ]
                     \end{forest}
-                \end{center}
+            \end{center}
                 
-                Each cycle will be taken on individually. I'll fix the formatting later.
+            Each cycle will be taken on individually. I'll fix the formatting later.
             
     \section{Cycle 1: Project and File Management}
-    Here is the hierarchy diagram from the previous section. It considers two tasks, exporting and initialising.
-    \begin{center}
-        \footnotesize
-        \begin{forest}
-            for tree={
-                align=center,
-                font=\sffamily,
-            edge+={thick, -{Stealth[]}},
-            l sep'+=10pt,
-            fork sep'=10pt,
-            },
-            forked edges,
-            if level=0{
-                inner xsep=0pt,
-                tikz={\draw [thick] (.children first) -- (.children last);}
-                }{},
-                [Project and File Management
-                    [Opening projects
-                        [Initialising\\new projects
-                            [Making sure\\all relevant\\files are present]
-                            [Choosing\\working directory]
-                            [Initialising all\\the files]
+        Here is the hierarchy diagram from the previous section. It considers two tasks, exporting and initialising.
+
+        % C1 Hierarchy Diagram FRST
+        \begin{center}
+            \footnotesize
+            \begin{forest}
+                for tree={
+                    align=center,
+                    font=\sffamily,
+                edge+={thick, -{Stealth[]}},
+                l sep'+=10pt,
+                fork sep'=10pt,
+                },
+                forked edges,
+                if level=0{
+                    inner xsep=0pt,
+                    tikz={\draw [thick] (.children first) -- (.children last);}
+                    }{},
+                    [Project and File Management
+                        [Opening projects
+                            [Initialising\\new projects
+                                [Making sure\\all relevant\\files are present]
+                                [Choosing\\working directory]
+                                [Initialising all\\the files]
+                            ]
+                            [Opening existing\\projects
+                                [Choosing\\working directory]
+                                [Verifying files]
+                            ]
                         ]
-                        [Opening existing\\projects
-                            [Choosing\\working directory]
-                            [Verifying files]
+                        [Exporting circuit\\arrangements
+                            [Choosing\\destination]
+                            [Compressing\\and exporting]
                         ]
                     ]
-                    [Exporting circuit\\arrangements
-                        [Choosing\\destination]
-                        [Compressing\\and exporting]
-                    ]
-                ]
-            \end{forest}
+                \end{forest}
         \end{center}
 
         \subsection{Brief Outline}
             In this cycle I will create the programming for some interactive UI that will allow the user to initialise or open a project as well as export the project so that it would be able to be accessed by other people.
 
+
+            % Success Criteria C1 TBL
             \subsubsection{Success Criteria}
                 These are the success criteria that are going to be used. ID beginning with "X" indicates that it was specifically added for this cycle.
                 \begin{table}[!ht]
@@ -350,102 +385,126 @@
                     X4 & Compress exported files intuitively. \\ 
                     \end{tabular}
                 \end{center}
-                \caption{I'll decide on a consistent format later}
-                    
+                \caption{Success criteria for cycle 1}
+                \label{tbl:succ_crit_c1}
                 \end{table}
+
+
         \subsection{Design}
-        \subsubsection{User Interface}
+            \subsubsection{User Interface}
+                Will insert annotated drawings later.
 
-                Will insert annotated drawings l8r
-        \subsubsection{Data Structures}
+            \subsubsection{Data Structures}
 
-            \begin{table}[!ht]
-            \begin{center}
-                \begin{tabular}{llm{0.5\textwidth}}
-                Name & Data Type/Structure & Data \\ \hline
-                \verb|project_name| & String (var.) & Name of the project (will be used in displays and for organisational purposes) \\
-                \verb|working_dir| & String (var.) & The working directory of the project \\
-                \verb|source| & String (const.) & Where all the relevant files are initially stored \\
-                \verb|location| & String (var.) & Destination folder for exporting, inputted by user \\
-                \verb|permissions| & Bool (var.) & True if and only if the instance of the program has been run with administrator privileges. This limits the directories available.
-                \end{tabular}
-            \end{center}
-            \end{table}
+                % Data structures C1 TBL
+                \begin{table}[!ht]
+                \begin{center}
+                    \begin{tabular}{llm{0.5\textwidth}}
+                    Name & Data Type/Structure & Data \\ \hline
+                    \verb|project_name| & String (var.) & Name of the project (will be used in displays and for organisational purposes) \\
+                    \verb|working_dir| & String (var.) & The working directory of the project \\
+                    \verb|source| & String (const.) & Where all the relevant files are initially stored \\
+                    \verb|location| & String (var.) & Destination folder for exporting, inputted by user \\
+                    \verb|permissions| & Bool (var.) & True if and only if the instance of the program has been run with administrator privileges. This limits the directories available.
+                    \end{tabular}
+                \end{center}
+                \caption{Data structures that will be used in cycle 1}
+                \label{tbl:data_structs_c1}
+                \end{table}
 
-            The user may not always have permissions to save into/export into the directory they have selected. When doing file management using for example the file explorer on Windows 10, the operating system will handle telling the user that they have invalid permissions. However, when attempting operations on files with invalid permissions through a programming language such as Python, the error will be raised in the program. Due to this I have included a \verb|permissions| variable that checks whether the program has permissions to write to a given directory to prevent this.
 
-            \pagebreak
-        \subsubsection{Algorithms}
-            I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program.
+                The user may not always have permissions to save into/export into the directory they have selected. When doing file management using for example the file explorer on Windows 10, the operating system will handle telling the user that they have invalid permissions. However, when attempting operations on files with invalid permissions through a programming language such as Python, the error will be raised in the program. Due to this I have included a \verb|permissions| variable that checks whether the program has permissions to write to a given directory to prevent this.
 
-            % \begin{wrapfigure}{l}{.25\textwidth}
-            %     \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
-            %     \caption{Flow chart for exporting a project}
-            % \end{wrapfigure}
 
-            \begin{figure}[!ht]
-               \begin{center}
-                   \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
-               \end{center}
-               \caption{Flowchart for exporting a project}
-               \label{fig:export_flow}
-            \end{figure}
-            
-            \begin{figure}[!ht]
+                \pagebreak
+
+
+            \subsubsection{Algorithms}
+
+
+                I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program.
+
+
+                % Exporting flow chart FIG
+                \begin{figure}[!ht]
+                \begin{center}
+                    \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
+                \end{center}
+                \caption{Flowchart for exporting a project}
+                \label{fig:export_flow}
+                \end{figure}
+                
+
+                % Initialise project PC
+                \begin{figure}[!ht]
+                    \begin{minted}[linenos]{python}
+    import os
+    source = "Source directory here"
+    procedure init_files(target)
+        if target.permissions == False:
+            raise PermissionError
+        files = os.listdir(source)
+        for f in files:
+            f.copy(target)
+    endprocedure
+                    \end{minted}
+                    \caption{Pseudocode to copy initial project files to a folder}
+                    \label{pc:copy_to_folder}
+                \end{figure}
+
+
+                The file running the procedure above will need to be in the same location as the folder it is copying from. To make the file easier to access, the program could make a shortcut to this file and add it to the desktop for the user.
+                
+
+                % Install main program PC
+                \begin{figure}[!ht]
                 \begin{minted}[linenos]{python}
-import os
-source = "Source directory here"
-procedure init_files(target)
-    if target.permissions == False:
-        raise PermissionError
-    files = os.listdir(source)
-    for f in files:
-        f.copy(target)
-endprocedure
+    url = https://github.com/nathan-tat/cs_nea_2025/tree/main/code/software
+    procedure install_software(target)
+        if target.permissions == False:
+            raise PermissionError
+        
+        download_from_github(url, target)
                 \end{minted}
-                \caption{Pseudocode to copy initial project files to a folder}
-                \label{pc:copy_to_folder}
-            \end{figure}
+                \caption{Pseudocode to install the main program}
+                \label{pc:install_sw}
+                \end{figure}
 
-            The file running the procedure above will need to be in the same location as the folder it is copying from. To make the file easier to access, the program could make a shortcut to this file and add it to the desktop for the user.
-            
-            \begin{figure}[!ht]
-               \begin{minted}[linenos]{python}
-url = https://github.com/nathan-tat/cs_nea_2025/tree/main/code/software
-procedure install_software(target)
-    if target.permissions == False:
-        raise PermissionError
-    
-    download_from_github(url, target)
-               \end{minted}
-               \caption{Pseudocode to install the main program}
-               \label{pc:install_sw}
-            \end{figure}
 
-            I am going to use a library in order to download the link from GitHub.
-        \subsubsection{Test Data}
-            Need to write up test data
+                The installer will copy files from a GitHub repository, where all the files necessary for the program to run will be stored, into a folder specified by the user on the user's computer. This folder will then be referred to as \verb|source| (see \autoref{tbl:data_structs_c1})
+
+
+            \subsubsection{Test Data}
+                Need to write up test data
 
         
 
-    \subsection{Implementation}
-            There are two files in this cycle, one for the installer and one for the opener of file projects.
+        \subsection{Implementation}
+            There are two files in this cycle, one for the installer and one for the opener of file projects and I will tackle them seperately.
+
+
             \subsubsection{Installer}
-                The installer essentially copies files from a GitHub directory (where the files will be hosted) and copies them into a folder on the user's computer. The GUI element is implemented as a class with the functions of the buttons being methods of the class. 
+                The installer will copy files from a specified repository on GitHub, which will store all the necessary files for the program to run, into a folder specified by the user, which will then be referred to by the program as the source folder. 
+
+
+                % InstallGUI Class Diagram FIG
                 \begin{figure}[!ht]
                    \begin{center}
-                       \includegraphics[width=.25\textwidth]{figures/install_gui_class_diagram.png}
+                    %    \includegraphics[width=.25\textwidth]{figures/install_gui_class_diagram.png}
                    \end{center}
                    \caption{Class diagram for the InstallGUI class}
                    \label{fig:install_gui_class_diag}
                 \end{figure}
 
+
                 The buttons on the GUI element are attributes in the class which means I am able to access and edit their attributes within methods of the class. 
 
                 In \autoref{snip:install_gui_init}, the position, size, and text of the individual UI elements have been initialised as well as some of the attributes of the main window.
 
-\begin{figure}[!ht]
-   \begin{minted}[linenos]{python}
+
+                % Cancel and Browse buttons SC
+                \begin{figure}[!ht]
+                \begin{minted}[linenos]{python}
     def btn_cancel_command(self) -> None:
         """ Closes the UI window safely """
         print("Exiting...")
@@ -458,15 +517,18 @@ procedure install_software(target)
         self.lbl_welcome["text"] = self.filepath
         self.ent_dir["text"] = self.filepath
         self.btn_install["state"] = "active"
-   \end{minted}
-   \caption{Code for cancel and browse}
-   \label{snip:buttons_browse_cancel_code}
-\end{figure}
+                \end{minted}
+                \caption{Code for cancel and browse}
+                \label{snip:buttons_browse_cancel_code}
+                \end{figure}
+
 
                 In \autoref{snip:buttons_browse_cancel_code}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software.
 
+
+                % Install btn SC
                 \begin{figure}[!ht]
-                   \begin{minted}[linenos]{python}
+                \begin{minted}[linenos]{python}
     def btn_install_command(self) -> None:
         """ Installs the software to the given directory. Probably very not secure. """
         # set it equal to eachother <3
@@ -498,15 +560,18 @@ procedure install_software(target)
         self.btn_browse["state"] = "active"
         self.btn_cancel["state"] = "active"
         self.btn_install["state"] = "active"
-                   \end{minted}
-                   \caption{Code for install button}
-                   \label{snip:btn_install_code}
+                \end{minted}
+                \caption{Code for install button}
+                \label{snip:btn_install_code}
                 \end{figure}
+
 
                 This button will disable all the buttons while the software is installing. I think I would like to add a progress indicator in the future.
 
+
+                % InstallGUI class SC
                 \begin{figure}[!ht]
-                   \begin{minted}[linenos]{python}
+                \begin{minted}[linenos]{python}
 class InstallGUI:
     def __init__(self, root):
         #setting title
@@ -547,18 +612,22 @@ class InstallGUI:
         self.lbl_welcome.place(x=20,y=20,width=170,height=30)
         
         self.filepath = None
-                   \end{minted}
-                   \caption{init method for the installer}
-                   \label{snip:install_gui_init}
+                \end{minted}
+                \caption{init method for the installer}
+                \label{snip:install_gui_init}
                 \end{figure}
 
+
+                % Installer GUI evidence FIG
                 \begin{figure}[!ht]
                    \begin{center}
-                       \includegraphics[width=.5\textwidth]{figures/installer1.png}
+                    %    \includegraphics[width=.5\textwidth]{figures/installer1.png}
                    \end{center}
                    \caption{Installer in action}
                    \label{fig:installer_gui}
                 \end{figure}
+
+
                 The directory doesn't show on the entry box so I need to fix that (I'll take screenshots later).
         \subsubsection{Opener}
                 This code isnt finished yet.
