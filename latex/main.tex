@@ -35,6 +35,13 @@
 % for labels use this convention: 
 % {sensible_identifier}_{type}{numbering(if necessary)}_{cycle/section_name}
 
+
+% Sections should have a linebreak above and below, except when going from a lower level to 
+% a higher level in which case there should be two above the higher level.
+
+% \pagebreak should have a line break above and below
+
+
 \begin{document}
     \pagestyle{fancy}
     \setlength{\headheight}{13.6pt}
@@ -59,11 +66,14 @@
     \end{titlepage}
 
     \tableofcontents
+
     \pagebreak
+
     \fancyhead[L]{Nathan Tatkowski}
 
 
     \section{Analysis}
+
         \subsection{Problem Identification}
             Often times in physics, complex circuit diagrams have to be drawn and understood, and the opportunity to actually build them is not always available. A solution that could handle custom circuits as well as model and log different attributes quickly, accurately, and efficiently in order to help with building intuition in regard to how complex electrical systems function would be a useful tool that could help solve this issue.
 
@@ -93,6 +103,7 @@
             \end{itemize}
 
         \subsection{Existing Solutions}
+
             \subsubsection{Analytic Methods}
                 Analytic methods are very common as they require little cost or set-up and their effectiveness only depends on how well you understand the physics that you are doing. Since my stakeholders enjoy doing physics and are also quite good at it, they are all well versed in spending time going through calculations in order to achieve a set of mathematical equations that describe the system being modelled. 
 
@@ -105,9 +116,7 @@
                     \label{fig:daniel_working}
                 \end{figure}
 
-
                 \pagebreak
-
 
                 \textbf{Advantages:}
                 \begin{itemize}
@@ -144,8 +153,8 @@
 
                 The simplicity of Desmos allows it to be very versatile, but that also means its more of a jack-of-all-trades and master of none, so it wouldn't be very good for a more specialised application (like the ones being considered).
 
-
                 \pagebreak
+
                 \textbf{Advantages:}
                 \begin{itemize}
                     \item Desmos is a very versatile software which means that it can be used for a wide variety of problems. 
@@ -208,9 +217,9 @@
                     \item I found the system for placing new components in to be quite clunky and frustrating to get used to. Drawing the components is a good system, but the way it was implemented felt annoying to place in new components, it felt like you had to already know where you want to place components beforehand, which limits the freedom the user has to experiment with new arrangements. 
                 \end{itemize}
 
-
-        \pagebreak
+                \pagebreak
         
+
         \subsection{Success Criteria of the Proposed System}
             This is a table of what the essential criteria for the solution are.
 
@@ -264,7 +273,6 @@
         % \subsection{Analysis Data Dictionary}
         % \subsection{Data Flow Diagrams for Existing and Proposed System}
 
-
         \subsection{Justification of Chosen Solution}
             My proposed solution is to create a piece of software that functions as a electrical circuit builder allowing the user to place different components on a main board and then connect them using wires. Then the software would simulate what is happening at each component as well as allow those attributes to be viewed and logged by the user within the software. Circuits wouldn't be able to be edited while they are being simulated, as the two modes would be completely separate from each other.
 
@@ -278,6 +286,7 @@
 
         % \subsection{Entity-Relationship Models}
         % \subsection{Identification of Objects and Object Analysis Diagrams}
+
 
     \section{Overall System Design}
             I decided to split the system into three sections: project, simulating, building. Within the software, the user will initialise a "project" in a directory. The program will frequently refer to a "source directory", which will be the user's program files by default. This source directory will be configurable by the user, but there is no guarantee that the user changing things on their own won't break some of the functionality.
@@ -376,7 +385,6 @@
         \subsection{Brief Outline}
             In this cycle I will create the programming for some interactive UI that will allow the user to initialise or open a project as well as export the project so that it would be able to be accessed by other people.
 
-
             \subsubsection{Success Criteria}
                 These are the success criteria that are going to be used. ID beginning with "X" indicates that it was specifically added for this cycle.
 
@@ -398,6 +406,7 @@
 
 
         \subsection{Design}
+
             \subsubsection{User Interface}
                 Will insert annotated drawings later.
 
@@ -422,13 +431,9 @@
 
                 The user may not always have permissions to save into/export into the directory they have selected. When doing file management using for example the file explorer on Windows 10, the operating system will handle telling the user that they have invalid permissions. However, when attempting operations on files with invalid permissions through a programming language such as Python, the error will be raised in the program. Due to this I have included a \verb|permissions| variable that checks whether the program has permissions to write to a given directory to prevent this.
 
-
                 \pagebreak
 
-
             \subsubsection{Algorithms}
-
-
                 I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program.
 
 
@@ -478,17 +483,14 @@
                 \end{figure}
 
 
-                The installer will copy files from a GitHub repository, where all the files necessary for the program to run will be stored, into a folder specified by the user on the user's computer. This folder will then be referred to as \verb|source| (see \autoref{tbl:data_structs_c1})
-
+                The installer will copy files from a GitHub repository, where all the files necessary for the program to run will be stored, into a folder specified by the user on the user's computer. This folder will then be referred to as \verb|source| (see \autoref{tbl:data_structs_c1}). This will hopefully be done through the use of an external library.
 
             \subsubsection{Test Data}
                 Need to write up test data
 
-        
 
         \subsection{Implementation}
             There are two files in this cycle, one for the installer and one for the opener of file projects and I will tackle them seperately.
-
 
             \subsubsection{Installer}
                 The installer will copy files from a specified repository on GitHub, which will store all the necessary files for the program to run, into a folder specified by the user, which will then be referred to by the program as the source folder. 
@@ -636,34 +638,10 @@ class InstallGUI:
 
 
                 The directory doesn't show on the entry box so I need to fix that (I'll take screenshots later).
-        \subsubsection{Opener}
-                This code isnt finished yet.
+
+            \subsubsection{Opener}
+                    This code isnt finished yet.
 
 
-
-
-    %     \subsection{Annotated Listing of the Program(s)}
-    %     \subsection{Annotated "Design Views" showing details of application-generated forms, reports, queries, buttons, cross tabulations, etc.}
-    %     \subsection{Procedure and Variable List}
-    %     \subsection{Testing to inform development - Testing at each stage}
-    %     \subsection{Re-Testing}
-
-    % % Join with previous section 
-    % \section{Testing}
-    %     \subsection{Test Plan}
-    %     \subsection{Test Data}
-    %     \subsection{Areas to Test}
-    %     \subsection{Tables}
-    %     \subsection{Justification of Data Selection}
-    %     \subsection{Evidence of Testing}
-    %     \subsection{Program Listing}
-    
-    % \section{Evaluation}
-    %     \subsection{Comparison of Performance of your System against Success Criteria}
-    %     \subsection{Analysis of User Feedback}
-    %     \subsection{Evaluation of Usability Features}
-    %     \subsection{Maintenance Issues and Limitations of the Product}
-    %     \subsection{Improvements and Possible Extensions}
-        
 
 \end{document}
