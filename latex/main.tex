@@ -32,7 +32,8 @@
 % SC - Sourcecode snippet
 % TBL - Table
 
-
+% for labels use this convention: 
+% {sensible_identifier}_{type}{numbering(if necessary)}_{cycle/section_name}
 
 \begin{document}
     \pagestyle{fancy}
@@ -95,7 +96,6 @@
             \subsubsection{Analytic Methods}
                 Analytic methods are very common as they require little cost or set-up and their effectiveness only depends on how well you understand the physics that you are doing. Since my stakeholders enjoy doing physics and are also quite good at it, they are all well versed in spending time going through calculations in order to achieve a set of mathematical equations that describe the system being modelled. 
 
-
                 % Daniel's Working FIG
                 \begin{figure}[!ht]
                     \begin{center}
@@ -105,7 +105,7 @@
                     \label{fig:daniel_working}
                 \end{figure}
 
-                
+
                 \pagebreak
 
 
@@ -127,7 +127,6 @@
                     \item Scope of problems that can be approached is limited. Not all systems can be solved using analytic methods and sometimes numerical methods are necessary, depending on how simple or complex you choose to make your model.
                     \item Some problems are much harder to approach as the effectiveness of analytic methods is dependent on your ability to manipulate and work with equations, as well as general mathematical ability. Human's also make mistakes and are far less consistent than a computer at doing the same or similar calculations repeatedly.
                 \end{itemize}
-
 
             \subsubsection{Desmos}
 
@@ -165,7 +164,9 @@
                 \end{itemize}
 
 
+
             % do another one later
+            
             \subsubsection{Online Circuit Builder}
                 I searched for some online JavaScript based circuit builders and I found this \href{https://www.falstad.com/circuit/}{Circuit Simulator Applet}. Although none of my clients have used this before, and I don't personally have a lot of experience with it, I can see that there are a lot of good features in this solution. The use of circuit symbols instead of renders of components allows students to familiarise themselves with them, as when actually drawing out circuit diagrams that's what they would use. Furthermore, as circuits get more and more complex and components get smaller, it may not even be practical or useful to look at a real life version of the circuit. 
 
@@ -176,7 +177,7 @@
                         \includegraphics[width=.5\textwidth]{figures/circuit_builder.png}
                     \end{center}
                     \caption{A simple circuit made on the circuit builder}
-                    \label{fig:builderss}
+                    \label{fig:circuit_builder_ss1}
                 \end{figure}
 
 
@@ -186,7 +187,7 @@
                         \includegraphics[width=.5\textwidth]{figures/circuit_graphs.png}
                     \end{center}
                     \caption{Graphs of attributes changing with respect to time and each other}
-                    \label{fig:circuit_builder_existing_sol}
+                    \label{fig:circuit_builder_ss2}
                 \end{figure}
 
 
@@ -196,7 +197,7 @@
                     \item Charge flow indicators in the form of yellow circles that represent electrons help visualise the flow of charge around a circuit for students. 
                     \item Including colour indicators do distinguish between places with negative and positive potential difference adds another level of interaction for the user, and this is something that could be quite hard to visualise and notice even with a real life version of the circuit available.
                     \item The simulation can be freely paused and unpaused in order to be able to see how a circuit appears at a specific point in time, which would be difficult with a real life version. 
-                    \item The ability to plot real time graphs akin to an oscilloscope is as useful as having a real life oscilloscope, which is great when used to see how attributes change with respect to time and each other. See \autoref{fig:circuit_builder_existing_sol}.
+                    \item The ability to plot real time graphs akin to an oscilloscope is as useful as having a real life oscilloscope, which is great when used to see how attributes change with respect to time and each other. See \autoref{fig:circuit_builder_ss2}.
                     \item The ability to export and import circuit arrangements is very useful as it allows for easier collaboration.
                 \end{itemize}
 
@@ -208,13 +209,12 @@
                 \end{itemize}
 
 
-        % \subsection{Proposed Solution}
-        
         \pagebreak
+        
         \subsection{Success Criteria of the Proposed System}
             This is a table of what the essential criteria for the solution are.
 
-            % Essecital Success Criteria TBL
+            % Essential Success Criteria TBL
             \begin{table}[!ht]
                 \begin{center}
                 \footnotesize
@@ -231,7 +231,11 @@
                 A8 & Nameable components, for easier management. & If working on more complicated circuits, a way to be able to label components and then search for them would be very beneficial, rather than "component 1", "component 2", and so on, especially for my client Hugo who often works on complex electrical systems. & 1.4 \\ \hline
                 \end{tabular}
                 \end{center}
+                \caption{Essential success criteria}
+                \label{tbl:essential_succ_crit}
             \end{table}
+
+
             \pagebreak
 
             Here is a table of optional criteria for the solution, that would still benefit the users but aren't essential for it to be deemed functional and are mostly quality of life features.
@@ -250,6 +254,8 @@
                 B5 & Adding keyboard shortcuts & Keyboard shortcuts would heavily streamline the use of a software like this, especially as the user gets more and more accustomed to them over time, as is common in many scientific programs. \\ \hline
                 \end{tabular}
                 \end{center}
+                \caption{Optional success criteria}
+                \label{tbl:optional_succ_crit}
             \end{table}
         
         
@@ -364,16 +370,17 @@
                             [Compressing\\and exporting]
                         ]
                     ]
-                \end{forest}
+            \end{forest}
         \end{center}
 
         \subsection{Brief Outline}
             In this cycle I will create the programming for some interactive UI that will allow the user to initialise or open a project as well as export the project so that it would be able to be accessed by other people.
 
 
-            % Success Criteria C1 TBL
             \subsubsection{Success Criteria}
                 These are the success criteria that are going to be used. ID beginning with "X" indicates that it was specifically added for this cycle.
+
+                % Success Criteria C1 TBL
                 \begin{table}[!ht]
                     \begin{center}
                     \begin{tabular}{m{16pt}m{0.8\textwidth}}
@@ -398,16 +405,16 @@
 
                 % Data structures C1 TBL
                 \begin{table}[!ht]
-                \begin{center}
-                    \begin{tabular}{llm{0.5\textwidth}}
-                    Name & Data Type/Structure & Data \\ \hline
-                    \verb|project_name| & String (var.) & Name of the project (will be used in displays and for organisational purposes) \\
-                    \verb|working_dir| & String (var.) & The working directory of the project \\
-                    \verb|source| & String (const.) & Where all the relevant files are initially stored \\
-                    \verb|location| & String (var.) & Destination folder for exporting, inputted by user \\
-                    \verb|permissions| & Bool (var.) & True if and only if the instance of the program has been run with administrator privileges. This limits the directories available.
-                    \end{tabular}
-                \end{center}
+                    \begin{center}
+                        \begin{tabular}{llm{0.5\textwidth}}
+                        Name & Data Type/Structure & Data \\ \hline
+                        \verb|project_name| & String (var.) & Name of the project (will be used in displays and for organisational purposes) \\
+                        \verb|working_dir| & String (var.) & The working directory of the project \\
+                        \verb|source| & String (const.) & Where all the relevant files are initially stored \\
+                        \verb|location| & String (var.) & Destination folder for exporting, inputted by user \\
+                        \verb|permissions| & Bool (var.) & True if and only if the instance of the program has been run with administrator privileges. This limits the directories available.
+                        \end{tabular}
+                    \end{center}
                 \caption{Data structures that will be used in cycle 1}
                 \label{tbl:data_structs_c1}
                 \end{table}
@@ -431,7 +438,7 @@
                     \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
                 \end{center}
                 \caption{Flowchart for exporting a project}
-                \label{fig:export_flow}
+                \label{fig:exporting_fc_c1}
                 \end{figure}
                 
 
@@ -449,7 +456,7 @@
     endprocedure
                     \end{minted}
                     \caption{Pseudocode to copy initial project files to a folder}
-                    \label{pc:copy_to_folder}
+                    \label{pc:copy_to_folder_ps_c1}
                 \end{figure}
 
 
@@ -467,7 +474,7 @@
         download_from_github(url, target)
                 \end{minted}
                 \caption{Pseudocode to install the main program}
-                \label{pc:install_sw}
+                \label{pc:install_software_ps_c1}
                 \end{figure}
 
 
@@ -493,13 +500,13 @@
                     %    \includegraphics[width=.25\textwidth]{figures/install_gui_class_diagram.png}
                    \end{center}
                    \caption{Class diagram for the InstallGUI class}
-                   \label{fig:install_gui_class_diag}
+                   \label{fig:installgui_class_diagram_c1}
                 \end{figure}
 
 
                 The buttons on the GUI element are attributes in the class which means I am able to access and edit their attributes within methods of the class. 
 
-                In \autoref{snip:install_gui_init}, the position, size, and text of the individual UI elements have been initialised as well as some of the attributes of the main window.
+                In \autoref{snip:install_gui_init_sc_c1}, the position, size, and text of the individual UI elements have been initialised as well as some of the attributes of the main window.
 
 
                 % Cancel and Browse buttons SC
@@ -519,11 +526,11 @@
         self.btn_install["state"] = "active"
                 \end{minted}
                 \caption{Code for cancel and browse}
-                \label{snip:buttons_browse_cancel_code}
+                \label{snip:cancel_and_browse_btns_sc_c1}
                 \end{figure}
 
 
-                In \autoref{snip:buttons_browse_cancel_code}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software.
+                In \autoref{snip:cancel_and_browse_btns_sc_c1}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software.
 
 
                 % Install btn SC
@@ -562,14 +569,14 @@
         self.btn_install["state"] = "active"
                 \end{minted}
                 \caption{Code for install button}
-                \label{snip:btn_install_code}
+                \label{snip:install_btn_sc_c1}
                 \end{figure}
 
 
                 This button will disable all the buttons while the software is installing. I think I would like to add a progress indicator in the future.
 
 
-                % InstallGUI class SC
+                % InstallGUI class init SC
                 \begin{figure}[!ht]
                 \begin{minted}[linenos]{python}
 class InstallGUI:
@@ -613,8 +620,8 @@ class InstallGUI:
         
         self.filepath = None
                 \end{minted}
-                \caption{init method for the installer}
-                \label{snip:install_gui_init}
+                \caption{Initialising method for the InstallGUI class}
+                \label{snip:install_gui_init_sc_c1}
                 \end{figure}
 
 
@@ -624,7 +631,7 @@ class InstallGUI:
                     %    \includegraphics[width=.5\textwidth]{figures/installer1.png}
                    \end{center}
                    \caption{Installer in action}
-                   \label{fig:installer_gui}
+                   \label{fig:installer_gui_ss1_c1}
                 \end{figure}
 
 
