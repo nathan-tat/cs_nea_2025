@@ -7,6 +7,9 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import filedialog
 
+# if im testing stuff 
+testing = True
+
 
 """ 
 The following code downloads a folder from GitHub
@@ -106,14 +109,14 @@ class InstallGUI:
         self.btn_browse.place(x=200,y=60,width=79,height=30)
         self.btn_browse["command"] = self.btn_browse_command
 
-        self.ent_dir = tk.Entry(root)
-        self.ent_dir["justify"] = "left"
-        self.ent_dir["text"] = "C:\\Program Files\\"
-        self.ent_dir.place(x=20,y=60,width=183,height=30)
+        self.lbl_dir = tk.Label(root)
+        self.lbl_dir["justify"] = "left"
+        self.lbl_dir["text"] = "Install Directory" # initial text
+        self.lbl_dir.place(x=20,y=60,width=183,height=30)
 
         self.lbl_welcome = tk.Label(root)
         self.lbl_welcome["justify"] = "center"
-        self.lbl_welcome["text"] = "this is the installer"
+        self.lbl_welcome["text"] = "This is the installer."
         self.lbl_welcome.place(x=20,y=20,width=170,height=30)
         
         self.filepath = None
@@ -127,9 +130,9 @@ class InstallGUI:
 
     def btn_install_command(self) -> None:
         """ Installs the software to the given directory. Probably very not secure. """
-        # set it equal to eachother <3
-        if self.filepath != self.ent_dir["text"]:
-            self.filepath = self.ent_dir["text"]
+        # set it equal to eachother 
+        if self.filepath != self.lbl_dir["text"]:
+            self.filepath = self.lbl_dir["text"]
             
         # if not a real directory
         if not os.path.isdir(self.filepath):
@@ -143,15 +146,20 @@ class InstallGUI:
         
         self.lbl_welcome["text"] = "Please wait... Downloading..."
         
-        
-        # this probably works
-        try:
-            install_requirements(REQ)
-            download_from_github(self.filepath)
-        except:
-            self.lbl_welcome["text"] = "something bad happened"
+        if not testing:
+            # this probably works
+            try:
+                install_requirements(REQ)
+                download_from_github(self.filepath)
+                
+            except Exception as e:
+                # if something goes wrong then output the exception that was raised
+                self.lbl_welcome["text"] = f"something bad happened: {e}"
+            else:
+                # if everything goes fine
+                self.lbl_welcome["text"] = f"Installed to {self.lbl_dir['text']}"
         else:
-            self.lbl_welcome["text"] = "Thank you. Downloaded. "
+            self.lbl_welcome["test"] = f"Installed to {self.lbl_dir['text']}"
         
         self.btn_browse["state"] = "active"
         self.btn_cancel["state"] = "active"
@@ -161,8 +169,8 @@ class InstallGUI:
     def btn_browse_command(self) -> None:
         """ Allows the user to select a directory to install the software into. Check permissions. """
         self.filepath = filedialog.askdirectory()
-        self.lbl_welcome["text"] = self.filepath
-        self.ent_dir["text"] = self.filepath
+        # self.lbl_welcome["text"] = self.filepath
+        self.lbl_dir["text"] = self.filepath
         self.btn_install["state"] = "active"
 
 
