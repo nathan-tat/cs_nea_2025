@@ -170,7 +170,6 @@
                 \end{itemize}
 
 
-
             % do another one later
             
             \subsubsection{Online Circuit Builder}
@@ -467,16 +466,16 @@
 
                 % Install main program PC
                 \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+                    \begin{minted}[linenos]{python}
     url = https://github.com/nathan-tat/cs_nea_2025/tree/main/code/software
     procedure install_software(target)
         if target.permissions == False:
             raise PermissionError
         
         download_from_github(url, target)
-                \end{minted}
-                \caption{Pseudocode to install the main program}
-                \label{pc:install_software_ps_c1}
+                    \end{minted}
+                    \caption{Pseudocode to install the main program}
+                    \label{pc:install_software_ps_c1}
                 \end{figure}
 
 
@@ -487,7 +486,7 @@
 
 
         \subsection{Implementation}
-            There are two files in this cycle, one for the installer and one for the opener of file projects and I will tackle them seperately.
+            There are two files in this cycle, one for the installer and one for the opener of file projects and I will tackle them separately.
 
             \subsubsection{Installer}
                 The installer will copy files from a specified repository on GitHub, which will store all the necessary files for the program to run, into a folder specified by the user, which will then be referred to by the program as the source folder. 
@@ -496,7 +495,7 @@
                 % InstallGUI Class Diagram FIG
                 \begin{figure}[!ht]
                    \begin{center}
-                    %    \includegraphics[width=.25\textwidth]{figures/install_gui_class_diagram.png}
+                       \includegraphics[width=.25\textwidth]{figures/install_gui_class_diagram.png}
                    \end{center}
                    \caption{Class diagram for the InstallGUI class}
                    \label{fig:installgui_class_diagram_c1}
@@ -505,12 +504,12 @@
 
                 The buttons on the GUI element are attributes in the class which means I am able to access and edit their attributes within methods of the class. 
 
-                In \autoref{snip:install_gui_init_sc_c1}, the position, size, and text of the individual UI elements have been initialised as well as some of the attributes of the main window.
+                In \autoref{sc:install_gui_init_sc_c1}, the position, size, and text of the individual UI elements have been initialised as well as some of the attributes of the main window.
 
 
                 % Cancel and Browse buttons SC
                 \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+                    \begin{minted}[linenos]{python}
     def btn_cancel_command(self) -> None:
         """ Closes the UI window safely """
         print("Exiting...")
@@ -523,18 +522,18 @@
         self.lbl_welcome["text"] = self.filepath
         self.ent_dir["text"] = self.filepath
         self.btn_install["state"] = "active"
-                \end{minted}
-                \caption{Code for cancel and browse}
-                \label{snip:cancel_and_browse_btns_sc_c1}
+                    \end{minted}
+                    \caption{Code for cancel and browse}
+                    \label{sc:cancel_and_browse_btns_sc_c1}
                 \end{figure}
 
 
-                In \autoref{snip:cancel_and_browse_btns_sc_c1}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software.
+                In \autoref{sc:cancel_and_browse_btns_sc_c1}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software.
 
 
                 % Install btn SC
                 \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+                    \begin{minted}[linenos]{python}
     def btn_install_command(self) -> None:
         """ Installs the software to the given directory. Probably very not secure. """
         # set it equal to eachother <3
@@ -566,9 +565,9 @@
         self.btn_browse["state"] = "active"
         self.btn_cancel["state"] = "active"
         self.btn_install["state"] = "active"
-                \end{minted}
-                \caption{Code for install button}
-                \label{snip:install_btn_sc_c1}
+                    \end{minted}
+                    \caption{Code for install button}
+                    \label{sc:install_btn_sc_c1}
                 \end{figure}
 
 
@@ -577,7 +576,7 @@
 
                 % InstallGUI class init SC
                 \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+                    \begin{minted}[linenos]{python}
 class InstallGUI:
     def __init__(self, root):
         #setting title
@@ -618,26 +617,44 @@ class InstallGUI:
         self.lbl_welcome.place(x=20,y=20,width=170,height=30)
         
         self.filepath = None
-                \end{minted}
-                \caption{Initialising method for the InstallGUI class}
-                \label{snip:install_gui_init_sc_c1}
+                    \end{minted}
+                    \caption{Initialising method for the InstallGUI class}
+                    \label{sc:install_gui_init_sc_c1}
                 \end{figure}
 
 
+                % fig:installer_gui_ss1_c1
                 % Installer GUI evidence FIG
                 \begin{figure}[!ht]
                    \begin{center}
-                    %    \includegraphics[width=.5\textwidth]{figures/installer1.png}
+                       \includegraphics[width=.5\textwidth]{figures/installer1.png}
                    \end{center}
                    \caption{Installer in action}
                    \label{fig:installer_gui_ss1_c1}
                 \end{figure}
 
 
-                The directory doesn't show on the entry box so I need to fix that (I'll take screenshots later).
+                I decided that the entry box in the installer was redundant thanks to the browse button I introduced which already managed the validation aspect for me, as you can only select an existing directory on your computer. Because of this, I decided to just make it an uneditable label object that will display the directory chosen. 
+
+
+                % installgui_ent_to_lbl_c1
+                % Entry to label sc snippet pf
+                \begin{figure}[!ht]
+                   \begin{minted}[linenos]{python}
+        self.lbl_dir = tk.Label(root)
+        self.lbl_dir["justify"] = "left"
+        self.lbl_dir["text"] = "Install Directory" # initial text
+        self.lbl_dir.place(x=20,y=60,width=183,height=30)
+                   \end{minted}
+                   \caption{Entry that was changed to a label}
+                   \label{sc:installgui_ent_to_lbl_c1}
+                \end{figure}
+
+
+                In the function tied to the "Install" button, see \autoref{sc:install_btn_sc_c1}, there are two functions called, \verb|install_requirements| and \verb|download_from_github|. The former of these 
 
             \subsubsection{Opener}
-                    This code isnt finished yet.
+                    This code isn't finished yet.
 
 
 
