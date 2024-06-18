@@ -47,8 +47,7 @@ REQ: str = "https://raw.githubusercontent.com/nathan-tat/cs_nea_2025/main/requir
 REPO_NAME: str = "nathan-tat/cs_nea_2025"
 # directory from which the software will be installed from 
 SW_DIR: str = "code/software"
-# default install directory (no linux)
-DEF_DIR: str = r"C:\Program Files"
+
 
 def is_admin() -> bool:
     """
