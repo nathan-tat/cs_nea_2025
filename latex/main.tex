@@ -57,8 +57,8 @@
             \includegraphics*[width=0.4\textwidth]{figures/igsLogo.jpg} \\
             \Large
             Invicta Grammar School \\
-            Centre Number: \\
-            Candidate Number: 
+            Centre Number: 61721 \\
+            Candidate Number: 8324
         \end{center}
     \end{titlepage}
 
@@ -435,11 +435,11 @@
 
                 % Exporting flow chart FIG
                 \begin{figure}[!ht]
-                \begin{center}
-                    \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
-                \end{center}
-                \caption{Flowchart for exporting a project}
-                \label{fig:exporting_fc_c1}
+                    \begin{center}
+                        \includegraphics[width=.2\textwidth]{figures/algorithms/c1_export.png}
+                    \end{center}
+                    \caption{Flowchart for exporting a project}
+                    \label{fig:exporting_fc_c1}
                 \end{figure}
                 
 
@@ -495,10 +495,10 @@
                 % InstallGUI Class Diagram FIG
                 \begin{figure}[!ht]
                    \begin{center}
-                       \includegraphics[width=.25\textwidth]{figures/install_gui_class_diagram.png}
+                    %    \includegraphics[width=.25\textwidth]{figures/install_gui_class_diagram.png}
                    \end{center}
                    \caption{Class diagram for the InstallGUI class}
-                   \label{fig:installgui_class_diagram_c1}
+                   \label{fig:install_gui_class_diagram}
                 \end{figure}
 
 
@@ -526,9 +526,6 @@
                     \caption{Code for cancel and browse}
                     \label{sc:cancel_and_browse_btns_sc_c1}
                 \end{figure}
-
-
-                In \autoref{sc:cancel_and_browse_btns_sc_c1}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software.
 
 
                 % Install btn SC
@@ -571,7 +568,7 @@
                 \end{figure}
 
 
-                This button will disable all the buttons while the software is installing. I think I would like to add a progress indicator in the future.
+                In \autoref{sc:cancel_and_browse_btns_sc_c1}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software which will also disable all the buttons while the software is installing. I considered some kind of progress indicator but found it too difficult.
 
 
                 % InstallGUI class init SC
@@ -627,14 +624,14 @@ class InstallGUI:
                 % Installer GUI evidence FIG
                 \begin{figure}[!ht]
                    \begin{center}
-                       \includegraphics[width=.5\textwidth]{figures/installer1.png}
+                    %    \includegraphics[width=.5\textwidth]{figures/installer1.png}
                    \end{center}
                    \caption{Installer in action}
                    \label{fig:installer_gui_ss1_c1}
                 \end{figure}
 
 
-                I decided that the entry box in the installer was redundant thanks to the browse button I introduced which already managed the validation aspect for me, as you can only select an existing directory on your computer. Because of this, I decided to just make it an uneditable label object that will display the directory chosen. 
+                I decided that the entry box in the installer was redundant thanks to the browse button I introduced which already managed the validation aspect for me, as you can only select an existing directory on your computer. Because of this, I decided to just make it an uneditable label object that will display the directory chosen. This also led me to abandon the idea of introducing a default install directory, as that was initially introduced due to how awkward it would've been to input a directory.
 
 
                 % installgui_ent_to_lbl_c1
@@ -651,7 +648,96 @@ class InstallGUI:
                 \end{figure}
 
 
-                In the function tied to the "Install" button, see \autoref{sc:install_btn_sc_c1}, there are two functions called, \verb|install_requirements| and \verb|download_from_github|. The former of these 
+                In the function tied to the "Install" button, see \autoref{sc:install_btn_sc_c1}, there are two functions called, \verb|install_requirements| and \verb|download_from_github|. The former of these makes sure that the user has all the necessary Python libraries installed on their device, so that the program can function properly. Originally, I was planning to completely make use of a Python library that would have allowed me to interact with the GitHub API, but I could not find one that would do that for me and work, instead I managed to find code that would do the same thing, which is shown in \autoref{sc:dl_from_github_stolen_c1}, courtesy of GitHub user \href{https://github.com/Nordgaren/Github-Folder-Downloader/tree/master}{Nordgaren}.
+
+                
+                % sc:dl_from_github_stolen_c1
+                % download from github stolen sc 
+                \begin{figure}[!ht]
+                   \begin{minted}[linenos]{python}
+def download(c: ContentFile, out: str):
+    r = requests.get(c.download_url)
+    output_path = f'{out}/{c.path}'
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, 'wb') as f:
+        print(f'downloading {c.path} to {out}')
+        f.write(r.content)
+
+
+def download_folder(repo: Repository, folder: str, out: str, recursive: bool):
+    contents = repo.get_contents(folder)
+    for c in contents:
+        if c.download_url is None:
+            if recursive:
+                download_folder(repo, c.path, out, recursive)
+            continue
+        download(c, out)
+                   \end{minted}
+                   \caption{Code to download from a specific GitHub folder.}
+                   \label{sc:dl_from_github_stolen_c1}
+                \end{figure}
+
+
+                The latter function in \autoref{sc:dl_from_github_stolen_c1} is finally called by another function \verb|download_from_github|, see \autoref{sc:final_dl_func_c1}, which passes all the arguments such as the name of the repository as well as the path to the folder into the previous functions. These values are stored as constants in the same file, so it is clear what they are and what they mean, see \autoref{sc:consts_install_c1}. The new function takes in one argument which will be the directory that the user has selected as their install directory. 
+
+                % sc:final_dl_func_c1
+                % the dowload_from_github function that called the functions in sc:dl_from_github_stolen_c1
+                \begin{figure}[!ht]
+                   \begin{minted}[linenos]{python}
+def download_from_github(destination: str) -> None:
+    """ Downloads a given GitHub folder from 'url' to the 'destination' directory """
+    g = Github()
+    repo = g.get_repo(REPO_NAME)
+    download_folder(repo, SW_DIR, destination, True)
+                   \end{minted}
+                   \caption{The final downloading function.}
+                   \label{sc:final_dl_func_c1}
+                \end{figure}
+
+                % sc:constants_install_c1
+                % constants defined for install file
+                \begin{figure}[!ht]
+                   \begin{minted}[linenos]{python}
+# the requirements.txt which has all the necessary pip libraries to run the program 
+REQ: str = "https://raw.githubusercontent.com/nathan-tat/cs_nea_2025/main/requirements.txt"
+# path to repository
+REPO_NAME: str = "nathan-tat/cs_nea_2025"
+# directory from which the software will be installed from 
+SW_DIR: str = "code/software"
+                   \end{minted}
+                   \caption{Constants defined with descriptions}
+                   \label{sc:consts_install_c1}
+                \end{figure}
+
+                As previously mentioned, I want to use a function in order to make sure that the relevent Python libraries are installed, which is shown in \autoref{sc:install_reqs_fail1_c1}. When this function is called in the program, see \autoref{sc:install_btn_sc_c1} line 22, the \verb|REQ| constant from is always passed as the argument, which links to the \verb|requirements.txt| file in the GitHub repository. However, this feature doesn't work as intended, see \autoref{fig:install_reqs_fail_pf_c1}, so it is commented out in the current version.
+
+                % sc:install_reqs_fail1_c1
+                % install_requirements function fail 1
+                \begin{figure}[!ht]
+                   \begin{minted}[linenos]{python}
+def install_requirements(url: str) -> None:
+    """ 
+    Installs the necessary python libraries from a 'requirements.txt' stored  
+    at 'url' using pip
+    """
+    # i dont think this actually works as of now
+    os.system(f"py -m pip install {url}")
+    # pass
+                   \end{minted}
+                   \caption{Function to install the required Python libraries}
+                   \label{sc:install_reqs_fail1_c1}
+                \end{figure}
+
+                % fig:install_reqs_fail_pf_c1
+                % cmd ss proof to show that it failed
+                \begin{figure}[!ht]
+                   \begin{center}
+                       \includegraphics[width=\textwidth]{figures/installer_req_fail1.png}
+                   \end{center}
+                   \caption{Failure of install requirements function}
+                   \label{fig:install_reqs_fail_pf_c1}
+                \end{figure}
+                
 
             \subsubsection{Opener}
                     This code isn't finished yet.
