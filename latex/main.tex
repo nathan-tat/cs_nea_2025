@@ -387,25 +387,50 @@
                 % Success Criteria C1 TBL
                 \begin{table}[!ht]
                     \begin{center}
-                    \begin{tabular}{m{16pt}m{0.8\textwidth}}
-                    ID & Feature \\ \hline
-                    B4 & Being able to export and import circuit arrangements. \\ 
-                    X1 & Only open directories that include all relevant files, raising an exception when this isn't met. \\ 
-                    X2 & Copy relevant files from the source directory in order to initialise a project. \\ 
-                    X3 & Allow user to specify directory for exporting. \\ 
-                    X4 & Compress exported files intuitively. \\ 
-                    \end{tabular}
-                \end{center}
-                \caption{Success criteria for cycle 1}
-                \label{tbl:succ_crit_c1}
+                        \begin{tabular}{m{16pt}m{0.8\textwidth}}
+                        ID & Feature \\ \hline
+                        B4 & Being able to export and import circuit arrangements. \\ 
+                        X1 & Only open directories that include all relevant files, raising an exception when this isn't met. \\ 
+                        X2 & Copy relevant files from the source directory in order to initialise a project. \\ 
+                        X3 & Allow user to specify directory for exporting. \\ 
+                        X4 & Compress exported files intuitively. \\ 
+                        \end{tabular}
+                    \end{center}
+                    \caption{Success criteria for cycle 1}
+                    \label{tbl:succ_crit_c1}
                 \end{table}
 
 
+                
         \subsection{Design}
 
             \subsubsection{User Interface}
                 Will insert annotated drawings later.
 
+                User interface (UI) windows will be implemented as classes that then have individual elements such as buttons, entries, and labels implemented as attributes of the class that can be edited as needed. Buttons will call methods in the class as their functions, allowing them to refer to other UI elements in the same window easily.
+
+                % fig:install_gui_class_diagram_c1
+                % InstallGUI Class Diagram FIG
+                \begin{figure}[!ht]
+                    \begin{center}
+                        \includegraphics[width=.25\textwidth]{figures/install_gui_class_diagram.png}
+                    \end{center}
+                    \caption{Class diagram for the InstallGUI class}
+                    \label{fig:install_gui_class_diagram_c1}
+                \end{figure}
+
+                % fig:installer_gui_design_c1
+                % design for the installer gui 
+                \begin{figure}[!ht]
+                   \begin{center}
+                    %    \includegraphics[width=.\textwidth]{}
+                   \end{center}
+                   \caption{UI Design (not yet real)}
+                   \label{fig:installer_gui_design_c1}
+                \end{figure}
+
+ 
+ 
             \subsubsection{Data Structures}
 
                 % Data structures C1 TBL
@@ -420,8 +445,8 @@
                         \verb|permissions| & Bool (var.) & True if and only if the instance of the program has been run with administrator privileges. This limits the directories available.
                         \end{tabular}
                     \end{center}
-                \caption{Data structures that will be used in cycle 1}
-                \label{tbl:data_structs_c1}
+                    \caption{Data structures that will be used in cycle 1}
+                    \label{tbl:data_structs_c1}
                 \end{table}
 
 
@@ -491,22 +516,109 @@
             \subsubsection{Installer}
                 The installer will copy files from a specified repository on GitHub, which will store all the necessary files for the program to run, into a folder specified by the user, which will then be referred to by the program as the source folder. 
 
-
-                % InstallGUI Class Diagram FIG
+                % sc:if_name_main_c1
+                % if name main for the installer.py 
                 \begin{figure}[!ht]
-                   \begin{center}
-                    %    \includegraphics[width=.25\textwidth]{figures/install_gui_class_diagram.png}
-                   \end{center}
-                   \caption{Class diagram for the InstallGUI class}
-                   \label{fig:install_gui_class_diagram}
+                   \begin{minted}[linenos]{python}
+if __name__ == "__main__":
+    if not is_admin():
+        raise Exception("You are not admin.")
+        
+    root = tk.Tk()
+    app = InstallGUI(root)
+    root.mainloop()
+                   \end{minted}
+                   \caption{The code that is being run at the beginning of the installer}
+                   \label{sc:if_name_main_c1}
+                \end{figure}
+
+                In \autoref{sc:if_name_main_c1}, there is code that is executed when the \verb|installer.py| file is run. This includes a check for whether or not the program is currently being run in administrator mode, shown in \autoref{sc:admin_checker}. This differs slightly from the design in \autoref{tbl:data_structs_c1}, where there was a variable defined to do the same thing. I found this implementation more readable and understandable, as using a function that returns a boolean value emphasises the fact that I want to check the permissions at a single moment in time. The code continues to start the UI so that the user can interact with the program. The code shown in \autoref{sc:admin_checker} was written by \href{https://stackoverflow.com/questions/130763/request-uac-elevation-from-within-a-python-script}{StackOverFlow user Martín De la Fuente}.
+
+
+                % sc:admin_checker
+                % is_admin check 
+                \begin{figure}[!ht]
+                   \begin{minted}[linenos]{python}
+def is_admin() -> bool:
+    """
+    Returns 'True' iff the current program is being 
+    run as administrator, else 'False'. 
+    Works on Windows 10 v.22H2 as of 2024-05-10
+    """
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+                   \end{minted}
+                   \caption{Check for if the program is being run as administrator}
+                   \label{sc:admin_checker}
                 \end{figure}
 
 
-                The buttons on the GUI element are attributes in the class which means I am able to access and edit their attributes within methods of the class. 
+                % sc:install_gui_init_sc_c1
+                % InstallGUI class init SC
+                \begin{figure}[!ht]
+                    \begin{minted}[linenos]{python}
+class InstallGUI:
+    def __init__(self, root):
+        #setting title
+        root.title("Installer")
+        #setting window size
+        w = 305
+        h = 160
+        sw = root.winfo_screenwidth()
+        sh = root.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (w, h, (sw - w) / 2, (sh - h) / 2)
+        root.geometry(alignstr)
+        root.resizable(width=False, height=False)
 
-                In \autoref{sc:install_gui_init_sc_c1}, the position, size, and text of the individual UI elements have been initialised as well as some of the attributes of the main window.
+        self.btn_cancel = tk.Button(root)
+        self.btn_cancel["text"] = "Cancel"
+        self.btn_cancel.place(x=20,y=110,width=70,height=25)
+        self.btn_cancel["command"] = self.btn_cancel_command
+
+        self.btn_install = tk.Button(root)
+        self.btn_install["text"] = "Install"
+        self.btn_install.place(x=210,y=110,width=70,height=25)
+        self.btn_install["command"] = self.btn_install_command
+        self.btn_install["state"] = "disabled"
+
+        self.btn_browse = tk.Button(root)
+        self.btn_browse["text"] = "Browse"
+        self.btn_browse.place(x=200,y=60,width=79,height=30)
+        self.btn_browse["command"] = self.btn_browse_command
+
+        self.lbl_dir = tk.Label(root)
+        self.lbl_dir["justify"] = "left"
+        self.lbl_dir["text"] = "Install Directory" # initial text
+        self.lbl_dir.place(x=20,y=60,width=183,height=30)
+
+        self.lbl_welcome = tk.Label(root)
+        self.lbl_welcome["justify"] = "center"
+        self.lbl_welcome["text"] = "This is the installer."
+        self.lbl_welcome.place(x=20,y=20,width=170,height=30)
+        
+        self.filepath = None
+                    \end{minted}
+                    \caption{Initialising method for the InstallGUI class}
+                    \label{sc:install_gui_init_sc_c1}
+                \end{figure}
+                
+
+                % fig:installer_gui_ss1_c1
+                % Installer GUI evidence FIG
+                \begin{figure}[!ht]
+                    \begin{center}
+                        \includegraphics[width=.5\textwidth]{figures/installer1.png}
+                    \end{center}
+                    \caption{Installer in action}
+                    \label{fig:installer_gui_ss1_c1}
+                \end{figure}
 
 
+                I decided that the entry box in the installer, shown in \autoref{fig:install_gui_class_diagram_c1} and \autoref{fig:installer_gui_design_c1}, was redundant thanks to the browse button I introduced while implementing, shown in \autoref{fig:installer_gui_ss1_c1}, which already manages the validation aspect for me, as you can only select an existing directory on your computer. Because of this, I decided to make what was an entry box an uneditable label object that will display the directory chosen. This also led me to also abandon the idea of introducing a default install directory, as that was initially introduced due to how awkward it would've been to input a directory.
+
+                % sc:cancel_and_browse_btns_sc_c1
                 % Cancel and Browse buttons SC
                 \begin{figure}[!ht]
                     \begin{minted}[linenos]{python}
@@ -528,6 +640,7 @@
                 \end{figure}
 
 
+                % sc:install_btn_sc_c1
                 % Install btn SC
                 \begin{figure}[!ht]
                     \begin{minted}[linenos]{python}
@@ -568,87 +681,10 @@
                 \end{figure}
 
 
-                In \autoref{sc:cancel_and_browse_btns_sc_c1}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software which will also disable all the buttons while the software is installing. I considered some kind of progress indicator but found it too difficult.
+                In \autoref{sc:cancel_and_browse_btns_sc_c1}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software which will also disable all the buttons while the software is installing. At this point I considered some kind of progress indicator but found it too difficult.
 
 
-                % InstallGUI class init SC
-                \begin{figure}[!ht]
-                    \begin{minted}[linenos]{python}
-class InstallGUI:
-    def __init__(self, root):
-        #setting title
-        root.title("Installer")
-        #setting window size
-        w = 305
-        h = 160
-        sw = root.winfo_screenwidth()
-        sh = root.winfo_screenheight()
-        alignstr = '%dx%d+%d+%d' % (w, h, (sw - w) / 2, (sh - h) / 2)
-        root.geometry(alignstr)
-        root.resizable(width=False, height=False)
-
-        self.btn_cancel = tk.Button(root)
-        self.btn_cancel["text"] = "Cancel"
-        self.btn_cancel.place(x=20,y=110,width=70,height=25)
-        self.btn_cancel["command"] = self.btn_cancel_command
-
-        self.btn_install = tk.Button(root)
-        self.btn_install["text"] = "Install"
-        self.btn_install.place(x=210,y=110,width=70,height=25)
-        self.btn_install["command"] = self.btn_install_command
-        self.btn_install["state"] = "disabled"
-
-        self.btn_browse = tk.Button(root)
-        self.btn_browse["text"] = "Browse"
-        self.btn_browse.place(x=200,y=60,width=79,height=30)
-        self.btn_browse["command"] = self.btn_browse_command
-
-        self.ent_dir = tk.Entry(root)
-        self.ent_dir["justify"] = "left"
-        self.ent_dir["text"] = "C:\\Program Files\\"
-        self.ent_dir.place(x=20,y=60,width=183,height=30)
-
-        self.lbl_welcome = tk.Label(root)
-        self.lbl_welcome["justify"] = "center"
-        self.lbl_welcome["text"] = "this is the installer"
-        self.lbl_welcome.place(x=20,y=20,width=170,height=30)
-        
-        self.filepath = None
-                    \end{minted}
-                    \caption{Initialising method for the InstallGUI class}
-                    \label{sc:install_gui_init_sc_c1}
-                \end{figure}
-
-
-                % fig:installer_gui_ss1_c1
-                % Installer GUI evidence FIG
-                \begin{figure}[!ht]
-                   \begin{center}
-                    %    \includegraphics[width=.5\textwidth]{figures/installer1.png}
-                   \end{center}
-                   \caption{Installer in action}
-                   \label{fig:installer_gui_ss1_c1}
-                \end{figure}
-
-
-                I decided that the entry box in the installer was redundant thanks to the browse button I introduced which already managed the validation aspect for me, as you can only select an existing directory on your computer. Because of this, I decided to just make it an uneditable label object that will display the directory chosen. This also led me to abandon the idea of introducing a default install directory, as that was initially introduced due to how awkward it would've been to input a directory.
-
-
-                % installgui_ent_to_lbl_c1
-                % Entry to label sc snippet pf
-                \begin{figure}[!ht]
-                   \begin{minted}[linenos]{python}
-        self.lbl_dir = tk.Label(root)
-        self.lbl_dir["justify"] = "left"
-        self.lbl_dir["text"] = "Install Directory" # initial text
-        self.lbl_dir.place(x=20,y=60,width=183,height=30)
-                   \end{minted}
-                   \caption{Entry that was changed to a label}
-                   \label{sc:installgui_ent_to_lbl_c1}
-                \end{figure}
-
-
-                In the function tied to the "Install" button, see \autoref{sc:install_btn_sc_c1}, there are two functions called, \verb|install_requirements| and \verb|download_from_github|. The former of these makes sure that the user has all the necessary Python libraries installed on their device, so that the program can function properly. Originally, I was planning to completely make use of a Python library that would have allowed me to interact with the GitHub API, but I could not find one that would do that for me and work, instead I managed to find code that would do the same thing, which is shown in \autoref{sc:dl_from_github_stolen_c1}, courtesy of GitHub user \href{https://github.com/Nordgaren/Github-Folder-Downloader/tree/master}{Nordgaren}.
+                In the function tied to the install button, see \autoref{sc:install_btn_sc_c1}, there are two functions called, \verb|install_requirements| and \verb|download_from_github|. The former of these makes sure that the user has all the necessary Python libraries installed on their device, so that the program can function properly. Originally, I was planning to completely make use of a Python library that would have allowed me to interact with the GitHub API, but I could not find one that would do that for me and work, instead I managed to find code that would do the same thing, which is shown in \autoref{sc:dl_from_github_stolen_c1}, courtesy of GitHub user \href{https://github.com/Nordgaren/Github-Folder-Downloader/tree/master}{Nordgaren}.
 
                 
                 % sc:dl_from_github_stolen_c1
@@ -709,7 +745,7 @@ SW_DIR: str = "code/software"
                    \label{sc:consts_install_c1}
                 \end{figure}
 
-                As previously mentioned, I want to use a function in order to make sure that the relevent Python libraries are installed, which is shown in \autoref{sc:install_reqs_fail1_c1}. When this function is called in the program, see \autoref{sc:install_btn_sc_c1} line 22, the \verb|REQ| constant from is always passed as the argument, which links to the \verb|requirements.txt| file in the GitHub repository. However, this feature doesn't work as intended, see \autoref{fig:install_reqs_fail_pf_c1}, so it is commented out in the current version.
+                As previously mentioned, I want to use a function in order to make sure that the relevant Python libraries are installed, which is shown in \autoref{sc:install_reqs_fail1_c1}. When this function is called in the program, see \autoref{sc:install_btn_sc_c1} line 22, the \verb|REQ| constant from is always passed as the argument, which links to the \verb|requirements.txt| file in the GitHub repository. However, this feature doesn't work as intended, see \autoref{fig:install_reqs_fail_pf_c1}, so it is commented out in the current version.
 
                 % sc:install_reqs_fail1_c1
                 % install_requirements function fail 1
@@ -740,7 +776,7 @@ def install_requirements(url: str) -> None:
                 
 
             \subsubsection{Opener}
-                    This code isn't finished yet.
+                This code isn't finished yet.
 
 
 
