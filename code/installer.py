@@ -49,11 +49,12 @@ REPO_NAME: str = "nathan-tat/cs_nea_2025"
 SW_DIR: str = "code/software"
 
 
+# thank you stackoverflow
+# https://stackoverflow.com/questions/130763/request-uac-elevation-from-within-a-python-script
 def is_admin() -> bool:
     """
     Returns 'True' iff the current program is being run as administrator, else 'False'. 
-    \nWorks on Windows 10 v.22H2 as of 2024-05-10
-    \nhttps://stackoverflow.com/questions/130763/request-uac-elevation-from-within-a-python-script
+    Works on Windows 10 v.22H2 as of 2024-05-10
     """
     try:
         return ctypes.windll.shell32.IsUserAnAdmin()
@@ -174,7 +175,7 @@ class InstallGUI:
 
 
 if __name__ == "__main__":
-    # if not is_admin():
+    if not is_admin():
     #     # brings up UAC pop-up
     #     ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
         
@@ -182,6 +183,7 @@ if __name__ == "__main__":
     #     if not is_admin():
     #         # awkwarddd this doesnt work !!
     #         raise PermissionError("Program is not being run as Administrator")
+        raise Exception("You are not admin.")
         
     root = tk.Tk()
     app = InstallGUI(root)
