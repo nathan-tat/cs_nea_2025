@@ -405,32 +405,79 @@
         \subsection{Design}
 
             \subsubsection{User Interface}
-                Will insert annotated drawings later.
-
                 User interface (UI) windows will be implemented as classes that then have individual elements such as buttons, entries, and labels implemented as attributes of the class that can be edited as needed. Buttons will call methods in the class as their functions, allowing them to refer to other UI elements in the same window easily.
 
                 % fig:install_gui_class_diagram_c1
                 % InstallGUI Class Diagram FIG
                 \begin{figure}[!ht]
                     \begin{center}
-                        \includegraphics[width=.25\textwidth]{figures/c1/install_gui_class_diagram.png}
+                        \includegraphics[width=.25\textwidth]{figures/c1/design/install_gui_class_diagram.png}
                     \end{center}
                     \caption{Class diagram for the InstallGUI class}
                     \label{fig:install_gui_class_diagram_c1}
                 \end{figure}
 
+                In \autoref{fig:installer_gui_design_c1}, I have made a design for the graphical user interface of the installer part of this cycle. The user will be able to enter a directory on their computer in the white entry box, and then press the install button which will then validate this input as well as download the files to the specified folder. The cancel button will quit the installer and no further processing will occur.
+
                 % fig:installer_gui_design_c1
                 % design for the installer gui 
                 \begin{figure}[!ht]
                    \begin{center}
-                       \includegraphics[width=.5\textwidth]{figures/c1/installer_ui_design_mock.png}
+                       \includegraphics[width=.5\textwidth]{figures/c1/design/installer_ui_design_mock.png}
                    \end{center}
                    \caption{UI Design}
                    \label{fig:installer_gui_design_c1}
                 \end{figure}
 
- 
- 
+                I chose the colours that I did for the button, as they were suggested to have high contrast with the black text on them, see \autoref{fig:high_contrast_ppt_pf_c1}. This aids accessibility, making it easier to see the text on each button. I believe that the text on each button also sufficiently describes their function, leaving no room for ambiguity, and the user can be confident in what each press will do. 
+
+                % fig:high_contrast_ppt_pf_c1
+                % Screenshot from ppt showing the "high-contrast only" toggle
+                \begin{figure}[!ht]
+                   \begin{center}
+                       \includegraphics[width=.5\textwidth]{figures/c1/design/high_contrast_ppt_pf.png}
+                   \end{center}
+                   \caption{High contrast colour suggestions by PowerPoint}
+                   \label{fig:high_contrast_ppt_pf_c1}
+                \end{figure}
+
+                I want to be able to communicate to the user if an error occurs, with a special case for if the user inputs an invalid directory. I used text coloured red, which has negative connotations, that was also marked as high contrast, as well as messages that told the user that the input was invalid, or a message saying that an unknown error occurred, see \autoref{fig:installer_ui_design_errors_c1}. I don't think that other errors will need to be treated specially, as any that occur would be with the downloading process and out of the user's control.
+
+                % fig:installer_ui_design_errors_c1
+                % Showing how errors will be handled by the UI
+                \begin{figure}[!ht]
+                    \begin{subfigure}{.5\textwidth}
+                        \begin{center}
+                            \includegraphics[scale=0.5]{figures/c1/design/installer_ui_design_error_1.png}
+                            \caption{Invalid directory error}
+                            \label{fig:installer_ui_design_directory_error}
+                        \end{center}
+                    \end{subfigure}%
+                    \begin{subfigure}{.5\textwidth}
+                        \begin{center}
+                            \includegraphics[scale=0.5]{figures/c1/design/installer_ui_design_unknown_error.png}
+                            \caption{Other unknown error}
+                            \label{fig:installer_ui_design_other_error}
+                        \end{center}
+                    \end{subfigure}%
+                    \caption{Design for communicating errors to the user}
+                    \label{fig:installer_ui_design_errors_c1}
+                \end{figure}
+
+                In the event of a successful installation, I would also like to notify the user. To do this I used the word "Success!" coloured in high contrast green, which is a colour with positive connotations, shown in \autoref{fig:install_ui_successful_design_c1}.
+
+                % fig:install_ui_successful_design_c1
+                % installation ui after a successful installation
+                \begin{figure}[!ht]
+                   \begin{center}
+                       \includegraphics[width=.5\textwidth]{figures/c1/design/installer_ui_success.png}
+                   \end{center}
+                   \caption{Message after successful installation}
+                   \label{fig:install_ui_successful_design_c1}
+                \end{figure}
+
+
+
             \subsubsection{Data Structures}
 
                 % Data structures C1 TBL
@@ -452,8 +499,6 @@
 
                 The user may not always have permissions to save into/export into the directory they have selected. When doing file management using for example the file explorer on Windows 10, the operating system will handle telling the user that they have invalid permissions. However, when attempting operations on files with invalid permissions through a programming language such as Python, the error will be raised in the program. Due to this I have included a \verb|permissions| variable that checks whether the program has permissions to write to a given directory to prevent this.
 
-                \pagebreak
-
             \subsubsection{Algorithms}
                 I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program.
 
@@ -461,7 +506,7 @@
                 % Exporting flow chart FIG
                 \begin{figure}[!ht]
                     \begin{center}
-                        \includegraphics[width=.2\textwidth]{figures/c1/exporting_fc.png}
+                        \includegraphics[width=.2\textwidth]{figures/c1/design/exporting_fc.png}
                     \end{center}
                     \caption{Flowchart for exporting a project}
                     \label{fig:exporting_fc_c1}
@@ -609,7 +654,7 @@ class InstallGUI:
                 % Installer GUI evidence FIG
                 \begin{figure}[!ht]
                     \begin{center}
-                        \includegraphics[width=.5\textwidth]{figures/c1/installer_gui_pf1.png}
+                        \includegraphics[width=.5\textwidth]{figures/c1/implement/installer_gui_pf1.png}
                     \end{center}
                     \caption{Installer in action}
                     \label{fig:installer_gui_ss1_c1}
@@ -768,7 +813,7 @@ def install_requirements(url: str) -> None:
                 % cmd ss proof to show that it failed
                 \begin{figure}[!ht]
                    \begin{center}
-                       \includegraphics[width=\textwidth]{figures/c1/installer_req_fail1.png}
+                       \includegraphics[width=\textwidth]{figures/c1/implement/installer_req_fail1.png}
                    \end{center}
                    \caption{Failure of install requirements function}
                    \label{fig:install_reqs_fail_pf_c1}
