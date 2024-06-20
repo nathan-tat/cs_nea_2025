@@ -5,3 +5,6 @@ Desmos
 astro-mechanics
 Invicta
 Kerbal
+InstallGUI
+Bool
+const

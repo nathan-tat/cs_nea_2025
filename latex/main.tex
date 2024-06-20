@@ -553,7 +553,7 @@
 
                 The installer will copy files from a GitHub repository, where all the files necessary for the program to run will be stored, into a folder specified by the user on the user's computer. This folder will then be referred to as \verb|source| (see \autoref{tbl:data_structs_c1}). This will hopefully be done through the use of an external library.
 
-            \subsubsection{Test Data}
+        \subsection{Testing}
                 Need to write up test data
 
 
@@ -579,7 +579,7 @@ if __name__ == "__main__":
                    \label{sc:if_name_main_c1}
                 \end{figure}
 
-                In \autoref{sc:if_name_main_c1}, there is code that is executed when the \verb|installer.py| file is run. This includes a check for whether or not the program is currently being run in administrator mode, shown in \autoref{sc:admin_checker}. This differs slightly from the design in \autoref{tbl:data_structs_c1}, where there was a variable defined to do the same thing. I found this implementation more readable and understandable, as using a function that returns a boolean value emphasises the fact that I want to check the permissions at a single moment in time. The code continues to start the UI so that the user can interact with the program. The code shown in \autoref{sc:admin_checker} was written by \href{https://stackoverflow.com/questions/130763/request-uac-elevation-from-within-a-python-script}{StackOverFlow user Martín De la Fuente}.
+                In \autoref{sc:if_name_main_c1}, there is code that is executed when the \verb|installer.py| file is run. This includes a check for whether the program is currently being run in administrator mode, shown in \autoref{sc:admin_checker}. This differs slightly from the design in \autoref{tbl:data_structs_c1}, where there was a variable defined to do the same thing. I found this implementation more readable and understandable, as using a function that returns a boolean value emphasises the fact that I want to check the permissions at a single moment in time. The code continues to start the UI so that the user can interact with the program. The code shown in \autoref{sc:admin_checker} was written by \href{https://stackoverflow.com/questions/130763/request-uac-elevation-from-within-a-python-script}{StackOverFlow user Martín De la Fuente}.
 
 
                 % sc:admin_checker
@@ -824,13 +824,6 @@ def install_requirements(url: str) -> None:
 
             \subsubsection{Opener}
                 This code isn't finished yet.
-
-        \newpage
-
-    \section{Appendix}
-
-        \listoffigures
-        \listoftables
 
 
 \end{document}
