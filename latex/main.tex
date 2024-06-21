@@ -18,7 +18,7 @@
 \useunder{\uline}{\ul}{}
 
 \definecolor{LightGray}{gray}{0.9}
-% \textwidth = 415.36792 pt
+% \textwidth = 415.37 pt
 
 
 
@@ -104,11 +104,11 @@
             \subsubsection{Analytic Methods}
                 Analytic methods are very common as they require little cost or set-up and their effectiveness only depends on how well you understand the physics that you are doing. Since my stakeholders enjoy doing physics and are also quite good at it, they are all well versed in spending time going through calculations in order to achieve a set of mathematical equations that describe the system being modelled. 
 
+                % fig:daniel_working
                 % Daniel's Working FIG
                 \begin{figure}[!ht]
-                    \begin{center}
-                        \includegraphics[width=0.25\textwidth]{figures/analysis/daniel_working.jpeg}
-                    \end{center}
+                    \centering
+                    \includegraphics[width=0.25\textwidth]{figures/analysis/daniel_working.jpeg}
                     \caption{A sample of Daniel's working out}
                     \label{fig:daniel_working}
                 \end{figure}
@@ -136,11 +136,11 @@
 
             \subsubsection{Desmos}
 
+                % fig:desmos
                 % Desmos FIG
                 \begin{figure}[!ht]
-                    \begin{center}
-                        \includegraphics[width=.5\textwidth]{figures/analysis/desmos.png}
-                    \end{center}
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/analysis/desmos.png}
                     \caption{Desmos graphing software}
                     \label{fig:desmos}
                 \end{figure}
@@ -175,22 +175,21 @@
             \subsubsection{Online Circuit Builder}
                 I searched for some online JavaScript based circuit builders and I found this \href{https://www.falstad.com/circuit/}{Circuit Simulator Applet}. Although none of my clients have used this before, and I don't personally have a lot of experience with it, I can see that there are a lot of good features in this solution. The use of circuit symbols instead of renders of components allows students to familiarise themselves with them, as when actually drawing out circuit diagrams that's what they would use. Furthermore, as circuits get more and more complex and components get smaller, it may not even be practical or useful to look at a real life version of the circuit. 
 
-
+                % fig:circuit_builder_ss1
                 % Circuit Builder SS FIG
                 \begin{figure}[!ht]
-                    \begin{center}
-                        \includegraphics[width=.5\textwidth]{figures/analysis/circuit_builder_1.png}
-                    \end{center}
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/analysis/circuit_builder_1.png}
                     \caption{A simple circuit made on the circuit builder}
                     \label{fig:circuit_builder_ss1}
                 \end{figure}
 
 
-                % Circuit Builder SS2 FIG
+                % fig:circuit_builder_ss2
+                % Circuit Builder graphs screenshot
                 \begin{figure}[!ht]
-                    \begin{center}
-                        \includegraphics[width=.5\textwidth]{figures/analysis/circuit_builder_graphs.png}
-                    \end{center}
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/analysis/circuit_builder_graphs.png}
                     \caption{Graphs of attributes changing with respect to time and each other}
                     \label{fig:circuit_builder_ss2}
                 \end{figure}
@@ -221,21 +220,20 @@
 
             % Essential Success Criteria TBL
             \begin{table}[!ht]
-                \begin{center}
+                \centering
                 \footnotesize
                 \begin{tabular}{|l|m{187pt}|m{188pt}|l|}
-                \hline
-                ID & Feature & Justification & Ref. \\ \hline
-                A1 & Model electric circuits \textbf{accurately} & This is the main purpose of the system and is something many of the stakeholders said they struggled with. & 1.5 \\ \hline
-                A2 & Be able to handle \textbf{10 or fewer} components in a single circuit (excluding multimeters and wires). This requirement will be tested on my specific device, and possible on others if I get the access to them. & It is very uncommon for circuits studied at GCSE and A-Level to exceed 10 components, and as most of my clients study at that level I felt this number was appropriate. & 1.4 \\ \hline
-                A3 & Have support for \textbf{at least} the following components: cell, wire, filament bulb, resistor, multimeter, switch. Each should have respective attributed be customisable (e.g. resistivity for wire, E.M.F. for cell) & This comes from analysis of common circuits seen at GCSE and A-Level circuits, which most commonly make use of these components. & 1.4 \\ \hline
-                A4 & Have general attributes of the circuit displayed, such as total resistance, current, potential difference, and electro-motive forces & These are all useful attributes to know about a circuit when analysing it. &  \\ \hline
-                A5 & Have a "snapshot" button that would be able to log attributes of all components at the time of the button press. This data could then be exported to a CSV file or similar for independent analysis by the user. & Allowing the user to easily collect data on components would make it easier for them to perform analysis on circuits and practice core skills that are a part of doing a practical at A-Level or GCSE. Building up these skills could allow for working with more complex systems to be easier. & 1.4 \\ \hline
-                A6 & An intuitive way to add components to a circuit, most likely being able to drag components onto the main stage using the mouse. & This way of interaction seems like the most intuitive way of adding new components. This would allow the user to easily interact with the software and be able to spend more time on learning the content rather than learning how to use the software. & 1.4 \\ \hline
-                A7 & \textbf{Charge flow indicators} to visualised charge flow around a circuit. Toggle between electron flow, conventional current, and off. & A concept that comes up in A-Level quite frequently is the conservation of charge and the actual movement of electrons and their interactions with circuit components. This feature would make it very easy to see how the electrons actually move about in the circuit, and make ideas like Kirchoff's Laws much easier to understand. & 1.4 \\ \hline
-                A8 & Nameable components, for easier management. & If working on more complicated circuits, a way to be able to label components and then search for them would be very beneficial, rather than "component 1", "component 2", and so on, especially for my client Hugo who often works on complex electrical systems. & 1.4 \\ \hline
+                    \hline
+                    ID & Feature & Justification & Ref. \\ \hline
+                    A1 & Model electric circuits \textbf{accurately} & This is the main purpose of the system and is something many of the stakeholders said they struggled with. & 1.5 \\ \hline
+                    A2 & Be able to handle \textbf{10 or fewer} components in a single circuit (excluding multimeters and wires). This requirement will be tested on my specific device, and possible on others if I get the access to them. & It is very uncommon for circuits studied at GCSE and A-Level to exceed 10 components, and as most of my clients study at that level I felt this number was appropriate. & 1.4 \\ \hline
+                    A3 & Have support for \textbf{at least} the following components: cell, wire, filament bulb, resistor, multimeter, switch. Each should have respective attributed be customisable (e.g. resistivity for wire, E.M.F. for cell) & This comes from analysis of common circuits seen at GCSE and A-Level circuits, which most commonly make use of these components. & 1.4 \\ \hline
+                    A4 & Have general attributes of the circuit displayed, such as total resistance, current, potential difference, and electro-motive forces & These are all useful attributes to know about a circuit when analysing it. &  \\ \hline
+                    A5 & Have a "snapshot" button that would be able to log attributes of all components at the time of the button press. This data could then be exported to a CSV file or similar for independent analysis by the user. & Allowing the user to easily collect data on components would make it easier for them to perform analysis on circuits and practice core skills that are a part of doing a practical at A-Level or GCSE. Building up these skills could allow for working with more complex systems to be easier. & 1.4 \\ \hline
+                    A6 & An intuitive way to add components to a circuit, most likely being able to drag components onto the main stage using the mouse. & This way of interaction seems like the most intuitive way of adding new components. This would allow the user to easily interact with the software and be able to spend more time on learning the content rather than learning how to use the software. & 1.4 \\ \hline
+                    A7 & \textbf{Charge flow indicators} to visualised charge flow around a circuit. Toggle between electron flow, conventional current, and off. & A concept that comes up in A-Level quite frequently is the conservation of charge and the actual movement of electrons and their interactions with circuit components. This feature would make it very easy to see how the electrons actually move about in the circuit, and make ideas like Kirchoff's Laws much easier to understand. & 1.4 \\ \hline
+                    A8 & Nameable components, for easier management. & If working on more complicated circuits, a way to be able to label components and then search for them would be very beneficial, rather than "component 1", "component 2", and so on, especially for my client Hugo who often works on complex electrical systems. & 1.4 \\ \hline
                 \end{tabular}
-                \end{center}
                 \caption{Essential success criteria}
                 \label{tbl:essential_succ_crit}
             \end{table}
@@ -247,18 +245,17 @@
             
             % Optional Success Criteria TBL
             \begin{table}[!ht]
-                \begin{center}
+                \centering
                 \footnotesize
                 \begin{tabular}{|l|m{200pt}|m{200pt}|}
-                \hline
-                ID & Feature & Justification \\ \hline
-                B1 & Be able to handle multiple (two or more) separate circuits running simultaneously. & This feature could be useful when studying more complex electrical systems, however it is more of a way to measure the performance and efficiency of the program, and this is a good target to work towards. \\ \hline
-                B2 & Have the snapshot button be more customisable, with snapshots possible occurring automatically after a given time period. Could also have the snapshot button only take in certain attributes of certain components rather than all of them. & This feature would allow for easier monitoring of data as well as not having to take in all of the data, which could be a lot if the circuit is complex enough. \\ \hline
-                B3 & Include customisable themes and/or accessibility features such as accounting for different types of colour blindness. & In order to make my solution as accessible as possible to help as many students as possible, being able to change the colour scheme would be a very useful feature. \\ \hline
-                B4 & Being able to export and import circuit arrangements. & This would allow for easier collaboration, also between students and teachers, which would help as it would be much easier to communicate ideas. \\ \hline
-                B5 & Adding keyboard shortcuts & Keyboard shortcuts would heavily streamline the use of a software like this, especially as the user gets more and more accustomed to them over time, as is common in many scientific programs. \\ \hline
+                    \hline
+                    ID & Feature & Justification \\ \hline
+                    B1 & Be able to handle multiple (two or more) separate circuits running simultaneously. & This feature could be useful when studying more complex electrical systems, however it is more of a way to measure the performance and efficiency of the program, and this is a good target to work towards. \\ \hline
+                    B2 & Have the snapshot button be more customisable, with snapshots possible occurring automatically after a given time period. Could also have the snapshot button only take in certain attributes of certain components rather than all of them. & This feature would allow for easier monitoring of data as well as not having to take in all of the data, which could be a lot if the circuit is complex enough. \\ \hline
+                    B3 & Include customisable themes and/or accessibility features such as accounting for different types of colour blindness. & In order to make my solution as accessible as possible to help as many students as possible, being able to change the colour scheme would be a very useful feature. \\ \hline
+                    B4 & Being able to export and import circuit arrangements. & This would allow for easier collaboration, also between students and teachers, which would help as it would be much easier to communicate ideas. \\ \hline
+                    B5 & Adding keyboard shortcuts & Keyboard shortcuts would heavily streamline the use of a software like this, especially as the user gets more and more accustomed to them over time, as is common in many scientific programs. \\ \hline
                 \end{tabular}
-                \end{center}
                 \caption{Optional success criteria}
                 \label{tbl:optional_succ_crit}
             \end{table}
@@ -387,16 +384,15 @@
                 % tbl:succ_crit_c1
                 % Success Criteria C1 TBL
                 \begin{table}[!ht]
-                    \begin{center}
-                        \begin{tabular}{m{16pt}m{0.8\textwidth}}
+                    \centering
+                    \begin{tabular}{m{16pt}m{0.8\textwidth}}
                         ID & Feature \\ \hline
                         B4 & Being able to export and import circuit arrangements. \\ 
                         X1 & Only open directories that include all relevant files, raising an exception when this isn't met. \\ 
                         X2 & Copy relevant files from the source directory in order to initialise a project. \\ 
                         X3 & Allow user to specify directory for exporting. \\ 
                         X4 & Compress exported files intuitively. \\ 
-                        \end{tabular}
-                    \end{center}
+                    \end{tabular}
                     \caption{Success criteria for cycle 1}
                     \label{tbl:succ_crit_c1}
                 \end{table}
@@ -412,23 +408,21 @@
                 % fig:install_gui_class_diagram_c1
                 % InstallGUI Class Diagram FIG
                 \begin{figure}[!ht]
-                    \begin{center}
-                        \includegraphics[width=.25\textwidth]{figures/c1/design/install_gui_class_diagram.png}
-                    \end{center}
+                    \centering
+                    \includegraphics[width=.25\textwidth]{figures/c1/design/install_gui_class_diagram.png}
                     \caption{Class diagram for the InstallGUI class}
                     \label{fig:install_gui_class_diagram_c1}
                 \end{figure}
 
-                In \autoref{fig:installer_gui_design_c1}, I have made a design for the graphical user interface of the installer part of this cycle. The user will be able to enter a directory on their computer in the white entry box, and then press the install button which will then validate this input as well as download the files to the specified folder. The cancel button will quit the installer and no further processing will occur.
+                In \autoref{fig:installer_gui_design_c1}, I have made a design for the graphical user interface of the installer part of this cycle. The user will be able to enter a directory on their computer in the white entry box, and then press the "Install" button which will then validate this input as well as download the files to the specified folder. The cancel button will quit the installer and no further processing will occur.
 
                 % fig:installer_gui_design_c1
                 % design for the installer gui 
                 \begin{figure}[!ht]
-                   \begin{center}
-                       \includegraphics[width=.5\textwidth]{figures/c1/design/installer_ui_design_mock.png}
-                   \end{center}
-                   \caption{UI Design}
-                   \label{fig:installer_gui_design_c1}
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c1/design/installer_ui_design_mock.png}
+                    \caption{UI Design}
+                    \label{fig:installer_gui_design_c1}
                 \end{figure}
 
                 I chose the colours that I did for the button, as they were suggested to have high contrast with the black text on them, see \autoref{fig:high_contrast_ppt_pf_c1}. This aids accessibility, making it easier to see the text on each button. I believe that the text on each button also sufficiently describes their function, leaving no room for ambiguity, and the user can be confident in what each press will do. 
@@ -436,31 +430,30 @@
                 % fig:high_contrast_ppt_pf_c1
                 % Screenshot from ppt showing the "high-contrast only" toggle
                 \begin{figure}[!ht]
-                   \begin{center}
-                       \includegraphics[width=.5\textwidth]{figures/c1/design/high_contrast_ppt_pf.png}
-                   \end{center}
-                   \caption{High contrast colour suggestions by PowerPoint}
-                   \label{fig:high_contrast_ppt_pf_c1}
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c1/design/high_contrast_ppt_pf.png}
+                    \caption{High contrast colour suggestions by PowerPoint}
+                    \label{fig:high_contrast_ppt_pf_c1}
                 \end{figure}
 
                 I want to be able to communicate to the user if an error occurs, with a special case for if the user inputs an invalid directory. I used text coloured red, which has negative connotations, that was also marked as high contrast, as well as messages that told the user that the input was invalid, or a message saying that an unknown error occurred, see \autoref{fig:installer_ui_design_errors_c1}. I don't think that other errors will need to be treated specially, as any that occur would be with the downloading process and out of the user's control.
 
                 % fig:installer_ui_design_errors_c1
+                %       fig:installer_ui_design_directory_error
+                %       fig:installer_ui_design_other_error
                 % Showing how errors will be handled by the UI
                 \begin{figure}[!ht]
                     \begin{subfigure}{.5\textwidth}
-                        \begin{center}
-                            \includegraphics[scale=0.5]{figures/c1/design/installer_ui_design_error_1.png}
-                            \caption{Invalid directory error}
-                            \label{fig:installer_ui_design_directory_error}
-                        \end{center}
+                        \centering
+                        \includegraphics[scale=0.5]{figures/c1/design/installer_ui_design_error_1.png}
+                        \caption{Invalid directory error}
+                        \label{fig:installer_ui_design_directory_error}
                     \end{subfigure}%
                     \begin{subfigure}{.5\textwidth}
-                        \begin{center}
-                            \includegraphics[scale=0.5]{figures/c1/design/installer_ui_design_unknown_error.png}
-                            \caption{Other unknown error}
-                            \label{fig:installer_ui_design_other_error}
-                        \end{center}
+                        \centering
+                        \includegraphics[scale=0.5]{figures/c1/design/installer_ui_design_unknown_error.png}
+                        \caption{Other unknown error}
+                        \label{fig:installer_ui_design_other_error}
                     \end{subfigure}%
                     \caption{Design for communicating errors to the user}
                     \label{fig:installer_ui_design_errors_c1}
@@ -471,11 +464,10 @@
                 % fig:install_ui_successful_design_c1
                 % installation ui after a successful installation
                 \begin{figure}[!ht]
-                   \begin{center}
-                       \includegraphics[width=.5\textwidth]{figures/c1/design/installer_ui_success.png}
-                   \end{center}
-                   \caption{Message after successful installation}
-                   \label{fig:install_ui_successful_design_c1}
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c1/design/installer_ui_success.png}
+                    \caption{Message after successful installation}
+                    \label{fig:install_ui_successful_design_c1}
                 \end{figure}
 
 
@@ -485,7 +477,7 @@
                 % Data structures C1 TBL
                 \begin{table}[!ht]
                     \begin{center}
-                        \begin{tabular}{llm{0.5\textwidth}}
+                        \begin{tabular}{llm{.5\textwidth}}
                         Name & Data Type/Structure & Data \\ \hline
                         \verb|project_name| & String (var.) & Name of the project (will be used in displays and for organisational purposes) \\
                         \verb|working_dir| & String (var.) & The working directory of the project \\
@@ -554,7 +546,21 @@
                 The installer will copy files from a GitHub repository, where all the files necessary for the program to run will be stored, into a folder specified by the user on the user's computer. This folder will then be referred to as \verb|source| (see \autoref{tbl:data_structs_c1}). This will hopefully be done through the use of an external library.
 
         \subsection{Testing}
-                Need to write up test data
+
+
+                Tests will be done
+                \begin{table}[!ht]
+                    \begin{center}
+                    \begin{tabular}[t]{@{}lm{.2\textwidth}m{.2\textwidth}m{.2\textwidth}m{.2\textwidth}}
+                    TestID & Test Reason & Type & Test Data & Expected Outcome \\ \hline
+                    I1 & Testing input validation for directories. & Normal & C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}testI1, any existing directory. & \autoref{fig:install_ui_successful_design_c1} \\
+                    I2 & Testing input validation for directories. & Erroneous & "C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}fake", any non-existing directory. & \autoref{fig:installer_ui_design_directory_error} \\
+                    I3 & Testing how the program handles the directory being deleted/altered during the installation process. & Boundary & "C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}testI3", any existing directory. & \autoref{fig:installer_ui_design_other_error} \\
+                    I4 & Testing how the program reacts to being terminated without the use of the "Cancel" button. & Erroneous & N/A &  \\
+                     &  &  &  & 
+                    \end{tabular}
+                \end{center}
+                \end{table}
 
 
         \subsection{Implementation}
@@ -731,7 +737,7 @@ class InstallGUI:
                 In \autoref{sc:cancel_and_browse_btns_sc_c1}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software which will also disable all the buttons while the software is installing. At this point I considered some kind of progress indicator but found it too difficult.
 
 
-                In the function tied to the install button, see \autoref{sc:install_btn_sc_c1}, there are two functions called, \verb|install_requirements| and \verb|download_from_github|. The former of these makes sure that the user has all the necessary Python libraries installed on their device, so that the program can function properly. Originally, I was planning to completely make use of a Python library that would have allowed me to interact with the GitHub API, but I could not find one that would do that for me and work, instead I managed to find code that would do the same thing, which is shown in \autoref{sc:dl_from_github_stolen_c1}, courtesy of GitHub user \href{https://github.com/Nordgaren/Github-Folder-Downloader/tree/master}{Nordgaren}.
+                In the function tied to the "Install" button, see \autoref{sc:install_btn_sc_c1}, there are two functions called, \verb|install_requirements| and \verb|download_from_github|. The former of these makes sure that the user has all the necessary Python libraries installed on their device, so that the program can function properly. Originally, I was planning to completely make use of a Python library that would have allowed me to interact with the GitHub API, but I could not find one that would do that for me and work, instead I managed to find code that would do the same thing, which is shown in \autoref{sc:dl_from_github_stolen_c1}, courtesy of GitHub user \href{https://github.com/Nordgaren/Github-Folder-Downloader/tree/master}{Nordgaren}.
 
                 
                 % sc:dl_from_github_stolen_c1
@@ -814,11 +820,10 @@ def install_requirements(url: str) -> None:
                 % fig:install_reqs_fail_pf_c1
                 % cmd ss proof to show that it failed
                 \begin{figure}[!ht]
-                   \begin{center}
-                       \includegraphics[width=\textwidth]{figures/c1/implement/installer_req_fail1.png}
-                   \end{center}
-                   \caption{Failure of install requirements function}
-                   \label{fig:install_reqs_fail_pf_c1}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/c1/implement/installer_req_fail1.png}
+                    \caption{Failure of install requirements function}
+                    \label{fig:install_reqs_fail_pf_c1}
                 \end{figure}
                 
 
