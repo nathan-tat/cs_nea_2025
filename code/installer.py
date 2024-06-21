@@ -47,6 +47,7 @@ REQ: str = "https://raw.githubusercontent.com/nathan-tat/cs_nea_2025/main/requir
 REPO_NAME: str = "nathan-tat/cs_nea_2025"
 # directory from which the software will be installed from 
 SW_DIR: str = "code/software"
+safety = False
 
 
 # thank you stackoverflow
@@ -56,6 +57,7 @@ def is_admin() -> bool:
     Returns 'True' iff the current program is being run as administrator, else 'False'. 
     Works on Windows 10 v.22H2 as of 2024-05-10
     """
+    if testing: return testing
     try:
         return ctypes.windll.shell32.IsUserAnAdmin()
     except:
@@ -124,6 +126,7 @@ class InstallGUI:
 
     def btn_cancel_command(self) -> None:
         """ Closes the UI window safely """
+        safety = True
         print("Exiting...")
         root.destroy()
 
@@ -181,10 +184,15 @@ if __name__ == "__main__":
         
     #     # if the user denied admin privilages
     #     if not is_admin():
-    #         # awkwarddd this doesnt work !!
+    #         # this doesn't work 
     #         raise PermissionError("Program is not being run as Administrator")
         raise Exception("You are not admin.")
         
     root = tk.Tk()
     app = InstallGUI(root)
     root.mainloop()
+    
+    if safety:
+        print("Program was exited safely")
+    else:
+        print("Program was not exited safely")

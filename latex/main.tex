@@ -496,17 +496,17 @@
             \subsubsection{Algorithms}
                 I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program.
 
-
+                % fig:exporting_fc_c1
                 % Exporting flow chart FIG
                 \begin{figure}[!ht]
-                    \begin{center}
-                        \includegraphics[width=.2\textwidth]{figures/c1/design/exporting_fc.png}
-                    \end{center}
+                    \centering
+                    \includegraphics[width=.2\textwidth]{figures/c1/design/exporting_fc.png}
                     \caption{Flowchart for exporting a project}
                     \label{fig:exporting_fc_c1}
                 \end{figure}
                 
 
+                % pc:copy_to_folder_ps_c1
                 % Initialise project PC
                 \begin{figure}[!ht]
                     \begin{minted}[linenos]{python}
@@ -528,6 +528,7 @@
                 The file running the procedure above will need to be in the same location as the folder it is copying from. To make the file easier to access, the program could make a shortcut to this file and add it to the desktop for the user.
                 
 
+                % pc:install_software_ps_c1
                 % Install main program PC
                 \begin{figure}[!ht]
                     \begin{minted}[linenos]{python}
@@ -661,9 +662,8 @@ class InstallGUI:
                 % fig:installer_gui_ss1_c1
                 % Installer GUI evidence FIG
                 \begin{figure}[!ht]
-                    \begin{center}
-                        \includegraphics[width=.5\textwidth]{figures/c1/implement/installer_gui_pf1.png}
-                    \end{center}
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c1/implement/installer_gui_pf1.png}
                     \caption{Installer in action}
                     \label{fig:installer_gui_ss1_c1}
                 \end{figure}
