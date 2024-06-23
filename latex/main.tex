@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 
 \usepackage{array}
+\usepackage{booktabs}
 \usepackage{caption}
 \usepackage{fancyhdr}
 \usepackage[a4paper, margin=1in]{geometry}
@@ -14,10 +15,13 @@
 \usepackage[edges]{forest}
 \usepackage[export]{adjustbox}
 \usepackage{wrapfig}
+\usepackage{tabularx}
+\usepackage{graphics}
 \usetikzlibrary{arrows.meta}
 \useunder{\uline}{\ul}{}
 
 \definecolor{LightGray}{gray}{0.9}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 % \textwidth = 415.37 pt
 
 
@@ -469,27 +473,35 @@
                     \caption{Message after successful installation}
                     \label{fig:install_ui_successful_design_c1}
                 \end{figure}
-
-
+                
 
             \subsubsection{Data Structures}
 
                 % Data structures C1 TBL
                 \begin{table}[!ht]
-                    \begin{center}
-                        \begin{tabular}{llm{.5\textwidth}}
+                    \centering
+                    \begin{tabular}{llm{.5\textwidth}}
                         Name & Data Type/Structure & Data \\ \hline
                         \verb|project_name| & String (var.) & Name of the project (will be used in displays and for organisational purposes) \\
                         \verb|working_dir| & String (var.) & The working directory of the project \\
                         \verb|source| & String (const.) & Where all the relevant files are initially stored \\
                         \verb|location| & String (var.) & Destination folder for exporting, inputted by user \\
-                        \verb|permissions| & Bool (var.) & True if and only if the instance of the program has been run with administrator privileges. This limits the directories available.
-                        \end{tabular}
-                    \end{center}
+                        \verb|permissions| & Bool (var.) & True if and only if the instance of the program has been run with administrator privileges. This limits the directories available. \\
+                        \verb|safety| & Bool (var.) & Set to true if the program is terminated safely by use of the "Cancel" button
+                    \end{tabular}
                     \caption{Data structures that will be used in cycle 1}
                     \label{tbl:data_structs_c1}
                 \end{table}
 
+                \begin{table}\centering
+                    \ra{1.3}
+                    \begin{tabularx}{\textwidth}{@{}ccc@{}}\toprule
+                    Name & Data Type & Data \\ \midrule
+                    \verb|project_name| & String (variable) & Name of the project, will be used in displays and for organisational purposes.\\
+                    \bottomrule
+                    \end{tabularx}
+                    \caption{Caption}
+                \end{table}
 
                 The user may not always have permissions to save into/export into the directory they have selected. When doing file management using for example the file explorer on Windows 10, the operating system will handle telling the user that they have invalid permissions. However, when attempting operations on files with invalid permissions through a programming language such as Python, the error will be raised in the program. Due to this I have included a \verb|permissions| variable that checks whether the program has permissions to write to a given directory to prevent this.
 
@@ -546,21 +558,34 @@
 
                 The installer will copy files from a GitHub repository, where all the files necessary for the program to run will be stored, into a folder specified by the user on the user's computer. This folder will then be referred to as \verb|source| (see \autoref{tbl:data_structs_c1}). This will hopefully be done through the use of an external library.
 
+                Having multiple directories with the program downloaded or having broken installations could cause undesired outcomes. Due to this, I would like the user to use the "Close" button in order to terminate the program, and so I will include a check for this. A Python file will not necessarily terminate after a GUI window is closed, so it is still possible to do some processing after this. In the method written for the "Close" button, I will have a variable \verb|safety| set to \verb|True| and then check its value afterwards, alerting the user if this condition isn't met and possibly giving them some advice on how they can go forwards to guarantee that everything will work later on, see 
+
+                % fig:installer_ui_design_unsafe_exit_c1
+                % Little design for when the user doesn't exit the program safely. 
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c1/design/installer_ui_design_unsafe_exit.png}
+                    \caption{Unsafe termination of the program alert}
+                    \label{fig:installer_ui_design_unsafe_exit_c1}
+                \end{figure}
+
         \subsection{Testing}
 
 
                 Tests will be done
                 \begin{table}[!ht]
-                    \begin{center}
-                    \begin{tabular}[t]{@{}lm{.2\textwidth}m{.2\textwidth}m{.2\textwidth}m{.2\textwidth}}
+                    \centering
+                    \begin{tabular}[t]{@{}lm{.18\textwidth}m{.18\textwidth}m{.18\textwidth}m{.18\textwidth}}
                     TestID & Test Reason & Type & Test Data & Expected Outcome \\ \hline
                     I1 & Testing input validation for directories. & Normal & C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}testI1, any existing directory. & \autoref{fig:install_ui_successful_design_c1} \\
                     I2 & Testing input validation for directories. & Erroneous & "C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}fake", any non-existing directory. & \autoref{fig:installer_ui_design_directory_error} \\
                     I3 & Testing how the program handles the directory being deleted/altered during the installation process. & Boundary & "C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}testI3", any existing directory. & \autoref{fig:installer_ui_design_other_error} \\
-                    I4 & Testing how the program reacts to being terminated without the use of the "Cancel" button. & Erroneous & N/A &  \\
-                     &  &  &  & 
+                    I4 & Testing how the program reacts to being terminated without the use of the "Cancel" button. & Erroneous & N/A & \autoref{fig:installer_ui_design_unsafe_exit_c1} \\
+                    I5 & Testing how the program handles being terminated through the use of the "ancel" button before the installation process & Normal & Pressing the "Cancel" button before pressing the "Install" button & Closing the window \\
+                    I6 & Testing how the program handles being terminated through the use of the "Cancel" button after the installation process & Normal & Pressing the "Cancel" button after pressing the "Install" button & Closing the window \\
                     \end{tabular}
-                \end{center}
+                    \caption{Test data (not actually finished)}
+                    \label{tbl:test_data_before_c1}
                 \end{table}
 
 
@@ -581,6 +606,11 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = InstallGUI(root)
     root.mainloop()
+    
+    if safety:
+        print("Program was exited safely")
+    else:
+        print("Program was not exited safely")
                    \end{minted}
                    \caption{The code that is being run at the beginning of the installer}
                    \label{sc:if_name_main_c1}
@@ -677,6 +707,8 @@ class InstallGUI:
                     \begin{minted}[linenos]{python}
     def btn_cancel_command(self) -> None:
         """ Closes the UI window safely """
+        global safety
+        safety = True
         print("Exiting...")
         root.destroy()
 
