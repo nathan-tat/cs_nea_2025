@@ -6,6 +6,7 @@ import requests
 import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import filedialog
+from tkinter import messagebox
 
 # if im testing stuff 
 testing = True
@@ -47,6 +48,7 @@ REQ: str = "https://raw.githubusercontent.com/nathan-tat/cs_nea_2025/main/requir
 REPO_NAME: str = "nathan-tat/cs_nea_2025"
 # directory from which the software will be installed from 
 SW_DIR: str = "code/software"
+
 safety = False
 
 
@@ -79,7 +81,6 @@ def install_requirements(url: str) -> None:
     # i dont think this actually works as of now
     # os.system(f"py -m pip install {url}")
     pass
-
 
 
 class InstallGUI:
@@ -126,6 +127,7 @@ class InstallGUI:
 
     def btn_cancel_command(self) -> None:
         """ Closes the UI window safely """
+        global safety
         safety = True
         print("Exiting...")
         root.destroy()
@@ -195,4 +197,4 @@ if __name__ == "__main__":
     if safety:
         print("Program was exited safely")
     else:
-        print("Program was not exited safely")
+        messagebox.showerror("Error", "You have not exited safely.")
