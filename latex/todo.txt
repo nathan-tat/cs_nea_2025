@@ -1,14 +1,17 @@
-Finish justifying chosen solution
-Hardware and Software
-Analysis Data Dictionary (???)
-Data flow diagrams (???)
-Volumetrics (???)
-Data Sources (???)
-Limitations
+Cycle 2:
+    Design              09-09
+    Testing             09-30
+    Implementation      10-07
+    Evaluation          10-14
 
-do another existing solution 
-	- mario maker
-	- kerbal space program
-	- idk
+Cycle 3:
+    Design              10-21
+    Testing             11-18
+    Implementation      11-25
+    Evaluation          12-02
 
-Discuss language type and way more existing solutions (even ones that are unrelated like the mandelbrot one)
+Final Evaluation:
+    Post dev testing    12-09
+    Evaluation          12-16
+
+Final Final Deadline    01-20

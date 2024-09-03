@@ -493,15 +493,15 @@
                     \label{tbl:data_structs_c1}
                 \end{table}
 
-                \begin{table}\centering
-                    \ra{1.3}
-                    \begin{tabularx}{\textwidth}{@{}ccc@{}}\toprule
-                    Name & Data Type & Data \\ \midrule
-                    \verb|project_name| & String (variable) & Name of the project, will be used in displays and for organisational purposes.\\
-                    \bottomrule
-                    \end{tabularx}
-                    \caption{Caption}
-                \end{table}
+                % \begin{table}\centering
+                %     \ra{1.3}
+                %     \begin{tabularx}{\textwidth}{@{}ccc@{}}\toprule
+                %     Name & Data Type & Data \\ \midrule
+                %     project_name & String (variable) & Name of the project, will be used in displays and for organisational purposes.\\
+                %     \bottomrule
+                %     \end{tabularx}
+                %     \caption{Caption}
+                % \end{table}
 
                 The user may not always have permissions to save into/export into the directory they have selected. When doing file management using for example the file explorer on Windows 10, the operating system will handle telling the user that they have invalid permissions. However, when attempting operations on files with invalid permissions through a programming language such as Python, the error will be raised in the program. Due to this I have included a \verb|permissions| variable that checks whether the program has permissions to write to a given directory to prevent this.
 
@@ -564,7 +564,7 @@
                 % Little design for when the user doesn't exit the program safely. 
                 \begin{figure}[!ht]
                     \centering
-                    \includegraphics[width=.5\textwidth]{figures/c1/design/installer_ui_design_unsafe_exit.png}
+                    % \includegraphics[width=.5\textwidth]{figures/c1/design/installer_ui_design_unsafe_exit.png}
                     \caption{Unsafe termination of the program alert}
                     \label{fig:installer_ui_design_unsafe_exit_c1}
                 \end{figure}
