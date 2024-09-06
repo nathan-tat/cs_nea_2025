@@ -473,7 +473,7 @@
                     \caption{Message after successful installation}
                     \label{fig:install_ui_successful_design_c1}
                 \end{figure}
-                
+
 
             \subsubsection{Data Structures}
 
@@ -581,7 +581,7 @@
                     I2 & Testing input validation for directories. & Erroneous & "C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}fake", any non-existing directory. & \autoref{fig:installer_ui_design_directory_error} \\
                     I3 & Testing how the program handles the directory being deleted/altered during the installation process. & Boundary & "C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}testI3", any existing directory. & \autoref{fig:installer_ui_design_other_error} \\
                     I4 & Testing how the program reacts to being terminated without the use of the "Cancel" button. & Erroneous & N/A & \autoref{fig:installer_ui_design_unsafe_exit_c1} \\
-                    I5 & Testing how the program handles being terminated through the use of the "ancel" button before the installation process & Normal & Pressing the "Cancel" button before pressing the "Install" button & Closing the window \\
+                    I5 & Testing how the program handles being terminated through the use of the "Cancel" button before the installation process & Normal & Pressing the "Cancel" button before pressing the "Install" button & Closing the window \\
                     I6 & Testing how the program handles being terminated through the use of the "Cancel" button after the installation process & Normal & Pressing the "Cancel" button after pressing the "Install" button & Closing the window \\
                     \end{tabular}
                     \caption{Test data (not actually finished)}
@@ -831,7 +831,6 @@ SW_DIR: str = "code/software"
                 \end{figure}
 
                 As previously mentioned, I want to use a function in order to make sure that the relevant Python libraries are installed, which is shown in \autoref{sc:install_reqs_fail1_c1}. When this function is called in the program, see \autoref{sc:install_btn_sc_c1} line 22, the \verb|REQ| constant from is always passed as the argument, which links to the \verb|requirements.txt| file in the GitHub repository. However, this feature doesn't work as intended, see \autoref{fig:install_reqs_fail_pf_c1}, so it is commented out in the current version.
-
                 % sc:install_reqs_fail1_c1
                 % install_requirements function fail 1
                 \begin{figure}[!ht]
@@ -861,6 +860,11 @@ def install_requirements(url: str) -> None:
 
             \subsubsection{Opener}
                 This code isn't finished yet.
+
+    \pagebreak
+    \section{Cycle 2:}
+        \subsection{Implementation}
+
 
 
 \end{document}
