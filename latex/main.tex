@@ -289,59 +289,59 @@
             I decided to split the system into three sections: project, simulating, building. Within the software, the user will initialise a "project" in a directory. The program will frequently refer to a "source directory", which will be the user's program files by default. This source directory will be configurable by the user, but there is no guarantee that the user changing things on their own won't break some of the functionality.
 
             % Overall Hierarchy Diagram FRST
-            \begin{center}
-                \footnotesize
-                \begin{forest}
-                    for tree={
-                        align=center,
-                        font=\sffamily,
-                    edge+={thick, -{Stealth[]}},
-                    l sep'+=10pt,
-                    fork sep'=10pt,
-                    },
-                    forked edges,
-                    if level=0{
-                        inner xsep=0pt,
-                        tikz={\draw [thick] (.children first) -- (.children last);}
-                        }{},
-                        [Circuit Builder
-                            [Project/File Management
-                                [Initialising
-                                    [Choose to\\make new or\\open file
-                                        [Importing\\all data and\\rendering]
-                                        [Initialising\\necessary files]
-                                    ]
-                                    [Choose working\\directory]
-                                ]
-                                [Exporting
-                                    [Data]
-                                    [Project/Circuit\\arrangement]
-                                ]
-                            ]
-                            [Simulating
-                                [Updating\\attributes of\\components
-                                    [Rendering\\updates]
-                                    [Storing data]
-                                ]
-                                [Rendering\\graphs]
-                            ]
-                            [Building
-                                [Placing\\components
-                                    [Choosing\\component]
-                                    [Choosing\\location]
-                                ]
-                                [Editing\\attributes
-                                    [Menu\\interactions]
-                                ]
-                            ]
-                        ]
-                    \end{forest}
-            \end{center}
+            % \begin{center}
+            %     \footnotesize
+            %     \begin{forest}
+            %         for tree={
+            %             align=center,
+            %             font=\sffamily,
+            %         edge+={thick, -{Stealth[]}},
+            %         l sep'+=10pt,
+            %         fork sep'=10pt,
+            %         },
+            %         forked edges,
+            %         if level=0{
+            %             inner xsep=0pt,
+            %             tikz={\draw [thick] (.children first) -- (.children last);}
+            %             }{},
+            %             [Circuit Builder
+            %                 [Project/File Management
+            %                     [Initialising
+            %                         [Choose to\\make new or\\open file
+            %                             [Importing\\all data and\\rendering]
+            %                             [Initialising\\necessary files]
+            %                         ]
+            %                         [Choose working\\directory]
+            %                     ]
+            %                     [Exporting
+            %                         [Data]
+            %                         [Project/Circuit\\arrangement]
+            %                     ]
+            %                 ]
+            %                 [Simulating
+            %                     [Updating\\attributes of\\components
+            %                         [Rendering\\updates]
+            %                         [Storing data]
+            %                     ]
+            %                     [Rendering\\graphs]
+            %                 ]
+            %                 [Building
+            %                     [Placing\\components
+            %                         [Choosing\\component]
+            %                         [Choosing\\location]
+            %                     ]
+            %                     [Editing\\attrib[utes
+            %                         [Menu\\interactions]
+            %                     ]
+            %                 ]
+            %             ]
+            %         \end{forest}
+            % \end{center}
                 
             Each cycle will be taken on individually. I'll fix the formatting later.
             
-    \section{Cycle 1: Project and File Management}
-        Here is the hierarchy diagram from the previous section. It considers two tasks, exporting and initialising.
+    \section{Cycle 1: Installation}
+        Below is the hierarchy diagram for this cycle. Note that here "program" is used to refer to the entire program, and not just the installer covered in this cycle.
 
         % C1 Hierarchy Diagram FRST
         \begin{center}
@@ -359,28 +359,28 @@
                     inner xsep=0pt,
                     tikz={\draw [thick] (.children first) -- (.children last);}
                     }{},
-                    [Project and File Management
-                        [Opening projects
-                            [Initialising\\new projects
-                                [Making sure\\all relevant\\files are present]
-                                [Choosing\\working directory]
-                                [Initialising all\\the files]
-                            ]
-                            [Opening existing\\projects
-                                [Choosing\\working directory]
-                                [Verifying files]
-                            ]
+                    [Installation
+                        [File management
+                            [Hosting files]
+                            [Updating files]
                         ]
-                        [Exporting circuit\\arrangements
-                            [Choosing\\destination]
-                            [Compressing\\and exporting]
+                        [Installer
+                            [Checking\\permissions
+                                [Admin permissions]
+                                [Directory validation]
+                            ]
+                            [Program\\configuration]
+                            [Ease of use
+                                [Add desktop\\shortcut]
+                                [Uninstaller program]
+                            ]
                         ]
                     ]
             \end{forest}
         \end{center}
 
         \subsection{Brief Outline}
-            In this cycle I will create the programming for some interactive UI that will allow the user to initialise or open a project as well as export the project so that it would be able to be accessed by other people.
+            In this cycle I will create a way to install the program onto the user's computer using Python. This will also include an uninstall program which will allow the user to safely uninstall the program if they wish to do so.
 
             \subsubsection{Success Criteria}
                 These are the success criteria that are going to be used. ID beginning with "X" indicates that it was specifically added for this cycle.
@@ -397,7 +397,7 @@
                         X3 & Allow user to specify directory for exporting. \\ 
                         X4 & Compress exported files intuitively. \\ 
                     \end{tabular}
-                    \caption{Success criteria for cycle 1}
+                    \caption{Success criteria for Cycle 1}
                     \label{tbl:succ_crit_c1}
                 \end{table}
 
@@ -831,6 +831,7 @@ SW_DIR: str = "code/software"
                 \end{figure}
 
                 As previously mentioned, I want to use a function in order to make sure that the relevant Python libraries are installed, which is shown in \autoref{sc:install_reqs_fail1_c1}. When this function is called in the program, see \autoref{sc:install_btn_sc_c1} line 22, the \verb|REQ| constant from is always passed as the argument, which links to the \verb|requirements.txt| file in the GitHub repository. However, this feature doesn't work as intended, see \autoref{fig:install_reqs_fail_pf_c1}, so it is commented out in the current version.
+
                 % sc:install_reqs_fail1_c1
                 % install_requirements function fail 1
                 \begin{figure}[!ht]
@@ -861,9 +862,53 @@ def install_requirements(url: str) -> None:
             \subsubsection{Opener}
                 This code isn't finished yet.
 
-    \pagebreak
-    \section{Cycle 2:}
+        \subsection{Evaluation}
+
+    \clearpage
+    \section{Cycle 2: Project Management}
+        \subsection{Brief Outline}
+                This cycle will cover initialising and opening "projects", which will be how the user will be able to save their work and access it at a later time. 
+                        % C1 Hierarchy Diagram FRST
+                \begin{center}
+                    \footnotesize
+                    \begin{forest}
+                        for tree={
+                            align=center,
+                            font=\sffamily,
+                        edge+={thick, -{Stealth[]}},
+                        l sep'+=10pt,
+                        fork sep'=10pt,
+                        },
+                        forked edges,
+                        if level=0{
+                            inner xsep=0pt,
+                            tikz={\draw [thick] (.children first) -- (.children last);}
+                            }{},
+                            [Project Management
+                                [Opening projects
+                                    [Choosing working\\directory]
+                                    [Verifying files]
+                                ]
+                                [Initialising projects
+                                    [Initialising files]
+                                    [Choosing working\\directory
+                                        [Naming projects]
+                                    ]
+                                ]
+                            ]
+                    \end{forest}
+                \end{center}
+
+                \subsubsection{Success Criteria}
+                    Success criteria will go here.
+
+                    
+
+
+        \subsection{Design}
+        \subsection{Testing}
         \subsection{Implementation}
+        \subsection{Evaluation}
 
 
 
