@@ -78,6 +78,8 @@
         \subsection{Problem Identification}
             Often times in physics, complex circuit diagrams have to be drawn and understood, and the opportunity to actually build them is not always available. A solution that could handle custom circuits as well as model and log different attributes quickly, accurately, and efficiently in order to help with building intuition in regard to how complex electrical systems function would be a useful tool that could help solve this issue.
 
+            As I would like to do mathematics at university, I have decided to do my writeup for my NEA in LaTeX in order to gain experience. This has added a lot of complexity, as I am relatively new to using LaTeX, especially regarding formatting my writeup to be readable as well as easy to follow.
+
         \subsection{Identification of why this problem is solvable by computational methods}
             The key requirements stated above (accuracy, haste, and clarity) lend themselves very well to using computational methods. Computers are able to make calculations orders of magnitude faster than by hand or by analogue machine, and to a virtually arbitrary degree of accuracy. Many modern central processing units (CPUs) are also able capable of making use of concurrent processing, further increasing the advantage that a computer would have over a human. Graphical processing units (GPUs) are specifically designed for parallel processing, making them especially useful for graphics, which would allow for high quality renders for the user to be able to see. Any data that you would need to consider can be displayed in a clear and user-friendly fashion, making it highly customisable to fit the individual person's needs and for many attributes to be studied at the same time.
 
@@ -242,6 +244,9 @@
                 \label{tbl:essential_succ_crit}
             \end{table}
 
+            % Add success criteria relating to the installer into the table above
+            % Also learn to format tables in LaTeX.
+
 
             \pagebreak
 
@@ -338,13 +343,16 @@
             %         \end{forest}
             % \end{center}
                 
-            Each cycle will be taken on individually. I'll fix the formatting later.
+
+            Each cycle will be taken on individually. I had to get rid of the overall hierarchy diagram because it wouldn't compile for some reason. (I will add it back later)
             
     \section{Cycle 1: Installation}
         Below is the hierarchy diagram for this cycle. Note that here "program" is used to refer to the entire program, and not just the installer covered in this cycle.
 
-        % C1 Hierarchy Diagram FRST
-        \begin{center}
+        % for:hierarchy_diagram_c1
+        % Cycle 1 Hierarchy diagram
+        \begin{figure}[!ht]
+            \centering
             \footnotesize
             \begin{forest}
                 for tree={
@@ -366,18 +374,20 @@
                         ]
                         [Installer
                             [Checking\\permissions
-                                [Admin permissions]
-                                [Directory validation]
+                                [Admin\\permissions]
+                                [Directory\\validation]
                             ]
                             [Program\\configuration]
                             [Ease of use
                                 [Add desktop\\shortcut]
-                                [Uninstaller program]
+                                [Uninstaller\\program]
                             ]
                         ]
                     ]
             \end{forest}
-        \end{center}
+            \caption{Hierarchy diagram for Cycle 1}
+            \label{for:hierarchy_diagram_c1}
+        \end{figure}
 
         \subsection{Brief Outline}
             In this cycle I will create a way to install the program onto the user's computer using Python. This will also include an uninstall program which will allow the user to safely uninstall the program if they wish to do so.
@@ -391,11 +401,10 @@
                     \centering
                     \begin{tabular}{m{16pt}m{0.8\textwidth}}
                         ID & Feature \\ \hline
-                        B4 & Being able to export and import circuit arrangements. \\ 
-                        X1 & Only open directories that include all relevant files, raising an exception when this isn't met. \\ 
-                        X2 & Copy relevant files from the source directory in order to initialise a project. \\ 
-                        X3 & Allow user to specify directory for exporting. \\ 
-                        X4 & Compress exported files intuitively. \\ 
+                        X1 & Install the program from GitHub \\ 
+                        X2 & Be able to uninstall the program safely using the same file. \\ 
+                        X3 & Allow the user to decide which directory to install to. \\ 
+                        X4 & Create an optional Desktop shortcut for the user. \\ 
                     \end{tabular}
                     \caption{Success criteria for Cycle 1}
                     \label{tbl:succ_crit_c1}
@@ -571,34 +580,33 @@
 
         \subsection{Testing}
 
-
-                Tests will be done
-                \begin{table}[!ht]
-                    \centering
-                    \begin{tabular}[t]{@{}lm{.18\textwidth}m{.18\textwidth}m{.18\textwidth}m{.18\textwidth}}
-                    TestID & Test Reason & Type & Test Data & Expected Outcome \\ \hline
-                    I1 & Testing input validation for directories. & Normal & C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}testI1, any existing directory. & \autoref{fig:install_ui_successful_design_c1} \\
-                    I2 & Testing input validation for directories. & Erroneous & "C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}fake", any non-existing directory. & \autoref{fig:installer_ui_design_directory_error} \\
-                    I3 & Testing how the program handles the directory being deleted/altered during the installation process. & Boundary & "C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}testI3", any existing directory. & \autoref{fig:installer_ui_design_other_error} \\
-                    I4 & Testing how the program reacts to being terminated without the use of the "Cancel" button. & Erroneous & N/A & \autoref{fig:installer_ui_design_unsafe_exit_c1} \\
-                    I5 & Testing how the program handles being terminated through the use of the "Cancel" button before the installation process & Normal & Pressing the "Cancel" button before pressing the "Install" button & Closing the window \\
-                    I6 & Testing how the program handles being terminated through the use of the "Cancel" button after the installation process & Normal & Pressing the "Cancel" button after pressing the "Install" button & Closing the window \\
-                    \end{tabular}
-                    \caption{Test data (not actually finished)}
-                    \label{tbl:test_data_before_c1}
-                \end{table}
+            Tests will be done
+            \begin{table}[!ht]
+                \centering
+                \begin{tabular}[t]{@{}lm{.18\textwidth}m{.18\textwidth}m{.18\textwidth}m{.18\textwidth}}
+                TestID & Test Reason & Type & Test Data & Expected Outcome \\ \hline
+                I1 & Testing input validation for directories. & Normal & C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}testI1, any existing directory. & \autoref{fig:install_ui_successful_design_c1} \\
+                I2 & Testing input validation for directories. & Erroneous & "C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}fake", any non-existing directory. & \autoref{fig:installer_ui_design_directory_error} \\
+                I3 & Testing how the program handles the directory being deleted/altered during the installation process. & Boundary & "C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}testI3", any existing directory. & \autoref{fig:installer_ui_design_other_error} \\
+                I4 & Testing how the program reacts to being terminated without the use of the "Cancel" button. & Erroneous & N/A & \autoref{fig:installer_ui_design_unsafe_exit_c1} \\
+                I5 & Testing how the program handles being terminated through the use of the "Cancel" button before the installation process & Normal & Pressing the "Cancel" button before pressing the "Install" button & Closing the window \\
+                I6 & Testing how the program handles being terminated through the use of the "Cancel" button after the installation process & Normal & Pressing the "Cancel" button after pressing the "Install" button & Closing the window \\
+                \end{tabular}
+                \caption{Test data (not actually finished)}
+                \label{tbl:test_data_before_c1}
+            \end{table}
 
 
         \subsection{Implementation}
-            There are two files in this cycle, one for the installer and one for the opener of file projects and I will tackle them separately.
+            % I neeed to ask if I'm doing a diary style implementation or the other one cause i have no clue
+            % I find it easer to write some code, insert a screenshot of it working/not working, and then explaining why I did what I did/what I did to fix it
 
-            \subsubsection{Installer}
-                The installer will copy files from a specified repository on GitHub, which will store all the necessary files for the program to run, into a folder specified by the user, which will then be referred to by the program as the source folder. 
+            The installer will copy files from a specified repository on GitHub, which will store all the necessary files for the program to run, into a folder specified by the user, which will then be referred to by the program as the source folder. 
 
-                % sc:if_name_main_c1
-                % if name main for the installer.py 
-                \begin{figure}[!ht]
-                   \begin{minted}[linenos]{python}
+            % sc:if_name_main_c1
+            % if name main for the installer.py 
+            \begin{figure}[!ht]
+                \begin{minted}[linenos]{python}
 if __name__ == "__main__":
     if not is_admin():
         raise Exception("You are not admin.")
@@ -611,18 +619,18 @@ if __name__ == "__main__":
         print("Program was exited safely")
     else:
         print("Program was not exited safely")
-                   \end{minted}
-                   \caption{The code that is being run at the beginning of the installer}
-                   \label{sc:if_name_main_c1}
-                \end{figure}
+                \end{minted}
+                \caption{The code that is being run at the beginning of the installer}
+                \label{sc:if_name_main_c1}
+            \end{figure}
 
-                In \autoref{sc:if_name_main_c1}, there is code that is executed when the \verb|installer.py| file is run. This includes a check for whether the program is currently being run in administrator mode, shown in \autoref{sc:admin_checker}. This differs slightly from the design in \autoref{tbl:data_structs_c1}, where there was a variable defined to do the same thing. I found this implementation more readable and understandable, as using a function that returns a boolean value emphasises the fact that I want to check the permissions at a single moment in time. The code continues to start the UI so that the user can interact with the program. The code shown in \autoref{sc:admin_checker} was written by \href{https://stackoverflow.com/questions/130763/request-uac-elevation-from-within-a-python-script}{StackOverFlow user Martín De la Fuente}.
+            In \autoref{sc:if_name_main_c1}, there is code that is executed when the \verb|installer.py| file is run. This includes a check for whether the program is currently being run in administrator mode, shown in \autoref{sc:admin_checker}. This differs slightly from the design in \autoref{tbl:data_structs_c1}, where there was a variable defined to do the same thing. I found this implementation more readable and understandable, as using a function that returns a boolean value emphasises the fact that I want to check the permissions at a single moment in time. The code continues to start the UI so that the user can interact with the program. The code shown in \autoref{sc:admin_checker} was written by \href{https://stackoverflow.com/questions/130763/request-uac-elevation-from-within-a-python-script}{StackOverFlow user Martín De la Fuente}.
 
 
-                % sc:admin_checker
-                % is_admin check 
-                \begin{figure}[!ht]
-                   \begin{minted}[linenos]{python}
+            % sc:admin_checker
+            % is_admin check 
+            \begin{figure}[!ht]
+                \begin{minted}[linenos]{python}
 def is_admin() -> bool:
     """
     Returns 'True' iff the current program is being 
@@ -633,16 +641,16 @@ def is_admin() -> bool:
         return ctypes.windll.shell32.IsUserAnAdmin()
     except:
         return False
-                   \end{minted}
-                   \caption{Check for if the program is being run as administrator}
-                   \label{sc:admin_checker}
-                \end{figure}
+                \end{minted}
+                \caption{Check for if the program is being run as administrator}
+                \label{sc:admin_checker}
+            \end{figure}
 
 
-                % sc:install_gui_init_sc_c1
-                % InstallGUI class init SC
-                \begin{figure}[!ht]
-                    \begin{minted}[linenos]{python}
+            % sc:install_gui_init_sc_c1
+            % InstallGUI class init SC
+            \begin{figure}[!ht]
+                \begin{minted}[linenos]{python}
 class InstallGUI:
     def __init__(self, root):
         #setting title
@@ -683,28 +691,28 @@ class InstallGUI:
         self.lbl_welcome.place(x=20,y=20,width=170,height=30)
         
         self.filepath = None
-                    \end{minted}
-                    \caption{Initialising method for the InstallGUI class}
-                    \label{sc:install_gui_init_sc_c1}
-                \end{figure}
-                
+                \end{minted}
+                \caption{Initialising method for the InstallGUI class}
+                \label{sc:install_gui_init_sc_c1}
+            \end{figure}
+            
 
-                % fig:installer_gui_ss1_c1
-                % Installer GUI evidence FIG
-                \begin{figure}[!ht]
-                    \centering
-                    \includegraphics[width=.5\textwidth]{figures/c1/implement/installer_gui_pf1.png}
-                    \caption{Installer in action}
-                    \label{fig:installer_gui_ss1_c1}
-                \end{figure}
+            % fig:installer_gui_ss1_c1
+            % Installer GUI evidence FIG
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=.5\textwidth]{figures/c1/implement/installer_gui_pf1.png}
+                \caption{Installer in action}
+                \label{fig:installer_gui_ss1_c1}
+            \end{figure}
 
 
-                I decided that the entry box in the installer, shown in \autoref{fig:install_gui_class_diagram_c1} and \autoref{fig:installer_gui_design_c1}, was redundant thanks to the browse button I introduced while implementing, shown in \autoref{fig:installer_gui_ss1_c1}, which already manages the validation aspect for me, as you can only select an existing directory on your computer. Because of this, I decided to make what was an entry box an uneditable label object that will display the directory chosen. This also led me to also abandon the idea of introducing a default install directory, as that was initially introduced due to how awkward it would've been to input a directory.
+            I decided that the entry box in the installer, shown in \autoref{fig:install_gui_class_diagram_c1} and \autoref{fig:installer_gui_design_c1}, was redundant thanks to the browse button I introduced while implementing, shown in \autoref{fig:installer_gui_ss1_c1}, which already manages the validation aspect for me, as you can only select an existing directory on your computer. Because of this, I decided to make what was an entry box an uneditable label object that will display the directory chosen. This also led me to also abandon the idea of introducing a default install directory, as that was initially introduced due to how awkward it would've been to input a directory.
 
-                % sc:cancel_and_browse_btns_sc_c1
-                % Cancel and Browse buttons SC
-                \begin{figure}[!ht]
-                    \begin{minted}[linenos]{python}
+            % sc:cancel_and_browse_btns_sc_c1
+            % Cancel and Browse buttons SC
+            \begin{figure}[!ht]
+                \begin{minted}[linenos]{python}
     def btn_cancel_command(self) -> None:
         """ Closes the UI window safely """
         global safety
@@ -719,16 +727,16 @@ class InstallGUI:
         self.lbl_welcome["text"] = self.filepath
         self.ent_dir["text"] = self.filepath
         self.btn_install["state"] = "active"
-                    \end{minted}
-                    \caption{Code for cancel and browse}
-                    \label{sc:cancel_and_browse_btns_sc_c1}
-                \end{figure}
+                \end{minted}
+                \caption{Code for cancel and browse}
+                \label{sc:cancel_and_browse_btns_sc_c1}
+            \end{figure}
 
 
-                % sc:install_btn_sc_c1
-                % Install btn SC
-                \begin{figure}[!ht]
-                    \begin{minted}[linenos]{python}
+            % sc:install_btn_sc_c1
+            % Install btn SC
+            \begin{figure}[!ht]
+                \begin{minted}[linenos]{python}
     def btn_install_command(self) -> None:
         """ Installs the software to the given directory. Probably very not secure. """
         # set it equal to eachother <3
@@ -760,22 +768,22 @@ class InstallGUI:
         self.btn_browse["state"] = "active"
         self.btn_cancel["state"] = "active"
         self.btn_install["state"] = "active"
-                    \end{minted}
-                    \caption{Code for install button}
-                    \label{sc:install_btn_sc_c1}
-                \end{figure}
+                \end{minted}
+                \caption{Code for install button}
+                \label{sc:install_btn_sc_c1}
+            \end{figure}
 
 
-                In \autoref{sc:cancel_and_browse_btns_sc_c1}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software which will also disable all the buttons while the software is installing. At this point I considered some kind of progress indicator but found it too difficult.
+            In \autoref{sc:cancel_and_browse_btns_sc_c1}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software which will also disable all the buttons while the software is installing. At this point I considered some kind of progress indicator but found it too difficult.
 
 
-                In the function tied to the "Install" button, see \autoref{sc:install_btn_sc_c1}, there are two functions called, \verb|install_requirements| and \verb|download_from_github|. The former of these makes sure that the user has all the necessary Python libraries installed on their device, so that the program can function properly. Originally, I was planning to completely make use of a Python library that would have allowed me to interact with the GitHub API, but I could not find one that would do that for me and work, instead I managed to find code that would do the same thing, which is shown in \autoref{sc:dl_from_github_stolen_c1}, courtesy of GitHub user \href{https://github.com/Nordgaren/Github-Folder-Downloader/tree/master}{Nordgaren}.
+            In the function tied to the "Install" button, see \autoref{sc:install_btn_sc_c1}, there are two functions called, \verb|install_requirements| and \verb|download_from_github|. The former of these makes sure that the user has all the necessary Python libraries installed on their device, so that the program can function properly. Originally, I was planning to completely make use of a Python library that would have allowed me to interact with the GitHub API, but I could not find one that would do that for me and work, instead I managed to find code that would do the same thing, which is shown in \autoref{sc:dl_from_github_stolen_c1}, courtesy of GitHub user \href{https://github.com/Nordgaren/Github-Folder-Downloader/tree/master}{Nordgaren}.
 
-                
-                % sc:dl_from_github_stolen_c1
-                % download from github stolen sc 
-                \begin{figure}[!ht]
-                   \begin{minted}[linenos]{python}
+            
+            % sc:dl_from_github_stolen_c1
+            % download from github stolen sc 
+            \begin{figure}[!ht]
+                \begin{minted}[linenos]{python}
 def download(c: ContentFile, out: str):
     r = requests.get(c.download_url)
     output_path = f'{out}/{c.path}'
@@ -793,49 +801,49 @@ def download_folder(repo: Repository, folder: str, out: str, recursive: bool):
                 download_folder(repo, c.path, out, recursive)
             continue
         download(c, out)
-                   \end{minted}
-                   \caption{Code to download from a specific GitHub folder.}
-                   \label{sc:dl_from_github_stolen_c1}
-                \end{figure}
+                \end{minted}
+                \caption{Code to download from a specific GitHub folder.}
+                \label{sc:dl_from_github_stolen_c1}
+            \end{figure}
 
 
-                The latter function in \autoref{sc:dl_from_github_stolen_c1} is finally called by another function \verb|download_from_github|, see \autoref{sc:final_dl_func_c1}, which passes all the arguments such as the name of the repository as well as the path to the folder into the previous functions. These values are stored as constants in the same file, so it is clear what they are and what they mean, see \autoref{sc:consts_install_c1}. The new function takes in one argument which will be the directory that the user has selected as their install directory. 
+            The latter function in \autoref{sc:dl_from_github_stolen_c1} is finally called by another function \verb|download_from_github|, see \autoref{sc:final_dl_func_c1}, which passes all the arguments such as the name of the repository as well as the path to the folder into the previous functions. These values are stored as constants in the same file, so it is clear what they are and what they mean, see \autoref{sc:consts_install_c1}. The new function takes in one argument which will be the directory that the user has selected as their install directory. 
 
-                % sc:final_dl_func_c1
-                % the dowload_from_github function that called the functions in sc:dl_from_github_stolen_c1
-                \begin{figure}[!ht]
-                   \begin{minted}[linenos]{python}
+            % sc:final_dl_func_c1
+            % the dowload_from_github function that called the functions in sc:dl_from_github_stolen_c1
+            \begin{figure}[!ht]
+                \begin{minted}[linenos]{python}
 def download_from_github(destination: str) -> None:
     """ Downloads a given GitHub folder from 'url' to the 'destination' directory """
     g = Github()
     repo = g.get_repo(REPO_NAME)
     download_folder(repo, SW_DIR, destination, True)
-                   \end{minted}
-                   \caption{The final downloading function.}
-                   \label{sc:final_dl_func_c1}
-                \end{figure}
+                \end{minted}
+                \caption{The final downloading function.}
+                \label{sc:final_dl_func_c1}
+            \end{figure}
 
-                % sc:constants_install_c1
-                % constants defined for install file
-                \begin{figure}[!ht]
-                   \begin{minted}[linenos]{python}
+            % sc:constants_install_c1
+            % constants defined for install file
+            \begin{figure}[!ht]
+                \begin{minted}[linenos]{python}
 # the requirements.txt which has all the necessary pip libraries to run the program 
 REQ: str = "https://raw.githubusercontent.com/nathan-tat/cs_nea_2025/main/requirements.txt"
 # path to repository
 REPO_NAME: str = "nathan-tat/cs_nea_2025"
 # directory from which the software will be installed from 
 SW_DIR: str = "code/software"
-                   \end{minted}
-                   \caption{Constants defined with descriptions}
-                   \label{sc:consts_install_c1}
-                \end{figure}
+                \end{minted}
+                \caption{Constants defined with descriptions}
+                \label{sc:consts_install_c1}
+            \end{figure}
 
-                As previously mentioned, I want to use a function in order to make sure that the relevant Python libraries are installed, which is shown in \autoref{sc:install_reqs_fail1_c1}. When this function is called in the program, see \autoref{sc:install_btn_sc_c1} line 22, the \verb|REQ| constant from is always passed as the argument, which links to the \verb|requirements.txt| file in the GitHub repository. However, this feature doesn't work as intended, see \autoref{fig:install_reqs_fail_pf_c1}, so it is commented out in the current version.
+            As previously mentioned, I want to use a function in order to make sure that the relevant Python libraries are installed, which is shown in \autoref{sc:install_reqs_fail1_c1}. When this function is called in the program, see \autoref{sc:install_btn_sc_c1} line 22, the \verb|REQ| constant from is always passed as the argument, which links to the \verb|requirements.txt| file in the GitHub repository. However, this feature doesn't work as intended, see \autoref{fig:install_reqs_fail_pf_c1}, so it is commented out in the current version.
 
-                % sc:install_reqs_fail1_c1
-                % install_requirements function fail 1
-                \begin{figure}[!ht]
-                   \begin{minted}[linenos]{python}
+            % sc:install_reqs_fail1_c1
+            % install_requirements function fail 1
+            \begin{figure}[!ht]
+                \begin{minted}[linenos]{python}
 def install_requirements(url: str) -> None:
     """ 
     Installs the necessary python libraries from a 'requirements.txt' stored  
@@ -844,68 +852,110 @@ def install_requirements(url: str) -> None:
     # i dont think this actually works as of now
     os.system(f"py -m pip install {url}")
     # pass
-                   \end{minted}
-                   \caption{Function to install the required Python libraries}
-                   \label{sc:install_reqs_fail1_c1}
-                \end{figure}
+                \end{minted}
+                \caption{Function to install the required Python libraries}
+                \label{sc:install_reqs_fail1_c1}
+            \end{figure}
 
-                % fig:install_reqs_fail_pf_c1
-                % cmd ss proof to show that it failed
-                \begin{figure}[!ht]
-                    \centering
-                    \includegraphics[width=\textwidth]{figures/c1/implement/installer_req_fail1.png}
-                    \caption{Failure of install requirements function}
-                    \label{fig:install_reqs_fail_pf_c1}
-                \end{figure}
-                
-
-            \subsubsection{Opener}
-                This code isn't finished yet.
+            % fig:install_reqs_fail_pf_c1
+            % cmd ss proof to show that it failed
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=\textwidth]{figures/c1/implement/installer_req_fail1.png}
+                \caption{Failure of install requirements function}
+                \label{fig:install_reqs_fail_pf_c1}
+            \end{figure}
+            
 
         \subsection{Evaluation}
+            % Do the testing as well as the evaluation
 
     \clearpage
     \section{Cycle 2: Project Management}
         \subsection{Brief Outline}
-                This cycle will cover initialising and opening "projects", which will be how the user will be able to save their work and access it at a later time. 
-                        % C1 Hierarchy Diagram FRST
-                \begin{center}
-                    \footnotesize
-                    \begin{forest}
-                        for tree={
-                            align=center,
-                            font=\sffamily,
-                        edge+={thick, -{Stealth[]}},
-                        l sep'+=10pt,
-                        fork sep'=10pt,
-                        },
-                        forked edges,
-                        if level=0{
-                            inner xsep=0pt,
-                            tikz={\draw [thick] (.children first) -- (.children last);}
-                            }{},
-                            [Project Management
-                                [Opening projects
-                                    [Choosing working\\directory]
-                                    [Verifying files]
-                                ]
-                                [Initialising projects
-                                    [Initialising files]
-                                    [Choosing working\\directory
-                                        [Naming projects]
-                                    ]
+            This cycle will cover initialising and opening "projects", which will be how the user will be able to save their work and access it at a later time. 
+            
+
+            % for:hierarchy_diagram_c2
+            % Cycle 2 Hierarchy diagram
+            \begin{figure}[!ht]
+                \centering
+                \footnotesize
+                \begin{forest}
+                    for tree={
+                        align=center,
+                        font=\sffamily,
+                    edge+={thick, -{Stealth[]}},
+                    l sep'+=10pt,
+                    fork sep'=10pt,
+                    },
+                    forked edges,
+                    if level=0{
+                        inner xsep=0pt,
+                        tikz={\draw [thick] (.children first) -- (.children last);}
+                        }{},
+                        [Project Management
+                            [Opening projects
+                                [Choosing working\\directory]
+                                [Verifying files]
+                            ]
+                            [Initialising projects
+                                [Initialising files]
+                                [Choosing working\\directory
+                                    [Naming projects]
                                 ]
                             ]
-                    \end{forest}
-                \end{center}
+                        ]
+                \end{forest}
+                \caption{Hierarchy diagram for Cycle 2}
+                \label{for:hierarchy_diagram_c2}
+            \end{figure}
+                
+            \subsubsection{Success Criteria}
 
-                \subsubsection{Success Criteria}
-                    Success criteria will go here.
-
-                    
+                % tbl:succ_crit_c2
+                % Success Criteria C2 TBL
+                \begin{table}[!ht]
+                    \centering
+                    \begin{tabular}{m{16pt}m{0.8\textwidth}}
+                        ID & Feature \\ \hline
+                        B4 & Being able to export and import circuit arrangements. \\ 
+                        X1 & Only open directories that include all relevant files, raising an exception when this isn't met. \\ 
+                        X2 & Copy relevant files from the source directory in order to initialise a project. \\ 
+                        X3 & Allow user to specify directory for exporting. \\ 
+                        X4 & Compress exported files intuitively. \\ 
+                    \end{tabular}
+                    \caption{Success criteria for Cycle 2}
+                    \label{tbl:succ_crit_c2}
+                \end{table}
 
 
         \subsection{Design}
+            % The general idea is that it will use one program (this is the same one that the installer creates a shortcut to)
+            % From then the user will be able to choose whether to open a new or existing project
+            % If an existing project then the user will navigate to the project FILE inside the project folder, select it, and then it will use that to open everything necessary
+            % If a new project then the user will select the DIRECTORY where they want the project file to be in. They will also decide on a name. I might also decide to include a drop down menu to select some kind of "type" or something.
+
+            \subsubsection{Data Structures}
+                For this cycle I will need to come up with a way to store the configuration file for a project, and also to come up with what information this file might contain. I will also need to consider what the file structure of a directory containing a project will look like. 
+
+                % Do this and do some bs as to why I'm doing it
+
+            \subsubsection{User Interface}
+                % Need to design 3 UI windows. 
+                % One initial one that will then decide to go into one of the other two 
+
+                % The initial one only needs two options, but something like a "recently viewed" might be nice.
+                % It also will need a cancel option.
+
+                % If user decides to open existing project, then need a browse directory button, as well as a confirm button. I don't think it needs anything more than that.
+                
+                % If user decides to open new project, then need a "Name" entry, as well as a directory entry. Also confirm and cancel buttons. 
+
+            \subsubsection{Algorithms}
+                % I'll need an algorithm for "opening" a project. i.e. passing off a directory as an argument to another function
+                
+            
         \subsection{Testing}
         \subsection{Implementation}
         \subsection{Evaluation}
