@@ -875,7 +875,6 @@ def install_requirements(url: str) -> None:
         \subsection{Brief Outline}
             This cycle will cover initialising and opening "projects", which will be how the user will be able to save their work and access it at a later time. 
             
-
             % for:hierarchy_diagram_c2
             % Cycle 2 Hierarchy diagram
             \begin{figure}[!ht]
@@ -910,6 +909,7 @@ def install_requirements(url: str) -> None:
                 \caption{Hierarchy diagram for Cycle 2}
                 \label{for:hierarchy_diagram_c2}
             \end{figure}
+
                 
             \subsubsection{Success Criteria}
 
@@ -931,29 +931,46 @@ def install_requirements(url: str) -> None:
 
 
         \subsection{Design}
-            % The general idea is that it will use one program (this is the same one that the installer creates a shortcut to)
-            % From then the user will be able to choose whether to open a new or existing project
-            % If an existing project then the user will navigate to the project FILE inside the project folder, select it, and then it will use that to open everything necessary
-            % If a new project then the user will select the DIRECTORY where they want the project file to be in. They will also decide on a name. I might also decide to include a drop down menu to select some kind of "type" or something.
+            The general idea is that it will use one program (this is the same one that the installer creates a shortcut to)
+            From then the user will be able to choose whether to open a new or existing project
+            If an existing project then the user will navigate to the project FILE inside the project folder, select it, and then it will use that to open everything necessary
+            If a new project then the user will select the DIRECTORY where they want the project file to be in. They will also decide on a name. I might also decide to include a drop down menu to select some kind of "type" or something.
 
             \subsubsection{Data Structures}
                 For this cycle I will need to come up with a way to store the configuration file for a project, and also to come up with what information this file might contain. I will also need to consider what the file structure of a directory containing a project will look like. 
 
-                % Do this and do some bs as to why I'm doing it
+                Do this and say some stuff as to why I'm doing it
 
             \subsubsection{User Interface}
-                % Need to design 3 UI windows. 
-                % One initial one that will then decide to go into one of the other two 
+                Need to design 3 UI windows. 
+                One initial one that will then decide to go into one of the other two 
 
-                % The initial one only needs two options, but something like a "recently viewed" might be nice.
-                % It also will need a cancel option.
+                The initial one only needs two options, but something like a "recently viewed" might be nice.
+                It also will need a cancel option.
 
-                % If user decides to open existing project, then need a browse directory button, as well as a confirm button. I don't think it needs anything more than that.
+                If user decides to open existing project, then need a browse directory button, as well as a confirm button. I don't think it needs anything more than that.
+                I think this could have a dropdown that could open a template 
                 
-                % If user decides to open new project, then need a "Name" entry, as well as a directory entry. Also confirm and cancel buttons. 
+                If user decides to open new project, then need a "Name" entry, as well as a directory entry. Also confirm and cancel buttons. 
+
+                There will be three user-interface menus covered in this section, one for where the user decides to open a new or existing project, and one each for actually selecting the project they want to open/create. This was mainly inspired by the user-interface from Visual Studio 2022, see \autoref{fig:vs22_ui_ss_c2}, which shows a minimal design with only the necessary features shown. The layout is also very user-friendly, with large clear buttons shown as well as recently opened/viewed projects.
+
+                % fig:vs22_ui_ss_c2
+                % Screenshot from visual studio 22 that shows the UI for opening a project
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c2/design/vscode22.png}
+                    \caption{Screenshot from Visual Studio 2022}
+                    \label{fig:vs22_ui_ss_c2}
+                \end{figure}
 
             \subsubsection{Algorithms}
-                % I'll need an algorithm for "opening" a project. i.e. passing off a directory as an argument to another function
+                I'll need an algorithm for "opening" a project. i.e. passing off a directory as an argument to another function
+                I'll need an algorithm to initiate a configuration file
+                I'll also need to think about how I will be able to lead from one UI element to another, something like this https://stackoverflow.com/questions/19473072/show-another-ui-file-on-button-click
+
+
+                Sorry this isn't done I was pretty certain on dropping this subject until like yesterday when I decided that I'll just lock in this year and do it, so I didn't really touch my NEA at all.
                 
             
         \subsection{Testing}
