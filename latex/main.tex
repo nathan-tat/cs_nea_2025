@@ -17,7 +17,9 @@
 \usepackage{wrapfig}
 \usepackage{tabularx}
 \usepackage{graphics}
-\usetikzlibrary{arrows.meta}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\usetikzlibrary{arrows.meta} % for the hierarchy diagrams i think
 \useunder{\uline}{\ul}{}
 
 \definecolor{LightGray}{gray}{0.9}
@@ -41,7 +43,24 @@
 % \pagebreak should have a line break above and below.
 
 
+% Defining tikz styles for the flowcharts
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzset{%
+    subprocess/.style = {rectangle, draw=black, fill=orange!30,
+                         minimum width=3cm, minimum height=1cm, inner xsep=3mm,
+                         text width =\pgfkeysvalueof{/pgf/minimum width}-2*\pgfkeysvalueof{/pgf/inner xsep},
+                         align=flush center,
+                         path picture={\draw 
+        ([xshift =2mm] \ppbb.north west) -- ([xshift= 2mm] \ppbb.south west)
+        ([xshift=-2mm] \ppbb.north east) -- ([xshift=-2mm] \ppbb.south east);
+                                      },% end of path picture
+                        }
+}
 
+\tikzstyle{arrow} = [thick,->,>=stealth]
 
 \begin{document}
     \pagestyle{fancy}
@@ -410,7 +429,6 @@
                     \label{tbl:succ_crit_c1}
                 \end{table}
 
-
                 
         \subsection{Design}
             % Need to do UI and testing here, as well as talk more about how this is going to be implemented
@@ -517,13 +535,25 @@
             \subsubsection{Algorithms}
                 I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program.
 
-                % fig:exporting_fc_c1
-                % Exporting flow chart FIG
+                % flow:flowchart_design_c1
+                % flowchart for exporting a project as a .zip file
                 \begin{figure}[!ht]
                     \centering
-                    \includegraphics[width=.2\textwidth]{figures/c1/design/exporting_fc.png}
+                    \begin{tikzpicture}[node distance=2cm]
+                        \node (start) [startstop] {Start};
+                        \node (in1) [io, below of=start, align=center] {Get destination\\directory};
+                        \node (dec1) [decision, below of=in1, align=center, yshift=-1.2cm] {User has\\permissions?};
+                        \node (exc1) [startstop, left of=dec1, xshift=-2.2cm] {Raise exception};
+                        \node (pro1) [process, below of=dec1, align=center, yshift=-1.2cm] {Move zip archive\\to destination};
+                        \node (end) [startstop, below of=pro1] {End};
+                        \draw [arrow] (start) -- (in1);
+                        \draw [arrow] (in1) -- (dec1);
+                        \draw [arrow] (dec1) -- node[anchor=north] {No} (exc1);
+                        \draw [arrow] (dec1) -- node[anchor=east] {Yes} (pro1);
+                        \draw [arrow] (pro1) -- (end);
+                    \end{tikzpicture}
                     \caption{Flowchart for exporting a project}
-                    \label{fig:exporting_fc_c1}
+                    \label{flow:flowchart_design_c1}
                 \end{figure}
                 
 
@@ -738,7 +768,10 @@ class InstallGUI:
             \begin{figure}[!ht]
                 \begin{minted}[linenos]{python}
     def btn_install_command(self) -> None:
-        """ Installs the software to the given directory. Probably very not secure. """
+        """ 
+        Installs the software to the given directory. 
+        Probably very not secure. 
+        """
         # set it equal to eachother <3
         if self.filepath != self.ent_dir["text"]:
             self.filepath = self.ent_dir["text"]
@@ -931,7 +964,7 @@ def install_requirements(url: str) -> None:
 
 
         \subsection{Design}
-            The general idea is that it will use one program (this is the same one that the installer creates a shortcut to)
+            The general idea is that it will use one program (this is the same one that the installer creates a shortcut to).
             From then the user will be able to choose whether to open a new or existing project
             If an existing project then the user will navigate to the project FILE inside the project folder, select it, and then it will use that to open everything necessary
             If a new project then the user will select the DIRECTORY where they want the project file to be in. They will also decide on a name. I might also decide to include a drop down menu to select some kind of "type" or something.
@@ -939,19 +972,24 @@ def install_requirements(url: str) -> None:
             \subsubsection{Data Structures}
                 For this cycle I will need to come up with a way to store the configuration file for a project, and also to come up with what information this file might contain. I will also need to consider what the file structure of a directory containing a project will look like. 
 
-                Do this and say some stuff as to why I'm doing it
+                Do this and say some stuff as to why I'm doing it.
+
+                % I need a way to store configuration settings for an individual project
+                % I need a way to store recently stored projects (globally)
+                % I need a way to run projects through command prompt for the main .exe
+                % I need to design a file structure for an individual project
 
             \subsubsection{User Interface}
-                Need to design 3 UI windows. 
-                One initial one that will then decide to go into one of the other two 
+                % Need to design 3 UI windows. 
+                % One initial one that will then decide to go into one of the other two 
 
-                The initial one only needs two options, but something like a "recently viewed" might be nice.
-                It also will need a cancel option.
+                % The initial one only needs two options, but something like a "recently viewed" might be nice.
+                % It also will need a cancel option.
 
-                If user decides to open existing project, then need a browse directory button, as well as a confirm button. I don't think it needs anything more than that.
-                I think this could have a dropdown that could open a template 
+                % If user decides to open existing project, then need a browse directory button, as well as a confirm button. I don't think it needs anything more than that.
+                % I think this could have a dropdown that could open a template 
                 
-                If user decides to open new project, then need a "Name" entry, as well as a directory entry. Also confirm and cancel buttons. 
+                % If user decides to open new project, then need a "Name" entry, as well as a directory entry. Also confirm and cancel buttons. 
 
                 There will be three user-interface menus covered in this section, one for where the user decides to open a new or existing project, and one each for actually selecting the project they want to open/create. This was mainly inspired by the user-interface from Visual Studio 2022, see \autoref{fig:vs22_ui_ss_c2}, which shows a minimal design with only the necessary features shown. The layout is also very user-friendly, with large clear buttons shown as well as recently opened/viewed projects.
 
@@ -963,6 +1001,43 @@ def install_requirements(url: str) -> None:
                     \caption{Screenshot from Visual Studio 2022}
                     \label{fig:vs22_ui_ss_c2}
                 \end{figure}
+
+                With the colour-scheme, I have decided to stay consistent with my user interface from Cycle 1. The colours, borders, and fonts are the same. I have decided to follow a similar layout to the one shown in \autoref{fig:vs22_ui_ss_c2}, but I chose to only have buttons for the three most recently viewed projects, as opposed to all of them sorted by date. If the user has yet to open three projects, then the others would be greyed out and the user would not be able to click on them. The justification for only showing three is that it could be difficult to implement an embedded window that allows the user to scroll through it independently of the rest of the window, and that the user will likely not not be working on more than three at a time. 
+
+                % fig:menu_1_design_c2
+                % first UI menu to show
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c2/design/ui1.png}
+                    \caption{First menu design}
+                    \label{fig:menu_1_design_c2}
+                \end{figure}
+
+                I change I have made in \autoref{fig:menu_2_design_c2} compared to \autoref{fig:menu_1_design_c2} is in moving the "Cancel" button to the bottom left corner instead of keeping it in the bottom right corner. I decided this was better as it stayed consistent with the previous cycle, see \autoref{fig:installer_gui_design_c1}, and that that is how people tend to read (the order being top left, top right, bottom left, bottom right, according to \href{https://www.interaction-design.org/literature/article/visual-hierarchy-organizing-content-to-follow-natural-eye-movement-patterns}{the Interaction Design Foundation}). As part of my reflection from the first cycle, I have decided to include a "Browse" button, which will allow the user to select a directory using the familiar user interface of their operating system, as opposed to being forced to type in their directory manually. This is better as it increases usability. 
+
+                \clearpage
+                % fig:menu_2_design_c2
+                % design for opening a menu 
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c2/design/ui2_open_existing.png}
+                    \caption{Design for opening an existing project}
+                    \label{fig:menu_2_design_c2}
+                \end{figure}
+
+                In \autoref{fig:init_new_proj_ui_design_c2}, I have designed the user interface for initialising a new project. The user will be allowed to select the name of the project and the directory in which the project is stored. I have also decided to include a dropdown selection box that would allow the user to select the "type" of project. At this time, I am not certain of what that exactly refers to. However, in the future I could use it for something. For example, the user being able to choose from a selection of pre-made circuits as a demonstration of the software.
+
+                % fig:init_new_proj_ui_design_c2
+                % design for the ui for initialising a new project
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c2/design/ui2_init_new_proj.png}
+                    \caption{Design for initialising a new project}
+                    \label{fig:init_new_proj_ui_design_c2}
+                \end{figure}
+
+                Following the menu from \autoref{fig:menu_2_design_c2} and \autoref{fig:init_new_proj_ui_design_c2}, the user will be taken to the main program, which will be taken on in a separate cycle.
+
 
             \subsubsection{Algorithms}
                 I'll need an algorithm for "opening" a project. i.e. passing off a directory as an argument to another function \autoref{fig:vs22_ui_ss_c2}

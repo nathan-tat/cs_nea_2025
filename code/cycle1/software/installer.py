@@ -134,7 +134,10 @@ class InstallGUI:
 
 
     def btn_install_command(self) -> None:
-        """ Installs the software to the given directory. Probably very not secure. """
+        """ 
+        Installs the software to the given directory. 
+        Probably very not secure. 
+        """
         # set it equal to eachother 
         if self.filepath != self.lbl_dir["text"]:
             self.filepath = self.lbl_dir["text"]
