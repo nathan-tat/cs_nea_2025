@@ -535,26 +535,26 @@
             \subsubsection{Algorithms}
                 I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program.
 
-                % fig:exporting_fc_c1
-                % Exporting flow chart FIG
+                % flow:flowchart_design_c1
+                % flowchart for exporting a project as a .zip file
                 \begin{figure}[!ht]
                     \centering
-                    \includegraphics[width=.2\textwidth]{figures/c1/design/exporting_fc.png}
+                    \begin{tikzpicture}[node distance=2cm]
+                        \node (start) [startstop] {Start};
+                        \node (in1) [io, below of=start, align=center] {Get destination\\directory};
+                        \node (dec1) [decision, below of=in1, align=center, yshift=-1.2cm] {User has\\permissions?};
+                        \node (exc1) [startstop, left of=dec1, xshift=-2.2cm] {Raise exception};
+                        \node (pro1) [process, below of=dec1, align=center, yshift=-1.2cm] {Move zip archive\\to destination};
+                        \node (end) [startstop, below of=pro1] {End};
+                        \draw [arrow] (start) -- (in1);
+                        \draw [arrow] (in1) -- (dec1);
+                        \draw [arrow] (dec1) -- node[anchor=north] {No} (exc1);
+                        \draw [arrow] (dec1) -- node[anchor=east] {Yes} (pro1);
+                        \draw [arrow] (pro1) -- (end);
+                    \end{tikzpicture}
                     \caption{Flowchart for exporting a project}
-                    \label{fig:exporting_fc_c1}
+                    \label{flow:flowchart_design_c1}
                 \end{figure}
-
-
-                \begin{tikzpicture}[node distance=2cm]
-                    \node (start) [startstop] {Start};
-                    \node (in1) [io, below of=start] {Get destination\\directory};
-                    \node (dec1) [decision, below of=in1] {User has\\permissions?};
-                    \node (exc1) [startstop, left of=dec1] {Raise exception};
-                    \node (pro1) [process, below of=dec1] {Move zip archive to destination};
-                    \node (end) [startstop, below of=pro1] {End};
-                    \draw [arrow] (start) -- (in1);
-                    \draw [arrow] (in1) -- (dec1);
-                \end{tikzpicture}
                 
 
                 % pc:copy_to_folder_ps_c1
@@ -973,6 +973,11 @@ def install_requirements(url: str) -> None:
                 For this cycle I will need to come up with a way to store the configuration file for a project, and also to come up with what information this file might contain. I will also need to consider what the file structure of a directory containing a project will look like. 
 
                 Do this and say some stuff as to why I'm doing it.
+
+                % I need a way to store configuration settings for an individual project
+                % I need a way to store recently stored projects (globally)
+                % I need a way to run projects through command prompt for the main .exe
+                % I need to design a file structure for an individual project
 
             \subsubsection{User Interface}
                 % Need to design 3 UI windows. 
