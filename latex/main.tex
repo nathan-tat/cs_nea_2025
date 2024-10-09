@@ -964,20 +964,22 @@ def install_requirements(url: str) -> None:
 
 
         \subsection{Design}
-            The general idea is that it will use one program (this is the same one that the installer creates a shortcut to).
-            From then the user will be able to choose whether to open a new or existing project
-            If an existing project then the user will navigate to the project FILE inside the project folder, select it, and then it will use that to open everything necessary
-            If a new project then the user will select the DIRECTORY where they want the project file to be in. They will also decide on a name. I might also decide to include a drop down menu to select some kind of "type" or something.
+            % The general idea is that it will use one program (this is the same one that the installer creates a shortcut to).
+            % From then the user will be able to choose whether to open a new or existing project
+            % If an existing project then the user will navigate to the project file inside the project folder, select it, and then it will use that to open everything necessary
+            % If a new project then the user will select the DIRECTORY where they want the project file to be in. They will also decide on a name. I might also decide to include a drop down menu to select some kind of "type" or something.
+
+            The idea of this cycle is that it will use one program, which is the one that the installer creates a shortcut to, from which the user will be able to decide whether to open a new or existing project. If the user chooses the former, then they will be prompted to select the \textit{directory} in which they would like to initialise their project, and if the latter then they will be prompted to select the \textit{project file} for their project. 
+            The user will initialy start on one user interface screen and depending on their choice go to one of two other user interface screens.
 
             \subsubsection{Data Structures}
-                For this cycle I will need to come up with a way to store the configuration file for a project, and also to come up with what information this file might contain. I will also need to consider what the file structure of a directory containing a project will look like. 
 
-                Do this and say some stuff as to why I'm doing it.
-
-                % I need a way to store configuration settings for an individual project
-                % I need a way to store recently stored projects (globally)
-                % I need a way to run projects through command prompt for the main .exe
-                % I need to design a file structure for an individual project
+                \begin{itemize}
+                    \item I need a way to store configureation settings for an individual project
+                    \item I need a way to store recently stored projects globally
+                    \item I need a way to run projects through the command prompt for the main executable
+                    \item I need to design a file structure for an individual project
+                \end{itemize}
 
             \subsubsection{User Interface}
                 % Need to design 3 UI windows. 
@@ -1015,7 +1017,7 @@ def install_requirements(url: str) -> None:
 
                 I change I have made in \autoref{fig:menu_2_design_c2} compared to \autoref{fig:menu_1_design_c2} is in moving the "Cancel" button to the bottom left corner instead of keeping it in the bottom right corner. I decided this was better as it stayed consistent with the previous cycle, see \autoref{fig:installer_gui_design_c1}, and that that is how people tend to read (the order being top left, top right, bottom left, bottom right, according to \href{https://www.interaction-design.org/literature/article/visual-hierarchy-organizing-content-to-follow-natural-eye-movement-patterns}{the Interaction Design Foundation}). As part of my reflection from the first cycle, I have decided to include a "Browse" button, which will allow the user to select a directory using the familiar user interface of their operating system, as opposed to being forced to type in their directory manually. This is better as it increases usability. 
 
-                \clearpage
+                % \clearpage
                 % fig:menu_2_design_c2
                 % design for opening a menu 
                 \begin{figure}[!ht]
