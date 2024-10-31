@@ -99,6 +99,8 @@ def create_shortcut(source: str, dest: str) -> None:
     
     shortcut.WorkingDirectory = source
     shortcut.save()
+    
+    print("Desktop shortcut created")
 
     
 
@@ -141,6 +143,16 @@ class InstallGUI:
         self.lbl_welcome["text"] = "This is the installer."
         self.lbl_welcome.place(x=20,y=20,width=170,height=30)
         
+        self.check_var = tk.IntVar()
+        self.check_shortcut = tk.Checkbutton(root, variable=self.check_var)
+        self.check_shortcut["text"] = "Desktop Shortcut"
+        self.check_shortcut.place(x=20,y=90)
+        
+        # self.lbl_shortcut = tk.Label(root)
+        # self.lbl_shortcut["justify"] = "center"
+        # self.lbl_shortcut["text"] = "Desktop shortcut"
+        # self.lbl_shortcut.place(x=35,y=90)
+        
         self.filepath = None
 
 
@@ -172,19 +184,27 @@ class InstallGUI:
         self.btn_install["state"] = "disabled"
         
         self.lbl_welcome["text"] = "Please wait... Downloading..."
-        
+
+
+        # skip this while testing 
         if not testing:
-            # this probably works
             try:
                 install_requirements(REQ)
                 download_from_github(self.filepath)
-                
+
+                if self.check_var.get():
+                    # get name of user currently logged in
+                    user = os.getlogin() 
+                    create_shortcut(self.filepath + r"\main.py", fr"C:\Users\{user}\Desktop")
+
             except Exception as e:
                 # if something goes wrong then output the exception that was raised
                 self.lbl_welcome["text"] = f"something bad happened: {e}"
+
             else:
                 # if everything goes fine
                 self.lbl_welcome["text"] = f"Installed to {self.lbl_dir['text']}"
+
         else:
             self.lbl_welcome["text"] = f"Installed to {self.lbl_dir['text']}"
         
