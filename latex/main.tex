@@ -3,6 +3,7 @@
 \usepackage{array}
 \usepackage{booktabs}
 \usepackage{caption}
+\usepackage{dirtree}
 \usepackage{fancyhdr}
 \usepackage[a4paper, margin=1in]{geometry}
 \usepackage[hidelinks]{hyperref}
@@ -10,6 +11,7 @@
 \usepackage{xcolor}
 \usepackage{subcaption}
 \usepackage{listings,cleveref}
+\usepackage{newfloat} % https://tex.stackexchange.com/questions/95631/defining-a-new-type-of-floating-environment 2024-10-14
 \usepackage{multimedia}
 \usepackage[normalem]{ulem}
 \usepackage[edges]{forest}
@@ -18,36 +20,62 @@
 \usepackage{tabularx}
 \usepackage{graphics}
 \usepackage{tikz}
+\usepackage{pgf-umlcd}
+\usepackage{ifthen}
+\usepackage{xstring}
+\usepackage{calc}
+\usepackage{pgfopts}
+% \usepackage{tikz-uml}
 \usetikzlibrary{shapes.geometric, arrows}
 \usetikzlibrary{arrows.meta} % for the hierarchy diagrams i think
 \useunder{\uline}{\ul}{}
+\renewcommand{\arraystretch}{1.2}
 
 \definecolor{LightGray}{gray}{0.9}
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 % \textwidth = 415.37 pt
 
+\renewcommand{\lstlistlistingname}{Code fragments}
 
+\renewcommand{\umlfillcolor}{white}
+\renewcommand{\umldrawcolor}{black}
 
 % Types of floats: 
-%   FIG - Figure or Image file
-%   PC - Pseudocode snippet
-%   SC - Sourcecode snippet
-%   TBL - Table
+%   FIG     - Figure or Image file
+%   PC      - Pseudocode snippet
+%   SC      - Sourcecode snippet
+%   TBL     - Table
+%   FLOW    - Flowchart
+%   FOR     - Forest
+%   DIR     - Directory Tree
 
 % for labels use this convention: 
 % {sensible_identifier}_{type}{numbering(if necessary)}_{cycle/section_name}
+
+\DeclareFloatingEnvironment[fileext=frm,placement={!ht},name=Code]{code}
+
+% ps, fig, flow, for, dir is declared in a figure
+% sc is declared in a listing
+% tbl is declared in a table
+
+
+
+% https://perso.ensta-paris.fr/%7Ekielbasi/tikzuml/var/files/doc/tikzumlmanual.pdf
+% 2024-10-16 Class Diagrams
 
 % Sections should have a linebreak above and below, except when going from a lower level to 
 % a higher level in which case there should be two above the higher level.
 
 % \pagebreak should have a line break above and below.
 
+\setlength{\parindent}{0pt}
+
 
 % Defining tikz styles for the flowcharts
-\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
-\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
-\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
-\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, ]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black,]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black,]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, ]
 \tikzset{%
     subprocess/.style = {rectangle, draw=black, fill=orange!30,
                          minimum width=3cm, minimum height=1cm, inner xsep=3mm,
@@ -61,6 +89,60 @@
 }
 
 \tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{darrow} = [dashed,->,>=stealth]
+
+
+% These are for the directory trees which are pretty 
+\definecolor{folderbg}{RGB}{124,166,198}
+\definecolor{folderborder}{RGB}{110,144,169}
+\newlength\Size
+\setlength\Size{4pt}
+\tikzset{%
+    folder/.pic={%
+        \filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);
+        \filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+    },
+    file/.pic={%
+        \filldraw [draw=folderborder, top color=folderbg!5, bottom color=folderbg!10] (-\Size,.4*\Size+5pt) coordinate (a) |- (\Size,-1.2*\Size) coordinate (b) -- ++(0,1.6*\Size) coordinate (c) -- ++(-5pt,5pt) coordinate (d) -- cycle (d) |- (c) ;
+    },
+}
+
+\forestset{%
+    declare autowrapped toks={pic me}{},
+    declare boolean register={pic root},
+    pic root=0,
+    pic dir tree/.style={%
+        for tree={%
+            folder,
+            font=\ttfamily,
+            grow'=0,
+            directory,
+            fit=band
+        },
+        before typesetting nodes={%
+            for tree={%
+                edge label+/.option={pic me},
+            },
+            if pic root={
+                tikz+={
+                    \pic at ([xshift=\Size].west) {folder};
+                },
+                align={l}
+            }{},
+        },
+    },
+    pic me set/.code n args=2{%
+        \forestset{%
+            #1/.style={%
+                inner xsep=2\Size,
+                pic me={pic {#2}},
+            }
+        }
+    },
+    pic me set={directory}{folder},
+    pic me set={file}{file},
+}
+
 
 \begin{document}
     \pagestyle{fancy}
@@ -87,6 +169,15 @@
 
     \tableofcontents
 
+    \newpage
+    \listoffigures
+
+    \newpage
+    \listoftables
+
+    \newpage
+    \lstlistoflistings
+
     \pagebreak
 
     \fancyhead[L]{Nathan Tatkowski}
@@ -105,8 +196,12 @@
         \subsection{Description of the Current System}
             Without using computer simulations, the usual process is to produce a handful of equations by hand that would model the attributes of an object, for example the path it takes in three-dimensional space. This has the benefit of giving exact values and equations that are very useful when trying to understand the underlying reasons for an event happening. For example when considering a pendulum, it is clear from the equation $$ T = 2 \pi \sqrt{\frac{L}{g}} $$ that the period of the pendulum $T$ does not depend on the mass of the object doing the swinging. However, when running computer simulations, such relationships may not be as obvious, and as computers aren't able to analytically solve problems (i.e. through the use of rigorous mathematics), this is a drawback that I will have to consider. A computer model of a circuit can only be so accurate, as there aren't enough resources or time in order to model every single electron, proton, and neutron and all the intricate interactions they have with each other in real time.
             
+
+        \pagebreak
+
         \subsection{Identification of Stakeholders}
             After considering the problem I identified the following groups that could use a solution to this problem, as well as having useful insight on how a program like this should function.
+
 
             % Identified Groups
             \begin{itemize}
@@ -150,7 +245,6 @@
                     \item Doing hard work to get to a result is rewarding and relaxing. Offloading a lot of that work to a computer would reduce the enjoyment from this process.
                 \end{itemize}
 
-
                 \textbf{Disadvantages:}
                 \begin{itemize}
                     \item Difficult to organise. You can't save paper notes in a way that is easily shareable and easy to organise on a computer (other than scanning them as PDF files which can take a lot of time and my clients find annoying). It may also be hard to stay consistent with formatting due to how versatile it is, as seen in \autoref{fig:daniel_working}.
@@ -175,7 +269,7 @@
 
                 The simplicity of Desmos allows it to be very versatile, but that also means its more of a jack-of-all-trades and master of none, so it wouldn't be very good for a more specialised application (like the ones being considered).
 
-                \pagebreak
+                % \newpage
 
                 \textbf{Advantages:}
                 \begin{itemize}
@@ -237,56 +331,12 @@
                     \item I found the system for placing new components in to be quite clunky and frustrating to get used to. Drawing the components is a good system, but the way it was implemented felt annoying to place in new components, it felt like you had to already know where you want to place components beforehand, which limits the freedom the user has to experiment with new arrangements. 
                 \end{itemize}
 
-                \pagebreak
-        
 
         \subsection{Success Criteria of the Proposed System}
-            This is a table of what the essential criteria for the solution are.
-
-            % Essential Success Criteria TBL
-            \begin{table}[!ht]
-                \centering
-                \footnotesize
-                \begin{tabular}{|l|m{187pt}|m{188pt}|l|}
-                    \hline
-                    ID & Feature & Justification & Ref. \\ \hline
-                    A1 & Model electric circuits \textbf{accurately} & This is the main purpose of the system and is something many of the stakeholders said they struggled with. & 1.5 \\ \hline
-                    A2 & Be able to handle \textbf{10 or fewer} components in a single circuit (excluding multimeters and wires). This requirement will be tested on my specific device, and possible on others if I get the access to them. & It is very uncommon for circuits studied at GCSE and A-Level to exceed 10 components, and as most of my clients study at that level I felt this number was appropriate. & 1.4 \\ \hline
-                    A3 & Have support for \textbf{at least} the following components: cell, wire, filament bulb, resistor, multimeter, switch. Each should have respective attributed be customisable (e.g. resistivity for wire, E.M.F. for cell) & This comes from analysis of common circuits seen at GCSE and A-Level circuits, which most commonly make use of these components. & 1.4 \\ \hline
-                    A4 & Have general attributes of the circuit displayed, such as total resistance, current, potential difference, and electro-motive forces & These are all useful attributes to know about a circuit when analysing it. &  \\ \hline
-                    A5 & Have a "snapshot" button that would be able to log attributes of all components at the time of the button press. This data could then be exported to a CSV file or similar for independent analysis by the user. & Allowing the user to easily collect data on components would make it easier for them to perform analysis on circuits and practice core skills that are a part of doing a practical at A-Level or GCSE. Building up these skills could allow for working with more complex systems to be easier. & 1.4 \\ \hline
-                    A6 & An intuitive way to add components to a circuit, most likely being able to drag components onto the main stage using the mouse. & This way of interaction seems like the most intuitive way of adding new components. This would allow the user to easily interact with the software and be able to spend more time on learning the content rather than learning how to use the software. & 1.4 \\ \hline
-                    A7 & \textbf{Charge flow indicators} to visualised charge flow around a circuit. Toggle between electron flow, conventional current, and off. & A concept that comes up in A-Level quite frequently is the conservation of charge and the actual movement of electrons and their interactions with circuit components. This feature would make it very easy to see how the electrons actually move about in the circuit, and make ideas like Kirchoff's Laws much easier to understand. & 1.4 \\ \hline
-                    A8 & Nameable components, for easier management. & If working on more complicated circuits, a way to be able to label components and then search for them would be very beneficial, rather than "component 1", "component 2", and so on, especially for my client Hugo who often works on complex electrical systems. & 1.4 \\ \hline
-                \end{tabular}
-                \caption{Essential success criteria}
-                \label{tbl:essential_succ_crit}
-            \end{table}
-
-            % Add success criteria relating to the installer into the table above
-            % Also learn to format tables in LaTeX.
+            See \autoref{tbl:essential_succ_crit} for a table of essential success criteria for the system. 
 
 
-            \pagebreak
-
-            Here is a table of optional criteria for the solution, that would still benefit the users but aren't essential for it to be deemed functional and are mostly quality of life features.
-            
-            % Optional Success Criteria TBL
-            \begin{table}[!ht]
-                \centering
-                \footnotesize
-                \begin{tabular}{|l|m{200pt}|m{200pt}|}
-                    \hline
-                    ID & Feature & Justification \\ \hline
-                    B1 & Be able to handle multiple (two or more) separate circuits running simultaneously. & This feature could be useful when studying more complex electrical systems, however it is more of a way to measure the performance and efficiency of the program, and this is a good target to work towards. \\ \hline
-                    B2 & Have the snapshot button be more customisable, with snapshots possible occurring automatically after a given time period. Could also have the snapshot button only take in certain attributes of certain components rather than all of them. & This feature would allow for easier monitoring of data as well as not having to take in all of the data, which could be a lot if the circuit is complex enough. \\ \hline
-                    B3 & Include customisable themes and/or accessibility features such as accounting for different types of colour blindness. & In order to make my solution as accessible as possible to help as many students as possible, being able to change the colour scheme would be a very useful feature. \\ \hline
-                    B4 & Being able to export and import circuit arrangements. & This would allow for easier collaboration, also between students and teachers, which would help as it would be much easier to communicate ideas. \\ \hline
-                    B5 & Adding keyboard shortcuts & Keyboard shortcuts would heavily streamline the use of a software like this, especially as the user gets more and more accustomed to them over time, as is common in many scientific programs. \\ \hline
-                \end{tabular}
-                \caption{Optional success criteria}
-                \label{tbl:optional_succ_crit}
-            \end{table}
+            See \autoref{tbl:optional_succ_crit} for a table of optional criteria for the solution, that would still benefit the users but aren't essential for it to be deemed functional and are mostly quality of life features.
         
         
         % \subsection{Data Source(s)}
@@ -361,7 +411,6 @@
             %             ]
             %         \end{forest}
             % \end{center}
-                
 
             Each cycle will be taken on individually. I had to get rid of the overall hierarchy diagram because it wouldn't compile for some reason. (I will add it back later)
             
@@ -404,7 +453,7 @@
                         ]
                     ]
             \end{forest}
-            \caption{Hierarchy diagram for Cycle 1}
+            \caption{Cycle 1 hierarchy diagram.}
             \label{for:hierarchy_diagram_c1}
         \end{figure}
 
@@ -412,36 +461,33 @@
             In this cycle I will create a way to install the program onto the user's computer using Python. This will also include an uninstall program which will allow the user to safely uninstall the program if they wish to do so.
 
             \subsubsection{Success Criteria}
-                These are the success criteria that are going to be used. ID beginning with "X" indicates that it was specifically added for this cycle.
-
-                % tbl:succ_crit_c1
-                % Success Criteria C1 TBL
-                \begin{table}[!ht]
-                    \centering
-                    \begin{tabular}{m{16pt}m{0.8\textwidth}}
-                        ID & Feature \\ \hline
-                        X1 & Install the program from GitHub \\ 
-                        X2 & Be able to uninstall the program safely using the same file. \\ 
-                        X3 & Allow the user to decide which directory to install to. \\ 
-                        X4 & Create an optional Desktop shortcut for the user. \\ 
-                    \end{tabular}
-                    \caption{Success criteria for Cycle 1}
-                    \label{tbl:succ_crit_c1}
-                \end{table}
-
+                See \autoref{tbl:succ_crit_c1}.
                 
         \subsection{Design}
             % Need to do UI and testing here, as well as talk more about how this is going to be implemented
 
             \subsubsection{User Interface}
-                User interface (UI) windows will be implemented as classes that then have individual elements such as buttons, entries, and labels implemented as attributes of the class that can be edited as needed. Buttons will call methods in the class as their functions, allowing them to refer to other UI elements in the same window easily.
+                User interface (UI) windows will be implemented as classes that then have individual elements such as buttons, entries, and labels implemented as attributes of the class that can be edited as needed. Buttons will call methods in the class as their functions, allowing them to refer to other UI elements in the same window easily. See \autoref{fig:install_gui_class_diagram_c1}.
 
                 % fig:install_gui_class_diagram_c1
                 % InstallGUI Class Diagram FIG
                 \begin{figure}[!ht]
                     \centering
-                    \includegraphics[width=.25\textwidth]{figures/c1/design/install_gui_class_diagram.png}
-                    \caption{Class diagram for the InstallGUI class}
+                    \begin{tikzpicture}
+                        \begin{class}[text width=5cm]{InstallGUI}{0,0}
+                            \attribute{btn\_cancel : Button}
+                            \attribute{btn\_install : Button}
+                            \attribute{btn\_browse : Button}
+                            \attribute{ent\_dir : Entry}
+                            \attribute{lbl\_welcome : Label}
+                            \attribute{filepath : String}
+
+                            \operation{btn\_cancel\_command}
+                            \operation{btn\_install\_command}
+                            \operation{btn\_browse\_command}
+                        \end{class}
+                    \end{tikzpicture}
+                    \caption{InstallGUI class diagram}
                     \label{fig:install_gui_class_diagram_c1}
                 \end{figure}
 
@@ -504,33 +550,7 @@
 
             \subsubsection{Data Structures}
 
-                % Data structures C1 TBL
-                \begin{table}[!ht]
-                    \centering
-                    \begin{tabular}{llm{.5\textwidth}}
-                        Name & Data Type/Structure & Data \\ \hline
-                        \verb|project_name| & String (var.) & Name of the project (will be used in displays and for organisational purposes) \\
-                        \verb|working_dir| & String (var.) & The working directory of the project \\
-                        \verb|source| & String (const.) & Where all the relevant files are initially stored \\
-                        \verb|location| & String (var.) & Destination folder for exporting, inputted by user \\
-                        \verb|permissions| & Bool (var.) & True if and only if the instance of the program has been run with administrator privileges. This limits the directories available. \\
-                        \verb|safety| & Bool (var.) & Set to true if the program is terminated safely by use of the "Cancel" button
-                    \end{tabular}
-                    \caption{Data structures that will be used in cycle 1}
-                    \label{tbl:data_structs_c1}
-                \end{table}
-
-                % \begin{table}\centering
-                %     \ra{1.3}
-                %     \begin{tabularx}{\textwidth}{@{}ccc@{}}\toprule
-                %     Name & Data Type & Data \\ \midrule
-                %     project_name & String (variable) & Name of the project, will be used in displays and for organisational purposes.\\
-                %     \bottomrule
-                %     \end{tabularx}
-                %     \caption{Caption}
-                % \end{table}
-
-                The user may not always have permissions to save into/export into the directory they have selected. When doing file management using for example the file explorer on Windows 10, the operating system will handle telling the user that they have invalid permissions. However, when attempting operations on files with invalid permissions through a programming language such as Python, the error will be raised in the program. Due to this I have included a \verb|permissions| variable that checks whether the program has permissions to write to a given directory to prevent this.
+                The user may not always have permissions to save into/export into the directory they have selected. When doing file management using for example the file explorer on Windows 10, the operating system will handle telling the user that they have invalid permissions. However, when attempting operations on files with invalid permissions through a programming language such as Python, the error will be raised in the program. Due to this I have included a \verb|permissions| variable that checks whether the program has permissions to write to a given directory to prevent this. See \autoref{tbl:data_structs_c1} for a table of data structures.
 
             \subsubsection{Algorithms}
                 I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program.
@@ -603,40 +623,456 @@
                 % Little design for when the user doesn't exit the program safely. 
                 \begin{figure}[!ht]
                     \centering
-                    % \includegraphics[width=.5\textwidth]{figures/c1/design/installer_ui_design_unsafe_exit.png}
+                    \includegraphics[width=.5\textwidth]{figures/c1/design/installer_ui_design_unsafe_exit.png}
                     \caption{Unsafe termination of the program alert}
                     \label{fig:installer_ui_design_unsafe_exit_c1}
                 \end{figure}
 
+
         \subsection{Testing}
 
-            Tests will be done
-            \begin{table}[!ht]
-                \centering
-                \begin{tabular}[t]{@{}lm{.18\textwidth}m{.18\textwidth}m{.18\textwidth}m{.18\textwidth}}
-                TestID & Test Reason & Type & Test Data & Expected Outcome \\ \hline
-                I1 & Testing input validation for directories. & Normal & C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}testI1, any existing directory. & \autoref{fig:install_ui_successful_design_c1} \\
-                I2 & Testing input validation for directories. & Erroneous & "C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}fake", any non-existing directory. & \autoref{fig:installer_ui_design_directory_error} \\
-                I3 & Testing how the program handles the directory being deleted/altered during the installation process. & Boundary & "C:\textbackslash{}Users\textbackslash{}Lilly\textbackslash{}nathan\textbackslash{}testI3", any existing directory. & \autoref{fig:installer_ui_design_other_error} \\
-                I4 & Testing how the program reacts to being terminated without the use of the "Cancel" button. & Erroneous & N/A & \autoref{fig:installer_ui_design_unsafe_exit_c1} \\
-                I5 & Testing how the program handles being terminated through the use of the "Cancel" button before the installation process & Normal & Pressing the "Cancel" button before pressing the "Install" button & Closing the window \\
-                I6 & Testing how the program handles being terminated through the use of the "Cancel" button after the installation process & Normal & Pressing the "Cancel" button after pressing the "Install" button & Closing the window \\
-                \end{tabular}
-                \caption{Test data (not actually finished)}
-                \label{tbl:test_data_before_c1}
-            \end{table}
+            See \autoref{tbl:test_data_before_c1} for the testing table for this cycle.
 
 
         \subsection{Implementation}
             % I neeed to ask if I'm doing a diary style implementation or the other one cause i have no clue
             % I find it easer to write some code, insert a screenshot of it working/not working, and then explaining why I did what I did/what I did to fix it
 
-            The installer will copy files from a specified repository on GitHub, which will store all the necessary files for the program to run, into a folder specified by the user, which will then be referred to by the program as the source folder. 
+            % The installer will copy files from a specified repository on GitHub, which will store all the necessary files for the program to run, into a folder specified by the user, which will then be referred to by the program as the source folder. 
 
-            % sc:if_name_main_c1
-            % if name main for the installer.py 
+
+            % In \autoref{sc:if_name_main_c1}, there is code that is executed when the \verb|installer.py| file is run. This includes a check for whether the program is currently being run in administrator mode, shown in \autoref{sc:admin_checker}. This differs slightly from the design in \autoref{tbl:data_structs_c1}, where there was a variable defined to do the same thing. I found this implementation more readable and understandable, as using a function that returns a boolean value emphasises the fact that I want to check the permissions at a single moment in time. The code continues to start the UI so that the user can interact with the program. The code shown in \autoref{sc:admin_checker} is from StackOverflow. 
+            % I am going to work on proper references at some point for this document
+
+
+            When the Python interpreter reads a source file, it sets the variable \verb|__name__| to \verb|__main__| if the program is being run as the main program, or as the filename if the program is being imported.
+            In order to avoid problems such as the installer being run unintentionally, I have decided to check this value of this variable to make certain that no code is executed in the case that the file is imported somewhere, see \autoref{sc:if_name_main_c1}.
+            In this beginning if-statement, there is also a check for whether the program is being run using elevated privileges or not, using the function shown in \autoref{sc:admin_checker}. 
+            This prevents the user from encountering errors when trying to install to a location that they don't have permission to.
+            This part of the program is also when the GUI element is run, as well as a safety check that is explained later.
+
+
+            % fig:installer_gui_ss1_c1
+            % Installer GUI evidence FIG
             \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+                \centering
+                \includegraphics[width=.5\textwidth]{figures/c1/implement/installer_gui_pf1.png}
+                \caption{Installer in action}
+                \label{fig:installer_gui_ss1_c1}
+            \end{figure}
+
+
+            While implementing the UI elements, I discovered that Tkinter, the Python library I decided to make use of for the UI, allowed for opening a pop-up dialogue in which the user could select a folder, as demonstrated in \autoref{fig:installer_gui_ss1_c1}.
+            This avoided the need to validate the user's entry as well as the need for a user text input at all, since the user can only select directories that exist on their computer. 
+            This also lead to the abandoning of a default install directory being entered for the user, which was initially introduced due to how awkward it would've been to input a directory.
+
+
+            In the function tied to the Install button, see \autoref{sc:install_btn_sc_c1}, there are two functions called, \verb|install_requirements| and \verb|download_from_github|. 
+            The former of these makes sure that the user has all the necessary Python libraries installed on their device, so that the program can function properly. 
+            Originally, I was planning to completely make use of a Python library that would have allowed me to interact with the GitHub API, but I could not find one that would do that for me and work, instead I managed to find code that would do the same thing, which is shown in \autoref{sc:dl_from_github_stolen_c1}, courtesy of GitHub user \href{https://github.com/Nordgaren/Github-Folder-Downloader/tree/master}{Nordgaren}.
+
+
+            The latter function in \autoref{sc:dl_from_github_stolen_c1} is finally called by another function \verb|download_from_github|, see \autoref{sc:final_dl_func_c1}, which passes all the arguments such as the name of the repository as well as the path to the folder into the previous functions. 
+            These values are stored as constants in the same file, so it is clear what they are and what they mean, see \autoref{sc:consts_install_c1}. 
+            The new function takes in one argument which will be the directory that the user has selected as their install directory. 
+
+
+            As previously mentioned, I want to use a function in order to make sure that the relevant Python libraries are installed, which is shown in \autoref{sc:install_reqs_fail1_c1}. 
+            When this function is called in the program, see \autoref{sc:install_btn_sc_c1} line 22, the \verb|REQ| constant from is always passed as the argument, which links to the \verb|requirements.txt| file in the GitHub repository. However, this feature doesn't work as intended, see \autoref{fig:install_reqs_fail_pf_c1}, so it is commented out in the current version.
+
+
+            % fig:install_reqs_fail_pf_c1
+            % cmd ss proof to show that it failed
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=\textwidth]{figures/c1/implement/installer_req_fail1.png}
+                \caption{Failure of install requirements function}
+                \label{fig:install_reqs_fail_pf_c1}
+            \end{figure}
+            
+
+            % I need to test it
+            I then decided to implement the function in order to create a desktop shortcut, shown in \autoref{sc:create_shortcut_c1}.
+
+
+
+        \subsection{Evaluation}
+            In this section I will conclude whether or not I have managed to meet the success criteria outlined at the beginning of the cycle. 
+
+    \clearpage
+    \section{Cycle 2: Project Management}
+        \subsection{Brief Outline}
+            This cycle will cover initialising and opening "projects", which will be how the user will be able to save their work and access it at a later time. 
+            
+            % for:hierarchy_diagram_c2
+            % Cycle 2 Hierarchy diagram
+            \begin{figure}[!ht]
+                \centering
+                \footnotesize
+                \begin{forest}
+                    for tree={
+                        align=center,
+                        font=\sffamily,
+                    edge+={thick, -{Stealth[]}},
+                    l sep'+=10pt,
+                    fork sep'=10pt,
+                    },
+                    forked edges,
+                    if level=0{
+                        inner xsep=0pt,
+                        tikz={\draw [thick] (.children first) -- (.children last);}
+                        }{},
+                        [Project Management
+                            [Opening projects
+                                [Choosing working\\directory]
+                                [Verifying files]
+                            ]
+                            [Initialising projects
+                                [Initialising files]
+                                [Choosing working\\directory
+                                    [Naming projects]
+                                ]
+                            ]
+                        ]
+                \end{forest}
+                \caption{Cycle 2 hierarchy diagram}
+                \label{for:hierarchy_diagram_c2}
+            \end{figure}
+
+                
+            \subsubsection{Success Criteria}
+                See \autoref{tbl:succ_crit_c2}.
+
+
+        \subsection{Design}
+            % The general idea is that it will use one program (this is the same one that the installer creates a shortcut to).
+            % From then the user will be able to choose whether to open a new or existing project
+            % If an existing project then the user will navigate to the project file inside the project folder, select it, and then it will use that to open everything necessary
+            % If a new project then the user will select the DIRECTORY where they want the project file to be in. They will also decide on a name. I might also decide to include a drop down menu to select some kind of "type" or something.
+
+            The idea of this cycle is that it will use one program, which is the one that the installer creates a shortcut to, from which the user will be able to decide whether to open a new or existing project. If the user chooses the former, then they will be prompted to select the \textit{directory} in which they would like to initialise their project, and if the latter then they will be prompted to select the \textit{project file} for their project. 
+            The user will initialy start on one user interface screen and depending on their choice go to one of two other user interface screens.
+
+            \subsubsection{Data Structures}
+
+                Each directory that contains a project will include a configuration JSON file that will inform the main program on how to treat the project.
+                
+                As shown in \autoref{ps:json_proj_config_example}, multiple properties regarding the project will be stored. Some of these will be set at the beginning and not changed again, such as \verb|directory|, and others are able to change even after the project's initial creation, in particular \verb|last_opened| will need to updated whenever the project is opened. Note that double backwards slashed are used for the \verb|directory| attribute, as a backwards slash is used as an escape character in the JSON file format.
+
+                % ps:json_proj_config_example
+                % Example for the JSON config file for a project
+                \begin{figure}[!ht]
+                    \begin{minted}[linenos]{json}
+{
+    "directory": "C:\\users\\...",
+    "project_name": "this is a project name",
+    "type": "project type",
+    "created": "UNIX timestamp",
+    "last_opened": "UNIX timestamp"
+}
+                    \end{minted}
+                    \caption{Configuration JSON file example}
+                    \label{ps:json_proj_config_example}
+                \end{figure}
+                
+                Another data structure that needs to be designed will be used to implement a feature that allows the user to select their most recent projects from a list. 
+                This data structure will need to be First In First Out, similar to a queue, however I would like it to only hold a maximum of three items. 
+                See \autoref{flow:queue_like_design} for details.
+
+                % flow:queue_like_design
+                % Design for the queue-like datastructure
+                \begin{figure}[!ht]
+                    \centering
+                    \begin{tikzpicture}[node distance=2cm]
+                        \node (2) [process, align=center] {B};
+                        \node (1) [process, left of=2,  align=center, xshift=-2.0cm] {A};
+                        \node (3) [process, right of=2, align=center, xshift=2.0cm] {C};
+                        \node (4) [process, below of=1, align=center, ] {A};
+                        \node (5) [process, below of=2, align=center, ] {B};
+                        \node (6) [process, below of=3, align=center, ] {C};
+                        \node (7) [process, right of=6, align=center, xshift=2.0cm] {D (New item)};
+                        \node (8) [process, below of=5, align=center, ] {B};
+                        \node (9) [process, below of=6, align=center, ] {C};
+                        \node (10) [process, below of=7, align=center, ] {D};
+                        \draw [arrow] (2) -- (1);
+                        \draw [arrow] (3) -- (2);
+                        \draw [darrow] (5) -- (4);
+                        \draw [arrow] (6) -- (5);
+                        \draw [arrow] (7) -- (6);
+                        \draw [arrow] (9) -- (8);
+                        \draw [arrow] (10) -- (9);
+                    \end{tikzpicture}
+                    \caption{How the queue-like structure will operate. Arrows point to the next oldest item.}
+                    \label{flow:queue_like_design}
+                \end{figure}
+
+                This structure will be implemented with the use of a text file that will store the three most recent projects in order.
+
+                % dir:project_directory_tree_example_c2
+                % Directory tree for an example project
+                \begin{figure}[!ht]
+                    \centering
+                    \begin{forest}
+                        pic dir tree,
+                        pic root,
+                        for tree={% folder icons by default; override using file for file icons
+                            directory,
+                        },
+                        [project-name
+                            [arrangements.json, file
+                            ]
+                            [config.json, file
+                            ]
+                        ]
+                    \end{forest}
+                    \caption{Directory tree example}
+                    \label{dir:project_directory_tree_example_c2}
+                \end{figure}
+
+
+                In \autoref{dir:project_directory_tree_example_c2}, I have designed the file structure for a single project. 
+                The \verb|arrangements.json| file will hold how the components are arranged on the board. This is what the main program will use to run. 
+                See \autoref{ps:json_proj_config_example} for the layout of \verb|config.json|.
+
+
+            \subsubsection{User Interface} 
+                % Need to design 3 UI windows. 
+                % One initial one that will then decide to go into one of the other two 
+
+                % The initial one only needs two options, but something like a "recently viewed" might be nice.
+                % It also will need a cancel option.
+
+                % If user decides to open existing project, then need a browse directory button, as well as a confirm button. I don't think it needs anything more than that.
+                % I think this could have a dropdown that could open a template 
+                
+                % If user decides to open new project, then need a "Name" entry, as well as a directory entry. Also confirm and cancel buttons. 
+
+                There will be three user-interface menus covered in this section, one for where the user decides to open a new or existing project, and one each for actually selecting the project they want to open/create. 
+                This was mainly inspired by the user-interface from Visual Studio 2022, see \autoref{fig:vs22_ui_ss_c2}, which shows a minimal design with only the necessary features shown.
+                The layout is also very user-friendly, with large clear buttons shown as well as recently opened/viewed projects.
+
+                % fig:vs22_ui_ss_c2
+                % Screenshot from visual studio 22 that shows the UI for opening a project
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c2/design/vscode22.png}
+                    \caption{Screenshot from Visual Studio 2022}
+                    \label{fig:vs22_ui_ss_c2}
+                \end{figure}
+
+                With the colour-scheme, I have decided to stay consistent with my user interface from Cycle 1. The colours, borders, and fonts are the same. 
+                I have decided to follow a similar layout to the one shown in \autoref{fig:vs22_ui_ss_c2}, but I chose to only have buttons for the three most recently viewed projects, as opposed to all of them sorted by date. 
+                If the user has yet to open three projects, then the others would be greyed out and the user would not be able to click on them. 
+                The justification for only showing three is that it could be difficult to implement an embedded window that allows the user to scroll through it independently of the rest of the window, and that the user will likely not not be working on more than three at a time. 
+
+                % fig:menu_1_design_c2
+                % first UI menu to show
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c2/design/ui1.png}
+                    \caption{Design for first menu}
+                    \label{fig:menu_1_design_c2}
+                \end{figure}
+
+                \pagebreak
+                I change I have made in \autoref{fig:menu_2_design_c2} compared to \autoref{fig:menu_1_design_c2} is in moving the "Cancel" button to the bottom left corner instead of keeping it in the bottom right corner. I decided this was better as it stayed consistent with the previous cycle, see \autoref{fig:installer_gui_design_c1}, and that that is how people tend to read (the order being top left, top right, bottom left, bottom right, according to \href{https://www.interaction-design.org/literature/article/visual-hierarchy-organizing-content-to-follow-natural-eye-movement-patterns}{the Interaction Design Foundation}). As part of my reflection from the first cycle, I have decided to include a "Browse" button, which will allow the user to select a directory using the familiar user interface of their operating system, as opposed to being forced to type in their directory manually. This is better as it increases usability. 
+
+                % \clearpage
+                % fig:menu_2_design_c2
+                % design for opening a menu 
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c2/design/ui2_open_existing.png}
+                    \caption{Design for opening an existing project}
+                    \label{fig:menu_2_design_c2}
+                \end{figure}
+
+                In \autoref{fig:init_new_proj_ui_design_c2}, I have designed the user interface for initialising a new project. The user will be allowed to select the name of the project and the directory in which the project is stored. I have also decided to include a dropdown selection box that would allow the user to select the "type" of project. At this time, I am not certain of what that exactly refers to. However, in the future I could use it for something. For example, the user being able to choose from a selection of pre-made circuits as a demonstration of the software.
+
+                % fig:init_new_proj_ui_design_c2
+                % design for the ui for initialising a new project
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{figures/c2/design/ui2_init_new_proj.png}
+                    \caption{Design for initialising a new project}
+                    \label{fig:init_new_proj_ui_design_c2}
+                \end{figure}
+
+                Following the menu from \autoref{fig:menu_2_design_c2} and \autoref{fig:init_new_proj_ui_design_c2}, the user will be taken to the main program, which will be taken on in a separate cycle.
+
+
+            \subsubsection{Algorithms}
+                % I'll need an algorithm for "opening" a project. i.e. passing off a directory as an argument to another function.
+                % I'll need an algorithm to initiate a configuration file
+                % I'll also need to think about how I will be able to lead from one UI element to another, something like this https://stackoverflow.com/questions/19473072/show-another-ui-file-on-button-click
+
+                For this cycle I have decided to plan some key algorithms. These include algorithms to initiate a configuration file, opening a project, and updating the queue-like data structure.
+
+                % pc:init_config_file_c2
+                % Pseudocode to initiate the configuration file in a project folder from UI
+                \begin{figure}[!h]
+                    \begin{minted}[linenos]{python}
+import json
+
+def create_config_file():
+    dictionary = {
+        "directory": ent_directory.text,
+        "project_name": ent_name.text,
+        "type": drop_type.text,
+        "created": UNIX(),
+        "last_opened": UNIX()
+    }
+
+    with open("config.json") as file:
+        json.dumps(dictionary, file)
+                    \end{minted}
+                    \caption{Pseudocode to initiate configuration file}
+                    \label{pc:init_config_file_c2}
+                \end{figure}
+
+
+                
+            
+        \subsection{Testing}
+        \subsection{Implementation}
+        \subsection{Evaluation}
+
+
+    \newpage
+    \appendix
+
+    \section{Tables}
+
+        % tbl:essential_succ_crit
+        % Essential Success Criteria TBL
+        \begin{table}[!h]
+            \centering
+            \footnotesize
+            \begin{tabular}{@{}lp{185pt}p{200pt}l@{}} \toprule
+                \textbf{ID} & \textbf{Feature} & \textbf{Justification} & \textbf{Ref.} \\ \midrule
+                A1 & Model electric circuits accurately & This is the main purpose of the system and is something many of the stakeholders said they struggled with. & 1.5 \\ \medskip
+                A2 & Be able to handle 10 or fewer components in a single circuit (excluding multimeters and wires). This requirement will be tested on my specific device, and possible on others if I get the access to them. & It is very uncommon for circuits studied at GCSE and A-Level to exceed 10 components, and as most of my clients study at that level I felt this number was appropriate. & 1.4 \\ \medskip
+                A3 & Have support for at least the following components: cell, wire, filament bulb, resistor, multimeter, switch. Each should have respective attributed be customisable (e.g. resistivity for wire, E.M.F. for cell) & This comes from analysis of common circuits seen at GCSE and A-Level circuits, which most commonly make use of these components. & 1.4 \\ \medskip
+                A4 & Have general attributes of the circuit displayed, such as total resistance, current, potential difference, and electro-motive forces & These are all useful attributes to know about a circuit when analysing it. &  \\ \medskip
+                A5 & Have a "snapshot" button that would be able to log attributes of all components at the time of the button press. This data could then be exported to a CSV file or similar for independent analysis by the user. & Allowing the user to easily collect data on components would make it easier for them to perform analysis on circuits and practice core skills that are a part of doing a practical at A-Level or GCSE. Building up these skills could allow for working with more complex systems to be easier. & 1.4 \\ \medskip
+                A6 & An intuitive way to add components to a circuit, most likely being able to drag components onto the main stage using the mouse. & This way of interaction seems like the most intuitive way of adding new components. This would allow the user to easily interact with the software and be able to spend more time on learning the content rather than learning how to use the software. & 1.4 \\ \medskip
+                A7 & Charge flow indicators to visualised charge flow around a circuit. Toggle between electron flow, conventional current, and off. & A concept that comes up in A-Level quite frequently is the conservation of charge and the actual movement of electrons and their interactions with circuit components. This feature would make it very easy to see how the electrons actually move about in the circuit, and make ideas like Kirchoff's Laws much easier to understand. & 1.4 \\ \medskip
+                A8 & Nameable components, for easier management. & If working on more complicated circuits, a way to be able to label components and then search for them would be very beneficial, rather than "component 1", "component 2", and so on, especially for my client Hugo who often works on complex electrical systems. & 1.4 \\
+                \bottomrule
+            \end{tabular}
+            \caption{Essential success criteria}
+            \label{tbl:essential_succ_crit}
+        \end{table}
+
+
+        \newpage
+        % tbl:optional_succ_crit
+        % Optional Success Criteria TBL
+        \begin{table}[!h]
+            \centering
+            \footnotesize
+            \begin{tabular}{@{}lp{206pt}p{210pt}@{}}
+                \toprule
+                \textbf{ID} & \textbf{Feature} & \textbf{Justification} \\ \midrule
+                B1 & Be able to handle multiple (two or more) separate circuits running simultaneously. & This feature could be useful when studying more complex electrical systems, however it is more of a way to measure the performance and efficiency of the program, and this is a good target to work towards. \\ \medskip
+                B2 & Have the snapshot button be more customisable, with snapshots possible occurring automatically after a given time period. Could also have the snapshot button only take in certain attributes of certain components rather than all of them. & This feature would allow for easier monitoring of data as well as not having to take in all of the data, which could be a lot if the circuit is complex enough. \\ \medskip
+                B3 & Include customisable themes and/or accessibility features such as accounting for different types of colour blindness. & In order to make my solution as accessible as possible to help as many students as possible, being able to change the colour scheme would be a very useful feature. \\ \medskip
+                B4 & Being able to export and import circuit arrangements. & This would allow for easier collaboration, also between students and teachers, which would help as it would be much easier to communicate ideas. \\ \medskip
+                B5 & Adding keyboard shortcuts. & Keyboard shortcuts would heavily streamline the use of a software like this, especially as the user gets more and more accustomed to them over time, as is common in many scientific programs. \\
+                \bottomrule
+            \end{tabular}
+            \caption{Optional success criteria}
+            \label{tbl:optional_succ_crit}
+        \end{table}
+
+
+        \newpage
+        % tbl:succ_crit_c1
+        % Success Criteria C1 TBL
+        \begin{table}[!h]
+            \centering
+            \begin{tabular}{@{}ll@{}} \toprule
+                \textbf{ID} & \textbf{Feature} \\ \midrule
+                X1 & Install the program from GitHub. \\ 
+                X2 & Be able to uninstall the program safely using the same file. \\ 
+                X3 & Allow the user to decide which directory to install to. \\ 
+                X4 & Create an optional Desktop shortcut for the user. \\ 
+                X5 & Install needed Python libraries for the user. \\
+                \bottomrule
+            \end{tabular}
+            \caption{Cycle 1 success criteria}
+            \label{tbl:succ_crit_c1}
+        \end{table}
+
+
+        \newpage
+        % tbl:data_structs_c1
+        % Data structures C1 TBL
+        \begin{table}[!h]
+            \centering
+            \begin{tabular}{@{}llp{.5\textwidth}@{}} \toprule
+                \textbf{Variable} & \textbf{Data Type/Structure} & \textbf{Data} \\ \midrule
+                \verb|project_name| & String (var.) & Name of the project (will be used in displays and for organisational purposes) \\ \medskip
+                \verb|working_dir| & String (var.) & The working directory of the project \\ \medskip
+                \verb|source| & String (const.) & Where all the relevant files are initially stored \\ \medskip
+                \verb|location| & String (var.) & Destination folder for exporting, inputted by user \\ \medskip
+                \verb|permissions| & Bool (var.) & True if and only if the instance of the program has been run with administrator privileges. This limits the directories available. \\ \medskip
+                \verb|safety| & Bool (var.) & Set to true if the program is terminated safely by use of the "Cancel" button \\
+                \bottomrule
+            \end{tabular}
+            \caption{Cycle 1 data structures}
+            \label{tbl:data_structs_c1}
+        \end{table}
+
+
+        \newpage
+        % tbl:test_data_before_c1
+        % Cycle 1 test data
+        \begin{table}[!h]
+            \centering
+            \begin{tabular}{@{}lp{150pt}lp{87pt}l@{}} \toprule
+                \textbf{ID} & \textbf{Reason} & \textbf{Type} & \textbf{Test Data} & \textbf{Expected Outcome} \\ \midrule
+                I1 & Testing input validation for directories & Normal & Any existing directory & \autoref{fig:install_ui_successful_design_c1} \\ \medskip
+                I2 & Testing input validation for directories & Erroneous & Any non-existing directory & \autoref{fig:installer_ui_design_directory_error} \\ \medskip
+                I3 & Testing how the program handles the directory being deleted/altered during the installation process & Boundary & Any existing directory & \autoref{fig:installer_ui_design_other_error} \\ \medskip
+                I4 & Testing how the program reacts to being terminated without the use of the Cancel button & Erroneous & N/A & \autoref{fig:installer_ui_design_unsafe_exit_c1} \\ \medskip
+                I5 & Testing how the program handles being terminated through the use of the Cancel button before the installation process & Normal & Pressing the Cancel button before pressing the Install button & Closing the window \\ \medskip
+                I6 & Testing how the program handles being terminated through the use of the Cancel button after the installation process & Normal & Pressing the Cancel button after pressing the Install button & Closing the window \\
+                \bottomrule
+            \end{tabular}
+            \caption{Cycle 1 test data}
+            \label{tbl:test_data_before_c1}
+        \end{table}
+
+
+        \newpage
+        % tbl:succ_crit_c2
+        % Success Criteria C2 TBL
+        \begin{table}[!h]
+            \centering
+            \begin{tabular}{@{}lp{425pt}@{}}\toprule
+                \textbf{ID} & \textbf{Feature} \\ \midrule
+                B4 & Being able to export and import circuit arrangements. \\ 
+                X1 & Only open directories that include all relevant files, raising an exception when this isn't met. \\ 
+                X2 & Copy relevant files from the source directory in order to initialise a project. \\ 
+                X3 & Allow user to specify directory for exporting. \\ 
+                X4 & Compress exported files intuitively. \\
+                \bottomrule
+            \end{tabular}
+            \caption{Cycle 2 success criteria}
+            \label{tbl:succ_crit_c2}
+        \end{table}
+
+
+    \newpage
+
+
+    \section{Source Codes}
+
+        % sc:if_name_main_c1
+        % if name main for the installer.py 
+        \begin{listing}[!ht]
+            \begin{minted}[linenos]{python}
 if __name__ == "__main__":
     if not is_admin():
         raise Exception("You are not admin.")
@@ -649,18 +1085,17 @@ if __name__ == "__main__":
         print("Program was exited safely")
     else:
         print("Program was not exited safely")
-                \end{minted}
-                \caption{The code that is being run at the beginning of the installer}
-                \label{sc:if_name_main_c1}
-            \end{figure}
-
-            In \autoref{sc:if_name_main_c1}, there is code that is executed when the \verb|installer.py| file is run. This includes a check for whether the program is currently being run in administrator mode, shown in \autoref{sc:admin_checker}. This differs slightly from the design in \autoref{tbl:data_structs_c1}, where there was a variable defined to do the same thing. I found this implementation more readable and understandable, as using a function that returns a boolean value emphasises the fact that I want to check the permissions at a single moment in time. The code continues to start the UI so that the user can interact with the program. The code shown in \autoref{sc:admin_checker} was written by \href{https://stackoverflow.com/questions/130763/request-uac-elevation-from-within-a-python-script}{StackOverFlow user Martín De la Fuente}.
+            \end{minted}
+            \caption{Installer program main code}
+            \label{sc:if_name_main_c1}
+        \end{listing}
 
 
-            % sc:admin_checker
-            % is_admin check 
-            \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+        \newpage
+        % sc:admin_checker
+        % is_admin check 
+        \begin{listing}[!ht]
+            \begin{minted}[linenos]{python}
 def is_admin() -> bool:
     """
     Returns 'True' iff the current program is being 
@@ -671,16 +1106,17 @@ def is_admin() -> bool:
         return ctypes.windll.shell32.IsUserAnAdmin()
     except:
         return False
-                \end{minted}
-                \caption{Check for if the program is being run as administrator}
-                \label{sc:admin_checker}
-            \end{figure}
+            \end{minted}
+            \caption{Check for if the program is being run as administrator}
+            \label{sc:admin_checker}
+        \end{listing}
 
 
-            % sc:install_gui_init_sc_c1
-            % InstallGUI class init SC
-            \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+        \newpage
+        % sc:install_gui_init_sc_c1
+        % InstallGUI class init SC
+        \begin{listing}[!ht]
+            \begin{minted}[linenos]{python}
 class InstallGUI:
     def __init__(self, root):
         #setting title
@@ -721,28 +1157,17 @@ class InstallGUI:
         self.lbl_welcome.place(x=20,y=20,width=170,height=30)
         
         self.filepath = None
-                \end{minted}
-                \caption{Initialising method for the InstallGUI class}
-                \label{sc:install_gui_init_sc_c1}
-            \end{figure}
-            
-
-            % fig:installer_gui_ss1_c1
-            % Installer GUI evidence FIG
-            \begin{figure}[!ht]
-                \centering
-                \includegraphics[width=.5\textwidth]{figures/c1/implement/installer_gui_pf1.png}
-                \caption{Installer in action}
-                \label{fig:installer_gui_ss1_c1}
-            \end{figure}
+            \end{minted}
+            \caption{Initialising method for the InstallGUI class}
+            \label{sc:install_gui_init_sc_c1}
+        \end{listing}
 
 
-            I decided that the entry box in the installer, shown in \autoref{fig:install_gui_class_diagram_c1} and \autoref{fig:installer_gui_design_c1}, was redundant thanks to the browse button I introduced while implementing, shown in \autoref{fig:installer_gui_ss1_c1}, which already manages the validation aspect for me, as you can only select an existing directory on your computer. Because of this, I decided to make what was an entry box an uneditable label object that will display the directory chosen. This also led me to also abandon the idea of introducing a default install directory, as that was initially introduced due to how awkward it would've been to input a directory.
-
-            % sc:cancel_and_browse_btns_sc_c1
-            % Cancel and Browse buttons SC
-            \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+        \newpage
+        % sc:cancel_and_browse_btns_sc_c1
+        % Cancel and Browse buttons SC
+        \begin{listing}[!ht]
+            \begin{minted}[linenos]{python}
     def btn_cancel_command(self) -> None:
         """ Closes the UI window safely """
         global safety
@@ -757,16 +1182,17 @@ class InstallGUI:
         self.lbl_welcome["text"] = self.filepath
         self.ent_dir["text"] = self.filepath
         self.btn_install["state"] = "active"
-                \end{minted}
-                \caption{Code for cancel and browse}
-                \label{sc:cancel_and_browse_btns_sc_c1}
-            \end{figure}
+            \end{minted}
+            \caption{Code for cancel and browse}
+            \label{sc:cancel_and_browse_btns_sc_c1}
+        \end{listing}
 
 
-            % sc:install_btn_sc_c1
-            % Install btn SC
-            \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+        \newpage
+        % sc:install_btn_sc_c1
+        % Install btn SC
+        \begin{listing}[!ht]
+            \begin{minted}[linenos]{python}
     def btn_install_command(self) -> None:
         """ 
         Installs the software to the given directory. 
@@ -801,22 +1227,17 @@ class InstallGUI:
         self.btn_browse["state"] = "active"
         self.btn_cancel["state"] = "active"
         self.btn_install["state"] = "active"
-                \end{minted}
-                \caption{Code for install button}
-                \label{sc:install_btn_sc_c1}
-            \end{figure}
+            \end{minted}
+            \caption{Code for install button}
+            \label{sc:install_btn_sc_c1}
+        \end{listing}
 
 
-            In \autoref{sc:cancel_and_browse_btns_sc_c1}, the browse button will open a dialogue allowing the user to select a folder into which they would like to install the software which will also disable all the buttons while the software is installing. At this point I considered some kind of progress indicator but found it too difficult.
-
-
-            In the function tied to the "Install" button, see \autoref{sc:install_btn_sc_c1}, there are two functions called, \verb|install_requirements| and \verb|download_from_github|. The former of these makes sure that the user has all the necessary Python libraries installed on their device, so that the program can function properly. Originally, I was planning to completely make use of a Python library that would have allowed me to interact with the GitHub API, but I could not find one that would do that for me and work, instead I managed to find code that would do the same thing, which is shown in \autoref{sc:dl_from_github_stolen_c1}, courtesy of GitHub user \href{https://github.com/Nordgaren/Github-Folder-Downloader/tree/master}{Nordgaren}.
-
-            
-            % sc:dl_from_github_stolen_c1
-            % download from github stolen sc 
-            \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+        \newpage
+        % sc:dl_from_github_stolen_c1
+        % download from github stolen sc 
+        \begin{listing}[!ht]
+            \begin{minted}[linenos]{python}
 def download(c: ContentFile, out: str):
     r = requests.get(c.download_url)
     output_path = f'{out}/{c.path}'
@@ -834,226 +1255,89 @@ def download_folder(repo: Repository, folder: str, out: str, recursive: bool):
                 download_folder(repo, c.path, out, recursive)
             continue
         download(c, out)
-                \end{minted}
-                \caption{Code to download from a specific GitHub folder.}
-                \label{sc:dl_from_github_stolen_c1}
-            \end{figure}
+            \end{minted}
+            \caption{Code to download from a specific GitHub folder.}
+            \label{sc:dl_from_github_stolen_c1}
+        \end{listing}
 
 
-            The latter function in \autoref{sc:dl_from_github_stolen_c1} is finally called by another function \verb|download_from_github|, see \autoref{sc:final_dl_func_c1}, which passes all the arguments such as the name of the repository as well as the path to the folder into the previous functions. These values are stored as constants in the same file, so it is clear what they are and what they mean, see \autoref{sc:consts_install_c1}. The new function takes in one argument which will be the directory that the user has selected as their install directory. 
-
-            % sc:final_dl_func_c1
-            % the dowload_from_github function that called the functions in sc:dl_from_github_stolen_c1
-            \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+        \newpage
+        % sc:final_dl_func_c1
+        % the dowload_from_github function that called the functions in sc:dl_from_github_stolen_c1
+        \begin{listing}[!ht]
+            \begin{minted}[linenos]{python}
 def download_from_github(destination: str) -> None:
     """ Downloads a given GitHub folder from 'url' to the 'destination' directory """
     g = Github()
     repo = g.get_repo(REPO_NAME)
     download_folder(repo, SW_DIR, destination, True)
-                \end{minted}
-                \caption{The final downloading function.}
-                \label{sc:final_dl_func_c1}
-            \end{figure}
+            \end{minted}
+            \caption{The final downloading function.}
+            \label{sc:final_dl_func_c1}
+        \end{listing}
 
-            % sc:constants_install_c1
-            % constants defined for install file
-            \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+
+        \newpage
+        % sc:constants_install_c1
+        % constants defined for install file
+        \begin{listing}[!ht]
+            \begin{minted}[linenos]{python}
 # the requirements.txt which has all the necessary pip libraries to run the program 
 REQ: str = "https://raw.githubusercontent.com/nathan-tat/cs_nea_2025/main/requirements.txt"
 # path to repository
 REPO_NAME: str = "nathan-tat/cs_nea_2025"
 # directory from which the software will be installed from 
 SW_DIR: str = "code/software"
-                \end{minted}
-                \caption{Constants defined with descriptions}
-                \label{sc:consts_install_c1}
-            \end{figure}
+            \end{minted}
+            \caption{Constants defined with descriptions}
+            \label{sc:consts_install_c1}
+        \end{listing}
 
-            As previously mentioned, I want to use a function in order to make sure that the relevant Python libraries are installed, which is shown in \autoref{sc:install_reqs_fail1_c1}. When this function is called in the program, see \autoref{sc:install_btn_sc_c1} line 22, the \verb|REQ| constant from is always passed as the argument, which links to the \verb|requirements.txt| file in the GitHub repository. However, this feature doesn't work as intended, see \autoref{fig:install_reqs_fail_pf_c1}, so it is commented out in the current version.
 
-            % sc:install_reqs_fail1_c1
-            % install_requirements function fail 1
-            \begin{figure}[!ht]
-                \begin{minted}[linenos]{python}
+        \newpage
+        % sc:install_reqs_fail1_c1
+        % install_requirements function fail 1
+        \begin{listing}[!ht]
+            \begin{minted}[linenos]{python}
 def install_requirements(url: str) -> None:
     """ 
     Installs the necessary python libraries from a 'requirements.txt' stored  
     at 'url' using pip
     """
-    # i dont think this actually works as of now
-    os.system(f"py -m pip install {url}")
-    # pass
-                \end{minted}
-                \caption{Function to install the required Python libraries}
-                \label{sc:install_reqs_fail1_c1}
-            \end{figure}
-
-            % fig:install_reqs_fail_pf_c1
-            % cmd ss proof to show that it failed
-            \begin{figure}[!ht]
-                \centering
-                \includegraphics[width=\textwidth]{figures/c1/implement/installer_req_fail1.png}
-                \caption{Failure of install requirements function}
-                \label{fig:install_reqs_fail_pf_c1}
-            \end{figure}
-            
-
-        \subsection{Evaluation}
-            % Do the testing as well as the evaluation
-
-    \clearpage
-    \section{Cycle 2: Project Management}
-        \subsection{Brief Outline}
-            This cycle will cover initialising and opening "projects", which will be how the user will be able to save their work and access it at a later time. 
-            
-            % for:hierarchy_diagram_c2
-            % Cycle 2 Hierarchy diagram
-            \begin{figure}[!ht]
-                \centering
-                \footnotesize
-                \begin{forest}
-                    for tree={
-                        align=center,
-                        font=\sffamily,
-                    edge+={thick, -{Stealth[]}},
-                    l sep'+=10pt,
-                    fork sep'=10pt,
-                    },
-                    forked edges,
-                    if level=0{
-                        inner xsep=0pt,
-                        tikz={\draw [thick] (.children first) -- (.children last);}
-                        }{},
-                        [Project Management
-                            [Opening projects
-                                [Choosing working\\directory]
-                                [Verifying files]
-                            ]
-                            [Initialising projects
-                                [Initialising files]
-                                [Choosing working\\directory
-                                    [Naming projects]
-                                ]
-                            ]
-                        ]
-                \end{forest}
-                \caption{Hierarchy diagram for Cycle 2}
-                \label{for:hierarchy_diagram_c2}
-            \end{figure}
-
-                
-            \subsubsection{Success Criteria}
-
-                % tbl:succ_crit_c2
-                % Success Criteria C2 TBL
-                \begin{table}[!ht]
-                    \centering
-                    \begin{tabular}{m{16pt}m{0.8\textwidth}}
-                        ID & Feature \\ \hline
-                        B4 & Being able to export and import circuit arrangements. \\ 
-                        X1 & Only open directories that include all relevant files, raising an exception when this isn't met. \\ 
-                        X2 & Copy relevant files from the source directory in order to initialise a project. \\ 
-                        X3 & Allow user to specify directory for exporting. \\ 
-                        X4 & Compress exported files intuitively. \\ 
-                    \end{tabular}
-                    \caption{Success criteria for Cycle 2}
-                    \label{tbl:succ_crit_c2}
-                \end{table}
+    # the command is 
+    # pip install -r /path/to/req.txt
+    
+    os.system(f"py -m pip install -r {url}")
+            \end{minted}
+            \caption{Function to install the required Python libraries}
+            \label{sc:install_reqs_fail1_c1}
+        \end{listing}
 
 
-        \subsection{Design}
-            % The general idea is that it will use one program (this is the same one that the installer creates a shortcut to).
-            % From then the user will be able to choose whether to open a new or existing project
-            % If an existing project then the user will navigate to the project file inside the project folder, select it, and then it will use that to open everything necessary
-            % If a new project then the user will select the DIRECTORY where they want the project file to be in. They will also decide on a name. I might also decide to include a drop down menu to select some kind of "type" or something.
+        \newpage
+        % sc:create_shortcut_c1
+        % Procedure to create the desktop shortcut
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+FILE = ""
+def create_shortcut(source: str, dest: str) -> None:
+    """ 
+    Creates a file shortcut to source at dest 
+    https://stackoverflow.com/a/60944178
+    """
+    
+    target = source + FILE
+    
+    shell = Dispatch("WScript.Shell")    
+    shortcut = shell.CreateShortCut(dest)
+    shortcut.Targetpath = target
+    
+    shortcut.WorkingDirectory = source
+    shortcut.save()
+            \end{minted}
+            \caption{Procedure to create shortcut}
+            \label{sc:create_shortcut_c1}
+        \end{listing}
 
-            The idea of this cycle is that it will use one program, which is the one that the installer creates a shortcut to, from which the user will be able to decide whether to open a new or existing project. If the user chooses the former, then they will be prompted to select the \textit{directory} in which they would like to initialise their project, and if the latter then they will be prompted to select the \textit{project file} for their project. 
-            The user will initialy start on one user interface screen and depending on their choice go to one of two other user interface screens.
-
-            \subsubsection{Data Structures}
-
-                \begin{itemize}
-                    \item I need a way to store configureation settings for an individual project
-                    \item I need a way to store recently stored projects globally
-                    \item I need a way to run projects through the command prompt for the main executable
-                    \item I need to design a file structure for an individual project
-                \end{itemize}
-
-            \subsubsection{User Interface}
-                % Need to design 3 UI windows. 
-                % One initial one that will then decide to go into one of the other two 
-
-                % The initial one only needs two options, but something like a "recently viewed" might be nice.
-                % It also will need a cancel option.
-
-                % If user decides to open existing project, then need a browse directory button, as well as a confirm button. I don't think it needs anything more than that.
-                % I think this could have a dropdown that could open a template 
-                
-                % If user decides to open new project, then need a "Name" entry, as well as a directory entry. Also confirm and cancel buttons. 
-
-                There will be three user-interface menus covered in this section, one for where the user decides to open a new or existing project, and one each for actually selecting the project they want to open/create. This was mainly inspired by the user-interface from Visual Studio 2022, see \autoref{fig:vs22_ui_ss_c2}, which shows a minimal design with only the necessary features shown. The layout is also very user-friendly, with large clear buttons shown as well as recently opened/viewed projects.
-
-                % fig:vs22_ui_ss_c2
-                % Screenshot from visual studio 22 that shows the UI for opening a project
-                \begin{figure}[!ht]
-                    \centering
-                    \includegraphics[width=.5\textwidth]{figures/c2/design/vscode22.png}
-                    \caption{Screenshot from Visual Studio 2022}
-                    \label{fig:vs22_ui_ss_c2}
-                \end{figure}
-
-                With the colour-scheme, I have decided to stay consistent with my user interface from Cycle 1. The colours, borders, and fonts are the same. I have decided to follow a similar layout to the one shown in \autoref{fig:vs22_ui_ss_c2}, but I chose to only have buttons for the three most recently viewed projects, as opposed to all of them sorted by date. If the user has yet to open three projects, then the others would be greyed out and the user would not be able to click on them. The justification for only showing three is that it could be difficult to implement an embedded window that allows the user to scroll through it independently of the rest of the window, and that the user will likely not not be working on more than three at a time. 
-
-                % fig:menu_1_design_c2
-                % first UI menu to show
-                \begin{figure}[!ht]
-                    \centering
-                    \includegraphics[width=.5\textwidth]{figures/c2/design/ui1.png}
-                    \caption{First menu design}
-                    \label{fig:menu_1_design_c2}
-                \end{figure}
-
-                I change I have made in \autoref{fig:menu_2_design_c2} compared to \autoref{fig:menu_1_design_c2} is in moving the "Cancel" button to the bottom left corner instead of keeping it in the bottom right corner. I decided this was better as it stayed consistent with the previous cycle, see \autoref{fig:installer_gui_design_c1}, and that that is how people tend to read (the order being top left, top right, bottom left, bottom right, according to \href{https://www.interaction-design.org/literature/article/visual-hierarchy-organizing-content-to-follow-natural-eye-movement-patterns}{the Interaction Design Foundation}). As part of my reflection from the first cycle, I have decided to include a "Browse" button, which will allow the user to select a directory using the familiar user interface of their operating system, as opposed to being forced to type in their directory manually. This is better as it increases usability. 
-
-                % \clearpage
-                % fig:menu_2_design_c2
-                % design for opening a menu 
-                \begin{figure}[!ht]
-                    \centering
-                    \includegraphics[width=.5\textwidth]{figures/c2/design/ui2_open_existing.png}
-                    \caption{Design for opening an existing project}
-                    \label{fig:menu_2_design_c2}
-                \end{figure}
-
-                In \autoref{fig:init_new_proj_ui_design_c2}, I have designed the user interface for initialising a new project. The user will be allowed to select the name of the project and the directory in which the project is stored. I have also decided to include a dropdown selection box that would allow the user to select the "type" of project. At this time, I am not certain of what that exactly refers to. However, in the future I could use it for something. For example, the user being able to choose from a selection of pre-made circuits as a demonstration of the software.
-
-                % fig:init_new_proj_ui_design_c2
-                % design for the ui for initialising a new project
-                \begin{figure}[!ht]
-                    \centering
-                    \includegraphics[width=.5\textwidth]{figures/c2/design/ui2_init_new_proj.png}
-                    \caption{Design for initialising a new project}
-                    \label{fig:init_new_proj_ui_design_c2}
-                \end{figure}
-
-                Following the menu from \autoref{fig:menu_2_design_c2} and \autoref{fig:init_new_proj_ui_design_c2}, the user will be taken to the main program, which will be taken on in a separate cycle.
-
-
-            \subsubsection{Algorithms}
-                I'll need an algorithm for "opening" a project. i.e. passing off a directory as an argument to another function \autoref{fig:vs22_ui_ss_c2}
-                I'll need an algorithm to initiate a configuration file
-                I'll also need to think about how I will be able to lead from one UI element to another, something like this https://stackoverflow.com/questions/19473072/show-another-ui-file-on-button-click
-
-
-                Sorry this isn't done I was pretty certain on dropping this subject until like yesterday when I decided that I'll just lock in this year and do it, so I didn't really touch my NEA at all.
-                
-            
-        \subsection{Testing}
-        \subsection{Implementation}
-        \subsection{Evaluation}
-
-
-
+        
 \end{document}

@@ -8,38 +8,8 @@ import tkinter.font as tkFont
 from tkinter import filedialog
 from tkinter import messagebox
 
-# if im testing stuff 
-testing = True
-
-
-""" 
-The following code downloads a folder from GitHub
-Source: https://github.com/Nordgaren/Github-Folder-Downloader/tree/master
-"""
-
-
-def download(c: ContentFile, out: str):
-    r = requests.get(c.download_url)
-    output_path = f'{out}/{c.path}'
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    with open(output_path, 'wb') as f:
-        print(f'downloading {c.path} to {out}')
-        f.write(r.content)
-
-
-def download_folder(repo: Repository, folder: str, out: str, recursive: bool):
-    contents = repo.get_contents(folder)
-    for c in contents:
-        if c.download_url is None:
-            if recursive:
-                download_folder(repo, c.path, out, recursive)
-            continue
-        download(c, out)
-
-
-""" 
-^^^ End of code from https://github.com/Nordgaren/Github-Folder-Downloader/tree/master
-"""
+import winshell
+from win32com.client import Dispatch
 
 
 # the requirements.txt which has all the necessary pip libraries to run the program 
@@ -49,17 +19,48 @@ REPO_NAME: str = "nathan-tat/cs_nea_2025"
 # directory from which the software will be installed from 
 SW_DIR: str = "code/software"
 
+# file that the shortcut will link to
+# I dont actually know what to call it
+FILE = ""
+
+# if im testing stuff 
+testing = False
+
+
+admin_flag = True
+
 safety = False
 
 
-# thank you stackoverflow
-# https://stackoverflow.com/questions/130763/request-uac-elevation-from-within-a-python-script
+
+def download(c: ContentFile, out: str):
+    """ https://github.com/Nordgaren/Github-Folder-Downloader/tree/master """
+    r = requests.get(c.download_url)
+    output_path = f'{out}/{c.path}'
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, 'wb') as f:
+        print(f'downloading {c.path} to {out}')
+        f.write(r.content)
+
+
+def download_folder(repo: Repository, folder: str, out: str, recursive: bool):
+    """ https://github.com/Nordgaren/Github-Folder-Downloader/tree/master """
+    contents = repo.get_contents(folder)
+    for c in contents:
+        if c.download_url is None:
+            if recursive:
+                download_folder(repo, c.path, out, recursive)
+            continue
+        download(c, out)
+
+
 def is_admin() -> bool:
     """
     Returns 'True' iff the current program is being run as administrator, else 'False'. 
     Works on Windows 10 v.22H2 as of 2024-05-10
+    https://stackoverflow.com/q/130763
     """
-    if testing: return testing
+    if admin_flag: return admin_flag
     try:
         return ctypes.windll.shell32.IsUserAnAdmin()
     except:
@@ -78,10 +79,28 @@ def install_requirements(url: str) -> None:
     Installs the necessary python libraries from a 'requirements.txt' stored  
     at 'url' using pip
     """
-    # i dont think this actually works as of now
-    # os.system(f"py -m pip install {url}")
-    pass
+    # the command is 
+    # pip install -r /path/to/req.txt
+    
+    os.system(f"py -m pip install -r {url}")
 
+
+def create_shortcut(source: str, dest: str) -> None:
+    """ 
+    Creates a file shortcut to source at dest 
+    https://stackoverflow.com/a/60944178
+    """
+    
+    target = source + FILE
+    
+    shell = Dispatch("WScript.Shell")    
+    shortcut = shell.CreateShortCut(dest)
+    shortcut.Targetpath = target
+    
+    shortcut.WorkingDirectory = source
+    shortcut.save()
+
+    
 
 class InstallGUI:
     def __init__(self, root):
@@ -167,7 +186,7 @@ class InstallGUI:
                 # if everything goes fine
                 self.lbl_welcome["text"] = f"Installed to {self.lbl_dir['text']}"
         else:
-            self.lbl_welcome["test"] = f"Installed to {self.lbl_dir['text']}"
+            self.lbl_welcome["text"] = f"Installed to {self.lbl_dir['text']}"
         
         self.btn_browse["state"] = "active"
         self.btn_cancel["state"] = "active"
@@ -180,6 +199,8 @@ class InstallGUI:
         # self.lbl_welcome["text"] = self.filepath
         self.lbl_dir["text"] = self.filepath
         self.btn_install["state"] = "active"
+
+
 
 
 if __name__ == "__main__":

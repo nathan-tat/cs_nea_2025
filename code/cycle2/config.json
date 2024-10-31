@@ -1,4 +1,7 @@
 {
     "directory": "C:\\users\\...",
-    "project name": "string"
+    "project_name": "this is a project name",
+    "type": "project type",
+    "created": "UNIX timestamp",
+    "last_opened": "UNIX timestamp"
 }
