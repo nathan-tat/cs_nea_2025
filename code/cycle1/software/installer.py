@@ -195,11 +195,11 @@ class InstallGUI:
                 if self.check_var.get():
                     # get name of user currently logged in
                     user = os.getlogin() 
-                    create_shortcut(self.filepath + r"\main.py", fr"C:\Users\{user}\Desktop")
+                    create_shortcut(self.filepath + r"\code\software\main.py", fr"C:\Users\{user}\Desktop\sim.lnk")
 
             except Exception as e:
                 # if something goes wrong then output the exception that was raised
-                self.lbl_welcome["text"] = f"something bad happened: {e}"
+                messagebox.showerror("Error", e)
 
             else:
                 # if everything goes fine
