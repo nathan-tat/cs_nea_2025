@@ -646,10 +646,10 @@
 
 
             When the Python interpreter reads a source file, it sets the variable \verb|__name__| to \verb|__main__| if the program is being run as the main program, or as the filename if the program is being imported.
-            In order to avoid problems such as the installer being run unintentionally, I have decided to check this value of this variable to make certain that no code is executed in the case that the file is imported somewhere, see \autoref{sc:if_name_main_c1}.
+            In order to avoid problems such as the installer being run unintentionally, I have decided to check the value of this variable to make certain that no code is executed in the case that the file is imported somewhere, see \autoref{sc:if_name_main_c1}.
             In this beginning if-statement, there is also a check for whether the program is being run using elevated privileges or not, using the function shown in \autoref{sc:admin_checker}. 
             This prevents the user from encountering errors when trying to install to a location that they don't have permission to.
-            This part of the program is also when the GUI element is run, as well as a safety check that is explained later.
+            This part of the program is also when the GUI element is run from.
 
 
             % fig:installer_gui_ss1_c1
@@ -666,19 +666,24 @@
             This avoided the need to validate the user's entry as well as the need for a user text input at all, since the user can only select directories that exist on their computer. 
             This also lead to the abandoning of a default install directory being entered for the user, which was initially introduced due to how awkward it would've been to input a directory.
 
+            % fig:requirements-txt-c1
+            % Requirements.txt file example
+            \begin{figure}[!h]
+                \centering
+                \includegraphics[scale=.25]{figures/c1/implement/requirements_file.png}
+                \caption{Requirements file}
+                \label{fig:requirements-txt-c1}
+            \end{figure}
 
-            In the function tied to the Install button, see \autoref{sc:install_btn_sc_c1}, there are two functions called, \verb|install_requirements| and \verb|download_from_github|. 
-            The former of these makes sure that the user has all the necessary Python libraries installed on their device, so that the program can function properly. 
-            Originally, I was planning to completely make use of a Python library that would have allowed me to interact with the GitHub API, but I could not find one that would do that for me and work, instead I managed to find code that would do the same thing, which is shown in \autoref{sc:dl_from_github_stolen_c1}, courtesy of GitHub user \href{https://github.com/Nordgaren/Github-Folder-Downloader/tree/master}{Nordgaren}.
+            In the function tied to the Install button, see \autoref{sc:install_btn_sc_c1}, there are two functions called.
+            The \verb|install_requirements| function installs all the necessary Python modules onto the users device referencing a text file that contains the names and version numbers of said modules, shown in \autoref{fig:requirements-txt-c1}. At first I had some trouble with this function as I wasn't calling the command with the correct flags, shown in \autoref{sc:install_reqs_fail1_c1}. 
+            The \verb|download_from_github| function copies the files from a folder in a GitHub repository. 
+            % The former of these makes sure that the user has all the necessary Python libraries installed on their device, so that the program can function properly. 
+            % Originally, I was planning to completely make use of a Python library that would have allowed me to interact with the GitHub API, but I could not find one that would do that for me and work, instead I managed to find code that would do the same thing, which is shown in \autoref{sc:dl_from_github_stolen_c1}, courtesy of GitHub user \href{https://github.com/Nordgaren/Github-Folder-Downloader/tree/master}{Nordgaren}.
 
 
-            The latter function in \autoref{sc:dl_from_github_stolen_c1} is finally called by another function \verb|download_from_github|, see \autoref{sc:final_dl_func_c1}, which passes all the arguments such as the name of the repository as well as the path to the folder into the previous functions. 
-            These values are stored as constants in the same file, so it is clear what they are and what they mean, see \autoref{sc:consts_install_c1}. 
-            The new function takes in one argument which will be the directory that the user has selected as their install directory. 
-
-
-            As previously mentioned, I want to use a function in order to make sure that the relevant Python libraries are installed, which is shown in \autoref{sc:install_reqs_fail1_c1}. 
-            When this function is called in the program, see \autoref{sc:install_btn_sc_c1} line 22, the \verb|REQ| constant from is always passed as the argument, which links to the \verb|requirements.txt| file in the GitHub repository. However, this feature doesn't work as intended, see \autoref{fig:install_reqs_fail_pf_c1}, so it is commented out in the current version.
+            % As previously mentioned, I want to use a function in order to make sure that the relevant Python libraries are installed, which is shown in \autoref{sc:install_reqs_fail1_c1}. 
+            % When this function is called in the program, see \autoref{sc:install_btn_sc_c1} line 22, the \verb|REQ| constant from is always passed as the argument, which links to the \verb|requirements.txt| file in the GitHub repository. However, this feature doesn't work as intended, see \autoref{fig:install_reqs_fail_pf_c1}, so it is commented out in the current version.
 
 
             % fig:install_reqs_fail_pf_c1
@@ -690,16 +695,64 @@
                 \label{fig:install_reqs_fail_pf_c1}
             \end{figure}
             
+            % fig:install-req-success
+            % Success of install req function
+            \begin{figure}[!h]
+                \centering
+                \includegraphics[width=\textwidth]{figures/c1/implement/install_req_success.png}
+                \caption{Success of install requirements function}
+                \label{fig:install-req-success}
+            \end{figure}
 
             % I need to test it
-            I then decided to implement the function in order to create a desktop shortcut, shown in \autoref{sc:create_shortcut_c1}.
+            I then decided to implement the function in order to create a desktop shortcut, shown in \autoref{sc:create_shortcut_c1}. For this I also made the change of adding a checkbox to the user interface that would allow the user to decide whether or not to add a desktop shortcut, shown in \autoref{fig:checkbox-installer-gui}. 
+
+
+            % fig:checkbox-installer-gui
+            % Installer GUI with checkbox
+            \begin{figure}[!h]
+                \centering
+                \includegraphics[scale=1]{figures/c1/implement/new_installer_gui.png}
+                \caption{Installer GUI with checkbox}
+                \label{fig:checkbox-installer-gui}
+            \end{figure}
+
+            Initially this feature didn't work, shown in \autoref{fig:shortcut-fail-c1}, but as after some tweaking to the file path, it worked, as shown in 
+
+            % fig:shortcut-fail-c1
+            % Shortcut failure
+            \begin{figure}[!h]
+                \centering
+                \includegraphics[scale=.4]{figures/c1/implement/shortcut_make_fail_01.png}
+                \caption{Shortcut not working}
+                \label{fig:shortcut-fail-c1}
+            \end{figure}
+
+            % fig:
+            % 
+            \begin{figure}[!h]
+                \centering
+                \begin{subfigure}{.4\textwidth}
+                    \centering
+                    \includegraphics[width=.9\textwidth]{figures/c1/implement/shortcut-working-proof-01.png}
+                    \caption{The code in the file}
+                    \label{fig:sc-working-proof-1-c1}
+                \end{subfigure}%
+                \begin{subfigure}{.4\textwidth}
+                    \centering
+                    \includegraphics[width=.9\textwidth]{figures/c1/implement/shortcut-working-proof-03.png}
+                    \caption{Code executed from the shortcut}
+                    \label{fig:}
+                \end{subfigure}%
+                \caption{Proof of shortcut working}
+            \end{figure}
 
 
 
         \subsection{Evaluation}
-            In this section I will conclude whether or not I have managed to meet the success criteria outlined at the beginning of the cycle. 
+            In this cycle I have managed to reach all of my success criteria listed in \autoref{tbl:succ_crit_c1} except for being able to uninstall the program with the same file. I have decided to move the development of this function to a later cycle, after the main program has been developed as I need a clearer view of how the program file structure will look like. 
 
-    \clearpage
+    \newpage
     \section{Cycle 2: Project Management}
         \subsection{Brief Outline}
             This cycle will cover initialising and opening "projects", which will be how the user will be able to save their work and access it at a later time. 
@@ -751,7 +804,7 @@
             % If a new project then the user will select the DIRECTORY where they want the project file to be in. They will also decide on a name. I might also decide to include a drop down menu to select some kind of "type" or something.
 
             The idea of this cycle is that it will use one program, which is the one that the installer creates a shortcut to, from which the user will be able to decide whether to open a new or existing project. If the user chooses the former, then they will be prompted to select the \textit{directory} in which they would like to initialise their project, and if the latter then they will be prompted to select the \textit{project file} for their project. 
-            The user will initialy start on one user interface screen and depending on their choice go to one of two other user interface screens.
+            The user will initially start on one user interface screen and depending on their choice go to one of two other user interface screens.
 
             \subsubsection{Data Structures}
 
@@ -765,10 +818,10 @@
                     \begin{minted}[linenos]{json}
 {
     "directory": "C:\\users\\...",
-    "project_name": "this is a project name",
+    "name": "this is a project name",
     "type": "project type",
     "created": "UNIX timestamp",
-    "last_opened": "UNIX timestamp"
+    "lastOpened": "UNIX timestamp"
 }
                     \end{minted}
                     \caption{Configuration JSON file example}
@@ -780,20 +833,23 @@
                 See \autoref{flow:queue_like_design} for details.
 
                 % flow:queue_like_design
-                % Design for the queue-like datastructure
+                % Design for the queue-like data structure
                 \begin{figure}[!ht]
                     \centering
                     \begin{tikzpicture}[node distance=2cm]
                         \node (2) [process, align=center] {B};
                         \node (1) [process, left of=2,  align=center, xshift=-2.0cm] {A};
                         \node (3) [process, right of=2, align=center, xshift=2.0cm] {C};
+
                         \node (4) [process, below of=1, align=center, ] {A};
                         \node (5) [process, below of=2, align=center, ] {B};
                         \node (6) [process, below of=3, align=center, ] {C};
                         \node (7) [process, right of=6, align=center, xshift=2.0cm] {D (New item)};
+
                         \node (8) [process, below of=5, align=center, ] {B};
                         \node (9) [process, below of=6, align=center, ] {C};
                         \node (10) [process, below of=7, align=center, ] {D};
+
                         \draw [arrow] (2) -- (1);
                         \draw [arrow] (3) -- (2);
                         \draw [darrow] (5) -- (4);
@@ -805,9 +861,34 @@
                     \caption{How the queue-like structure will operate. Arrows point to the next oldest item.}
                     \label{flow:queue_like_design}
                 \end{figure}
+                
+                This structure will be implemented with the use of a text file that will store the three most recent projects in order as well as using object-oriented programming.
+                
+                % Queue like
 
-                This structure will be implemented with the use of a text file that will store the three most recent projects in order.
+                % fig:file-q-class-diagram
+                % FileQueue class diagram
+                \begin{figure}[!ht]
+                    \centering
+                    \begin{tikzpicture}
+                        \begin{class}[text width=5cm]{FileQueue}{0,0}
+                            \attribute{-location : string}
+                            \attribute{-maxLength : int}
+                            \attribute{+rear : int}
+                            \attribute{+front : int}
 
+
+                            \operation{+enqueue(string)}
+                            \operation{+dequeue(): str}
+                            \operation{+length(): int}
+                        \end{class}
+                    \end{tikzpicture}
+                    \caption{FileQueue class diagram}
+                    \label{fig:file-q-class-diagram}
+                \end{figure}
+
+                This class will allow me to easily access the FileQueue for the user's projects. 
+                
                 % dir:project_directory_tree_example_c2
                 % Directory tree for an example project
                 \begin{figure}[!ht]
@@ -834,6 +915,32 @@
                 The \verb|arrangements.json| file will hold how the components are arranged on the board. This is what the main program will use to run. 
                 See \autoref{ps:json_proj_config_example} for the layout of \verb|config.json|.
 
+
+                % fig:project-class-diagram-c2
+                % Project class diagram
+                \begin{figure}[!ht]
+                    \centering
+                    \begin{tikzpicture}
+                        \begin{class}[text width=5cm]{Project}{0,0}
+                            \attribute{-name : string}
+                            \attribute{-created : int}
+                            \attribute{-lastOpened : int}
+                            \attribute{-directory : string}
+                            \attribute{-type : string}
+
+                            \operation{-setName(string)}
+                            \operation{-setLastOpened(int)}
+                            \operation{+save()}
+                            \operation{+export(string)}
+                            \operation{+open()}
+                            \operation{+close()}
+                        \end{class}
+                    \end{tikzpicture}
+                    \caption{Project class diagram}
+                    \label{fig:project-class-diagram-c2}
+                \end{figure}
+
+                I have again decided to make use of object-oriented programming this time in order to have a class for an instance of a running program, a class diagram of which is shown in \autoref{fig:project-class-diagram-c2}. 
 
             \subsubsection{User Interface} 
                 % Need to design 3 UI windows. 
@@ -874,8 +981,7 @@
                     \label{fig:menu_1_design_c2}
                 \end{figure}
 
-                \pagebreak
-                I change I have made in \autoref{fig:menu_2_design_c2} compared to \autoref{fig:menu_1_design_c2} is in moving the "Cancel" button to the bottom left corner instead of keeping it in the bottom right corner. I decided this was better as it stayed consistent with the previous cycle, see \autoref{fig:installer_gui_design_c1}, and that that is how people tend to read (the order being top left, top right, bottom left, bottom right, according to \href{https://www.interaction-design.org/literature/article/visual-hierarchy-organizing-content-to-follow-natural-eye-movement-patterns}{the Interaction Design Foundation}). As part of my reflection from the first cycle, I have decided to include a "Browse" button, which will allow the user to select a directory using the familiar user interface of their operating system, as opposed to being forced to type in their directory manually. This is better as it increases usability. 
+                A change I have made in \autoref{fig:menu_2_design_c2} compared to \autoref{fig:menu_1_design_c2} is moving the "Cancel" button to the bottom left corner instead of keeping it in the bottom right corner. I decided this was better as it stayed consistent with the previous cycle, see \autoref{fig:installer_gui_design_c1}, and that that is how people tend to read (the order being top left, top right, bottom left, bottom right, according to \href{https://www.interaction-design.org/literature/article/visual-hierarchy-organizing-content-to-follow-natural-eye-movement-patterns}{the Interaction Design Foundation}). As part of my reflection from the first cycle, I have decided to include a "Browse" button, which will allow the user to select a directory using the familiar user interface of their operating system, as opposed to being forced to type in their directory manually. This is better as it increases usability. 
 
                 % \clearpage
                 % fig:menu_2_design_c2
@@ -887,6 +993,7 @@
                     \label{fig:menu_2_design_c2}
                 \end{figure}
 
+                \newpage
                 In \autoref{fig:init_new_proj_ui_design_c2}, I have designed the user interface for initialising a new project. The user will be allowed to select the name of the project and the directory in which the project is stored. I have also decided to include a dropdown selection box that would allow the user to select the "type" of project. At this time, I am not certain of what that exactly refers to. However, in the future I could use it for something. For example, the user being able to choose from a selection of pre-made circuits as a demonstration of the software.
 
                 % fig:init_new_proj_ui_design_c2
@@ -931,7 +1038,70 @@ def create_config_file():
                 \end{figure}
 
 
-                
+                % Opening a project
+
+                % Updating Queue 
+
+                \newpage
+
+                % pc:fileq-length-method
+                % PC for length of the file queue
+                \begin{figure}[!h]
+                    \begin{minted}[linenos]{python}
+def length(self):
+    return self.rear - self.front + 1
+                    \end{minted}
+                    \caption{Pseudocode to return the length of the FileQueue}
+                    \label{pc:fileq-length-method}
+                \end{figure}
+
+                Note that in \autoref{fig:file-q-class-diagram} the \verb|length()| method is not a getter, as there is no length attribute defined in the class, which may be different to other implementations. For example in Python where \verb|len()| is an in-built function that takes in any iterable object, or in JavaScript where \verb|length| is an attribute. This method will mostly be used in order make some checks for the other functions in order to catch some edge cases. 
+
+                % pc:enq-for-file-q
+                % Code to enqueue to file queue
+                \begin{figure}[!h]
+                    \begin{minted}[linenos]{python}
+def enqueue(self, project_id):
+    # if the queue is full
+    if self.length() == self.maxLength:
+        self.front += 1
+
+    self.rear += 1
+        
+    file = open(self.location)
+    file.write(project_id)
+    file.close()
+                    \end{minted}
+                    \caption{Pseudocode to add project to a FileQueue}
+                    \label{pc:enq-for-file-q}
+                \end{figure}
+
+                In \autoref{pc:enq-for-file-q}, the amount of items in the queue is checked in order to make sure the pointers are changed properly. For example an edge case that could be considered is when an item is added to the FileQueue and there is no need to remove the oldest item as the FileQueue is not full, illustrated in \autoref{flow:fileq-not-full}.
+
+                % flow:fileq-not-full
+                % FileQueue when not full
+                \begin{figure}[!h]
+                    \centering
+                    \begin{tikzpicture}[node distance=2cm]
+                        \node (1) [process, align=center, ] {A};
+                        \node (2) [process, right of=1, align=center, xshift=2.0cm] {B};
+
+                        \node (3) [process, below of=1, align=center, ] {A};
+                        \node (4) [process, below of=2, align=center, ] {B};
+                        \node (5) [process, right of=4, align=center, xshift=2.0cm] {C};
+
+                        \draw[arrow] (2) -- (1);
+
+                        \draw[arrow] (4) -- (3);
+                        \draw[arrow] (5) -- (4);
+
+                    \end{tikzpicture}
+                    \caption{Desired FileQueue behaviour when not at maxLength. C is added without A being removed.}
+                    \label{flow:fileq-not-full}
+                \end{figure}
+
+                Essentially, the \verb|front| pointer is only incremented whenever the FileQueue is already at maximum capacity.
+
             
         \subsection{Testing}
         \subsection{Implementation}
@@ -941,6 +1111,7 @@ def create_config_file():
     \newpage
     \appendix
 
+    \newpage
     \section{Tables}
 
         % tbl:essential_succ_crit
@@ -1266,8 +1437,14 @@ def download_folder(repo: Repository, folder: str, out: str, recursive: bool):
         % the dowload_from_github function that called the functions in sc:dl_from_github_stolen_c1
         \begin{listing}[!ht]
             \begin{minted}[linenos]{python}
+# constants defined elsewhere
+# path to repository
+REPO_NAME: str = "nathan-tat/cs_nea_2025"
+# directory from which the software will be installed from 
+SW_DIR: str = "code/software"
+
 def download_from_github(destination: str) -> None:
-    """ Downloads a given GitHub folder from 'url' to the 'destination' directory """
+    """ Downloads a given GitHub folder the 'destination' directory """
     g = Github()
     repo = g.get_repo(REPO_NAME)
     download_folder(repo, SW_DIR, destination, True)
@@ -1278,27 +1455,16 @@ def download_from_github(destination: str) -> None:
 
 
         \newpage
-        % sc:constants_install_c1
-        % constants defined for install file
-        \begin{listing}[!ht]
-            \begin{minted}[linenos]{python}
-# the requirements.txt which has all the necessary pip libraries to run the program 
-REQ: str = "https://raw.githubusercontent.com/nathan-tat/cs_nea_2025/main/requirements.txt"
-# path to repository
-REPO_NAME: str = "nathan-tat/cs_nea_2025"
-# directory from which the software will be installed from 
-SW_DIR: str = "code/software"
-            \end{minted}
-            \caption{Constants defined with descriptions}
-            \label{sc:consts_install_c1}
-        \end{listing}
-
-
-        \newpage
         % sc:install_reqs_fail1_c1
         % install_requirements function fail 1
         \begin{listing}[!ht]
             \begin{minted}[linenos]{python}
+# constant defined elsewhere
+REQ: str = (
+    "https://raw.githubusercontent.com"
+    "/nathan-tat/cs_nea_2025/main/requirements.txt"
+)
+
 def install_requirements(url: str) -> None:
     """ 
     Installs the necessary python libraries from a 'requirements.txt' stored  
@@ -1319,7 +1485,9 @@ def install_requirements(url: str) -> None:
         % Procedure to create the desktop shortcut
         \begin{listing}[!h]
             \begin{minted}[linenos]{python}
-FILE = ""
+# constant defined elsewhere
+FILE = r"\code\software\main.py"
+
 def create_shortcut(source: str, dest: str) -> None:
     """ 
     Creates a file shortcut to source at dest 
@@ -1338,6 +1506,7 @@ def create_shortcut(source: str, dest: str) -> None:
             \caption{Procedure to create shortcut}
             \label{sc:create_shortcut_c1}
         \end{listing}
+
 
         
 \end{document}
