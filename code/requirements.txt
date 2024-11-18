@@ -1,0 +1,5 @@
+PyGithub==2.3.0
+PyGithub==2.4.0
+pywin32==306
+Requests==2.32.3
+winshell==0.6

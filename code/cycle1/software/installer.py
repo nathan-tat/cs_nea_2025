@@ -13,7 +13,10 @@ from win32com.client import Dispatch
 
 
 # the requirements.txt which has all the necessary pip libraries to run the program 
-REQ: str = "https://raw.githubusercontent.com/nathan-tat/cs_nea_2025/main/requirements.txt"
+REQ: str = (
+    "https://raw.githubusercontent.com"
+    "/nathan-tat/cs_nea_2025/main/requirements.txt"
+)
 # path to repository
 REPO_NAME: str = "nathan-tat/cs_nea_2025"
 # directory from which the software will be installed from 
@@ -21,7 +24,7 @@ SW_DIR: str = "code/software"
 
 # file that the shortcut will link to
 # I dont actually know what to call it
-FILE = ""
+FILE = r"\code\software\main.py"
 
 # if im testing stuff 
 testing = False
@@ -195,7 +198,7 @@ class InstallGUI:
                 if self.check_var.get():
                     # get name of user currently logged in
                     user = os.getlogin() 
-                    create_shortcut(self.filepath + r"\code\software\main.py", fr"C:\Users\{user}\Desktop\sim.lnk")
+                    create_shortcut(self.filepath, fr"C:\Users\{user}\Desktop\sim.lnk")
 
             except Exception as e:
                 # if something goes wrong then output the exception that was raised
