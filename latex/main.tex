@@ -1,12 +1,13 @@
 \documentclass[11pt]{article}
 
 \usepackage{array}
+\usepackage{amsmath}
 \usepackage{booktabs}
 \usepackage{caption}
 \usepackage{dirtree}
 \usepackage{fancyhdr}
 \usepackage[a4paper, margin=1in]{geometry}
-\usepackage[hidelinks]{hyperref}
+\usepackage{hyperref}
 \usepackage[newfloat]{minted}
 \usepackage{xcolor}
 \usepackage{subcaption}
@@ -26,6 +27,7 @@
 \usepackage{calc}
 \usepackage{pgfopts}
 % \usepackage{tikz-uml}
+\usepackage{siunitx}
 \usetikzlibrary{shapes.geometric, arrows}
 \usetikzlibrary{arrows.meta} % for the hierarchy diagrams i think
 \useunder{\uline}{\ul}{}
@@ -188,7 +190,7 @@
         \subsection{Problem Identification}
             Often times in physics, complex circuit diagrams have to be drawn and understood, and the opportunity to actually build them is not always available. A solution that could handle custom circuits as well as model and log different attributes quickly, accurately, and efficiently in order to help with building intuition in regard to how complex electrical systems function would be a useful tool that could help solve this issue.
 
-            As I would like to do mathematics at university, I have decided to do my writeup for my NEA in LaTeX in order to gain experience. This has added a lot of complexity, as I am relatively new to using LaTeX, especially regarding formatting my writeup to be readable as well as easy to follow.
+            As I would like to do Mathematics at university, I have decided to do my writeup for my NEA in LaTeX in order to gain experience. This has added a lot of complexity, as I am relatively new to using LaTeX, especially regarding formatting my writeup to be readable as well as easy to follow.
 
         \subsection{Identification of why this problem is solvable by computational methods}
             The key requirements stated above (accuracy, haste, and clarity) lend themselves very well to using computational methods. Computers are able to make calculations orders of magnitude faster than by hand or by analogue machine, and to a virtually arbitrary degree of accuracy. Many modern central processing units (CPUs) are also able capable of making use of concurrent processing, further increasing the advantage that a computer would have over a human. Graphical processing units (GPUs) are specifically designed for parallel processing, making them especially useful for graphics, which would allow for high quality renders for the user to be able to see. Any data that you would need to consider can be displayed in a clear and user-friendly fashion, making it highly customisable to fit the individual person's needs and for many attributes to be studied at the same time.
@@ -807,28 +809,8 @@
             The user will initially start on one user interface screen and depending on their choice go to one of two other user interface screens.
 
             \subsubsection{Data Structures}
-
-                Each directory that contains a project will include a configuration JSON file that will inform the main program on how to treat the project.
                 
-                As shown in \autoref{ps:json_proj_config_example}, multiple properties regarding the project will be stored. Some of these will be set at the beginning and not changed again, such as \verb|directory|, and others are able to change even after the project's initial creation, in particular \verb|last_opened| will need to updated whenever the project is opened. Note that double backwards slashed are used for the \verb|directory| attribute, as a backwards slash is used as an escape character in the JSON file format.
-
-                % ps:json_proj_config_example
-                % Example for the JSON config file for a project
-                \begin{figure}[!ht]
-                    \begin{minted}[linenos]{json}
-{
-    "directory": "C:\\users\\...",
-    "name": "this is a project name",
-    "type": "project type",
-    "created": "UNIX timestamp",
-    "lastOpened": "UNIX timestamp"
-}
-                    \end{minted}
-                    \caption{Configuration JSON file example}
-                    \label{ps:json_proj_config_example}
-                \end{figure}
-                
-                Another data structure that needs to be designed will be used to implement a feature that allows the user to select their most recent projects from a list. 
+                A data structure that allows the user to select their most recent projects from a list will need to be designed, as a consequence of the user interface design shown in \autoref{fig:menu_1_design_c2}.
                 This data structure will need to be First In First Out, similar to a queue, however I would like it to only hold a maximum of three items. 
                 See \autoref{flow:queue_like_design} for details.
 
@@ -862,10 +844,8 @@
                     \label{flow:queue_like_design}
                 \end{figure}
                 
-                This structure will be implemented with the use of a text file that will store the three most recent projects in order as well as using object-oriented programming.
+                This structure will be implemented with the use of a "global" text file (in the sense that changes to the text file on a local scale are reflected for every project) that will store projects in order of being opened.
                 
-                % Queue like
-
                 % fig:file-q-class-diagram
                 % FileQueue class diagram
                 \begin{figure}[!ht]
@@ -874,13 +854,17 @@
                         \begin{class}[text width=5cm]{FileQueue}{0,0}
                             \attribute{-location : string}
                             \attribute{-maxLength : int}
-                            \attribute{+rear : int}
-                            \attribute{+front : int}
+                            \attribute{-rear : int}
+                            \attribute{-front : int}
 
 
                             \operation{+enqueue(string)}
-                            \operation{+dequeue(): str}
+                            \operation{+dequeue(): string}
                             \operation{+length(): int}
+                            \operation{+drop(): list}
+
+                            \operation{+getRear(): int}
+                            \operation{+getFront(): int}
                         \end{class}
                     \end{tikzpicture}
                     \caption{FileQueue class diagram}
@@ -910,6 +894,31 @@
                     \label{dir:project_directory_tree_example_c2}
                 \end{figure}
 
+                % USed JSON cause it was easier
+                % Didnt use SQL/database because i dont need them to be connected in any way and there is only a small amount of data involved
+
+                
+                Each directory that contains a project will include a configuration JSON file that will inform the main program on how to treat the project. I have decided to use JSON as it integrates nicely with Python (using the json module), as well as allowing me to create a template that each project can follow. 
+
+
+                As shown in \autoref{ps:json_proj_config_example}, multiple properties regarding the project will be stored. Some of these will be set at the beginning and not changed again, such as \verb|directory|, and others are able to change even after the project's initial creation, in particular \verb|last_opened| will need to updated whenever the project is opened. Note that double backwards slashes are used for the \verb|directory| attribute, as a backwards slash is used as an escape character in the JSON file format.
+
+                % ps:json_proj_config_example
+                % Example for the JSON config file for a project
+                \begin{figure}[!ht]
+                    \begin{minted}[linenos]{json}
+{
+    "directory": "C:\\users\\...",
+    "name": "this is a project name",
+    "type": "project type",
+    "created": "UNIX timestamp",
+    "lastOpened": "UNIX timestamp"
+}
+                    \end{minted}
+                    \caption{Configuration JSON file example}
+                    \label{ps:json_proj_config_example}
+                \end{figure}
+
 
                 In \autoref{dir:project_directory_tree_example_c2}, I have designed the file structure for a single project. 
                 The \verb|arrangements.json| file will hold how the components are arranged on the board. This is what the main program will use to run. 
@@ -925,22 +934,24 @@
                             \attribute{-name : string}
                             \attribute{-created : int}
                             \attribute{-lastOpened : int}
-                            \attribute{-directory : string}
                             \attribute{-type : string}
+                            \attribute{-directory : string}
+                            \attribute{-config : string}
 
-                            \operation{-setName(string)}
-                            \operation{-setLastOpened(int)}
                             \operation{+save()}
                             \operation{+export(string)}
                             \operation{+open()}
                             \operation{+close()}
+
+                            \operation{+setName(string)}
+                            \operation{+setLastOpened(int)}
                         \end{class}
                     \end{tikzpicture}
                     \caption{Project class diagram}
                     \label{fig:project-class-diagram-c2}
                 \end{figure}
 
-                I have again decided to make use of object-oriented programming this time in order to have a class for an instance of a running program, a class diagram of which is shown in \autoref{fig:project-class-diagram-c2}. 
+                I have again decided to make use of object-oriented programming this time in order to have a class for an instance of a running program, a class diagram of which is shown in \autoref{fig:project-class-diagram-c2}.
 
             \subsubsection{User Interface} 
                 % Need to design 3 UI windows. 
@@ -993,7 +1004,7 @@
                     \label{fig:menu_2_design_c2}
                 \end{figure}
 
-                \newpage
+                % \newpage
                 In \autoref{fig:init_new_proj_ui_design_c2}, I have designed the user interface for initialising a new project. The user will be allowed to select the name of the project and the directory in which the project is stored. I have also decided to include a dropdown selection box that would allow the user to select the "type" of project. At this time, I am not certain of what that exactly refers to. However, in the future I could use it for something. For example, the user being able to choose from a selection of pre-made circuits as a demonstration of the software.
 
                 % fig:init_new_proj_ui_design_c2
@@ -1102,9 +1113,184 @@ def enqueue(self, project_id):
 
                 Essentially, the \verb|front| pointer is only incremented whenever the FileQueue is already at maximum capacity.
 
-            
+        \newpage
         \subsection{Testing}
+            See \autoref{tbl:test-data-cycle2}.
+
         \subsection{Implementation}
+            \subsubsection{CSV2LaTeX}
+                In the middle of creating \autoref{tbl:test-data-cycle2}, I found it very tedious to type in the data manually straight into LaTeX code, which prompted me to consider other methods. 
+                Since I find the user interface of Microsoft Excel quite easy to work with and well suited to manipulating tabular data, as well as CSV files easy to manipulate in Python, I wrote a Python script (including GUI) that would take in a CSV file and output a formatted table in LaTeX. 
+
+                % pc:csv2latex-example-input-csv
+                % Example input CSV file
+                \begin{figure}[!h]
+                    \begin{minted}[linenos]{text}
+This,is,a,test
+hello,world,foo,bar
+1,2,3,4
+words,words,words,words
+                    \end{minted}
+                    \caption{Example input CSV file. The top row includes the table headers.}
+                    \label{pc:csv2latex-example-input-csv}
+                \end{figure}
+
+
+                % pc:csv2latex-example-output-latex
+                % Example LaTeX table output
+                \begin{figure}[!h]
+                    \begin{minted}[linenos]{latex}
+% tbl:example-for-nea
+% Example table
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{@{}llll@{}} \toprule
+        \textbf{This} & \textbf{is} & \textbf{a} & \textbf{test} \\ \midrule 
+        hello & world & foo & bar \\ 
+        1 & 2 & 3 & 4 \\ 
+        words & words & words & words \\ 
+        \bottomrule
+    \end{tabular}
+    \caption{This is what an example table looks like}
+    \label{tbl:example-for-nea}
+\end{table}
+                    \end{minted}
+                    \caption{Example LaTeX code output}
+                    \label{pc:csv2latex-example-output-latex}
+                \end{figure}
+
+
+                % fig:rendered-csv2latex-table
+                % Rendered LaTeX table
+                \begin{figure}[!h]
+                    \centering
+                    \includegraphics[scale=.25]{figures/c2/implement/example-tbl.png}
+                    \caption{The rendered LaTeX code}
+                    \label{fig:rendered-csv2latex-table}
+                \end{figure}
+
+                First I wrote a function to work from a CSV file and write the LaTeX code from there, shown in \autoref{sc:csv2latex-func}. 
+                It takes in the path to the CSV input file, the desired label, caption, and title, and whether or not the CSV file includes the table headers or not. Using that, I formatted the data from the CSV file by following LaTeX code I had previously written. 
+                This function returns the LaTeX code as a string, not yet writing it to an output text file. 
+
+                Working with just this function within a Python file would have been fine, however in order to account for maintainability, I tried to make it as easy as possible for people other than me to create new tables, taking into consideration that LaTeX is specialist knowledge. For example in the case where multiple people are working on the documentation, they should use the same table formatting in order to stay consistent. 
+                This prompted me to develop a GUI front-end to the script. 
+
+                I again decided to use a class for the main GUI element and implement button functionality as methods of the class, the constructor of the class (where labels, entries, and buttons are defined) are shown in \autoref{sc:csv2latex-gui-init-1}, \autoref{sc:csv2latex-gui-init-2}, and \autoref{sc:csv2latex-gui-init-3}. 
+                I had also defined the \verb|input| and \verb|output| attributes, which are the input and output file paths respectively. 
+
+                Inspired by the previous implementation in Cycle 1, a browse button was added, the method for which is shown in \autoref{sc:csv2latex-browse-method}. 
+                This would allow the user to convert a CSV file from anywhere on the computer, allowing for the possibility of keeping a folder with a CSV file per table in the document which would make it easy to maintain them. 
+
+
+
+                
+
+
+                
+        \subsubsection{FileQueue}
+            I decided to implement the FileQueue first, as it was more standalone than the Project class and so better to do first. 
+
+            \vspace{10pt}
+            The constructor method for the FileQueue is shown in \autoref{sc:fileq-constructor}. The attributes have remained the same as in the design, shown in \autoref{fig:file-q-class-diagram}, \verb|__maxLength| and \verb|__location| are defined from the parameters, and \verb|rear| and \verb|front| are first defined as 0. 
+
+            Since the items in the FileQueue are read from a source text file, it follows that the initial values for the front and rear pointers depend on the state of the source at the time of initialisation. This only affects the front pointer, as the rear pointer always points to the last item in the source. 
+
+            % flow:fileq-front-ptr-init-bad
+            % Showing how the front pointer gets initialised
+            \begin{figure}[!h]
+                \centering
+                \begin{tikzpicture}[node distance=2cm]
+                    \node (1) [process, align=center, ] {A (Non-existent)};
+                    \node (2) [process, right of=1, align=center, xshift=2.0cm] {B};
+                    \node (3) [process, right of=2, align=center, xshift=2.0cm] {C};
+                    \node (4) [process, right of=3, align=center, xshift=2.0cm] {D};
+
+                    \node at (0, -1.3) {-1};
+                    \node at (4, -1.3) {0};
+                    \node at (8, -1.3) {1};
+                    \node at (12, -1.3) {2};
+
+                    \node at (12, 1.3) {rear};
+                    \node at (0, 1.5) {rear - maxLength + 1};
+                    \node at (0, 1.1) {(Wrong)};
+
+                    \draw[arrow] (4) -- (3);
+                    \draw[arrow] (3) -- (2);
+                    \draw[arrow] (2) -- (1);
+                    \draw[dashed] (2,-1.5) -- (2,1.7);
+                \end{tikzpicture}
+                \caption{How the front pointer could be wrongly initialised}
+                \label{flow:fileq-front-ptr-init-bad}
+            \end{figure}
+
+            \autoref{flow:fileq-front-ptr-init-bad} shows how the front pointer could be mistakenly initialised to a negative value if the source has not yet got maxLength items, which would cause unwanted behaviour later (in Python, accessing the $n$th index, where $n$ is negative, results in the $n$th to last item being returned, i.e. not raise an exception, which would make it hard to debug). Similar precautions were taken when implementing the enqueue method (the front pointer need not be decremented if the FileQueue has not reached maxLength).
+
+            \vspace{10pt}
+            Since the behaviour of other methods depended on the amount of items in the FileQueue, the length method was the first to be implemented, shown in \autoref{sc:fileq-length-method}. It is only one line, and returns the amount of items calculated with the front and rear pointers. 
+
+            \vspace{10pt}
+            The next method to be implemented was the dequeue method, shortened to \verb|deq| as it was easier to type, the code for which is shown in \autoref{sc:fileq-deq-method}. The first thing to check is the current length of the FileQueue; you can't remove items from an empty queue. The method raises a generic exception with a message explaining what happened, which I deemed descriptive enough to help in future debugging and maintainability.
+
+            Next the method accesses the value located at the rear pointer and sets it to a variable to be returned later. I have decided to use a Python \verb|with| statement to access the file, as it is safer than the usual \verb|file.open()| and \verb|file.close()|. With statements will automatically close the file and manage resources, whereas without it if an exception occurs before the closing statement is processed, the file will not close safely, which could lead to unwanted behaviour in the future. 
+
+            \vspace{10pt}
+            Notice that at no point is the item actually deleted from the text file, the front pointer is incremented to simulate this and it saves on having to think about working with text files further. One obvious downside to this implementation is that the source file will keep growing and taking up storage, however this will not be a big issue. 
+
+            % \vspace{10pt}
+            Assuming an average file path length of $l$ characters and the text file having $n$ lines the formula to calculate how much storage space $S$ it would use is as follows
+
+            \begin{align*}
+                8ln = S \\
+                \implies n = \frac{S}{8l}
+            \end{align*}
+            % Do a calculation to show why it isn't an issue. 
+
+            I wrote a Python script to find the average length of a file path on my computer, see \autoref{sc:avg-filepath-length-file}, which gave the output shown in \autoref{fig:avg-filepath-output}. I will use the value $123.37202$ as my value for $l$. 
+
+            % fig:avg-filepath-output
+            % Output from avg filepath script
+            \begin{figure}[!h]
+                \begin{minted}[linenos]{text}
+Total files: 995122
+Total length: 122770209
+Average: 123.37202
+Time taken: 4.143689362208049 min
+                \end{minted}
+                \caption{Output from the script}
+                \label{fig:avg-filepath-output}
+            \end{figure}
+
+            According to the Steam hardware survey, most computer users have over 1 \si{TB} of storage available, so using 0.5\% of that for $S$ is reasonable. 
+
+            % fig:steam-hw-survey-storage
+            % Steam hardware survey results regarding storage
+            \begin{figure}[!h]
+                \centering
+                \includegraphics[scale=.5]{figures/c2/implement/steam-hardware-survey-storage.png}
+                \caption{Steam hardware survey results regarding storage}
+                \label{fig:steam-hw-survey-storage}
+            \end{figure}
+
+            This means that to use up 5 \si{GB} of storage, the file would have to be written to almost 5.1 million times, which is clearly far beyond a reasonable amount. Thus I conclude that the contents of the file never being deleted would not be an issue to the average user, but in the case that it is, the user is welcome to remove the contents manually. 
+
+            
+            \vspace{10pt}
+            The method I implemented next was the enqueue method, again shortened to \verb|enq| as it was easier to type, the code for which is shown in \autoref{sc:fileq-enq-method}. 
+
+            The method takes in a string, which is the ID code or directory of a project, and the first thing that happens is the string being written to the file stored at \verb|__location|. A newline character is also written to make sure that they're written to different lines. 
+
+            When an item is enqueued, the pointers need to be correctly adjusted, and whether or not the \verb|front| pointer gets incremented depends on if the FileQueue is full. The code is commented in order to explain why and when which pointers are incremented. 
+
+            \vspace{10pt}
+            The final method for this class was \verb|drop|, the code for which is shown in \autoref{sc:fileq-drop-method-final}. In order to save resources, the method checks the length before opening the text file and returns an empty list if the length is zero. 
+
+            There were originally issues with this method, and the original code is shown in \autoref{sc:fileq-drop-method-og}. Firstly, the arguments passed to the for-loop were incorrect, which resulted in not all the items being printed. However the bigger issue stemmed from calling \verb|file.readlines()| at every iteration. 
+
+
+
+
+
         \subsection{Evaluation}
 
 
@@ -1203,11 +1389,11 @@ def enqueue(self, project_id):
             \centering
             \begin{tabular}{@{}lp{150pt}lp{87pt}l@{}} \toprule
                 \textbf{ID} & \textbf{Reason} & \textbf{Type} & \textbf{Test Data} & \textbf{Expected Outcome} \\ \midrule
-                I1 & Testing input validation for directories & Normal & Any existing directory & \autoref{fig:install_ui_successful_design_c1} \\ \medskip
-                I2 & Testing input validation for directories & Erroneous & Any non-existing directory & \autoref{fig:installer_ui_design_directory_error} \\ \medskip
-                I3 & Testing how the program handles the directory being deleted/altered during the installation process & Boundary & Any existing directory & \autoref{fig:installer_ui_design_other_error} \\ \medskip
-                I4 & Testing how the program reacts to being terminated without the use of the Cancel button & Erroneous & N/A & \autoref{fig:installer_ui_design_unsafe_exit_c1} \\ \medskip
-                I5 & Testing how the program handles being terminated through the use of the Cancel button before the installation process & Normal & Pressing the Cancel button before pressing the Install button & Closing the window \\ \medskip
+                I1 & Testing input validation for directories & Normal & Any existing directory & \autoref{fig:install_ui_successful_design_c1} \\ 
+                I2 & Testing input validation for directories & Erroneous & Any non-existing directory & \autoref{fig:installer_ui_design_directory_error} \\ 
+                I3 & Testing how the program handles the directory being deleted/altered during the installation process & Boundary & Any existing directory & \autoref{fig:installer_ui_design_other_error} \\ 
+                I4 & Testing how the program reacts to being terminated without the use of the Cancel button & Erroneous & N/A & \autoref{fig:installer_ui_design_unsafe_exit_c1} \\ 
+                I5 & Testing how the program handles being terminated through the use of the Cancel button before the installation process & Normal & Pressing the Cancel button before pressing the Install button & Closing the window \\ 
                 I6 & Testing how the program handles being terminated through the use of the Cancel button after the installation process & Normal & Pressing the Cancel button after pressing the Install button & Closing the window \\
                 \bottomrule
             \end{tabular}
@@ -1235,10 +1421,38 @@ def enqueue(self, project_id):
         \end{table}
 
 
+        \newpage
+        % tbl:test-data-cycle2
+        % Cycle 2 Test Data
+        \begin{table}[!h]
+            \centering
+            \begin{tabular}{@{}lp{150pt}lp{87pt}p{110pt}@{}} \toprule
+                \textbf{ID} & \textbf{Reason} & \textbf{Type} & \textbf{Test Data} & \textbf{Expected Outcome} \\ \midrule 
+                I7 & Testing FileQueue behaviour when adding items when full & Normal & Any String & \autoref{flow:queue_like_design} \\ 
+                I8 & Testing FileQueue behaviour when adding items when underfull & Normal & Any String & \autoref{flow:fileq-not-full} \\ 
+                I9 & Testing FileQueue behaviour when removing items when not empty & Normal & N/A & Item removed and program continues \\ 
+                I10 & Testing FileQueue behaviour when removing items when empty & Erroneous & N/A & Raise exception \\ 
+                I11 & Dropping items from the FileQueue & Normal & N/A & Return list of items in the FileQueue \\ 
+                I12 & Correct data in JSON to Project class & Normal & JSON file & Project object with correct attributes \\ 
+                I13 & I12 with missing data in JSON file & Erroneous & JSON file & Raise exception \\ 
+                I14 & I12 with wrong datatype data in JSON file & Erroneous & JSON file & Raise exception \\ 
+                I15 & Testing export method from Project class & Normal & Any existing directory & A Zip archive at that location \\ 
+                I16 & I15 with non-existing directory & Normal & Any non-existing directory & Folder is created and Zip archive at that location \\ 
+                I17 & I15 with non-directory string & Erroneous & Non-directory String & Raise exception \\ 
+                I18 & Entering project name & Normal & String shorter than 33 characters & JSON file gets written to correctly and program continues \\ 
+                I19 & Entering project name & Erroneous & String longer than 32 characters & User is prompted to re-enter name \\ 
+                \bottomrule
+            \end{tabular}
+            \caption{Cycle 2 test data}
+            \label{tbl:test-data-cycle2}
+        \end{table}
+        
+
+
     \newpage
-
-
     \section{Source Codes}
+
+        % #region Cycle 1
 
         % sc:if_name_main_c1
         % if name main for the installer.py 
@@ -1329,7 +1543,7 @@ class InstallGUI:
         
         self.filepath = None
             \end{minted}
-            \caption{Initialising method for the InstallGUI class}
+            \caption{InstallGUI constructor}
             \label{sc:install_gui_init_sc_c1}
         \end{listing}
 
@@ -1354,7 +1568,7 @@ class InstallGUI:
         self.ent_dir["text"] = self.filepath
         self.btn_install["state"] = "active"
             \end{minted}
-            \caption{Code for cancel and browse}
+            \caption{InstallGUI cancel and browse button methods}
             \label{sc:cancel_and_browse_btns_sc_c1}
         \end{listing}
 
@@ -1399,7 +1613,7 @@ class InstallGUI:
         self.btn_cancel["state"] = "active"
         self.btn_install["state"] = "active"
             \end{minted}
-            \caption{Code for install button}
+            \caption{InstallGUI install button method}
             \label{sc:install_btn_sc_c1}
         \end{listing}
 
@@ -1506,6 +1720,446 @@ def create_shortcut(source: str, dest: str) -> None:
             \caption{Procedure to create shortcut}
             \label{sc:create_shortcut_c1}
         \end{listing}
+
+        
+        % #endregion 
+
+        % #region Cycle 2
+
+
+        \newpage
+        % sc:csv2latex-func
+        % CSV2LaTeX
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+def csv_to_latex(
+        csv: str,               # source csv file
+        label: str = None,      # latex label
+        caption: str = None,    # table caption
+        title: str = None,      # table title
+        headers: bool = True,   # does the csv file contain headers
+        auto: bool = False      # auto size columns (not implemented)
+    ) -> str:
+    
+    # get amount of columns
+    length = 0
+    with open(csv, "r") as file:
+        length = len(file.readlines()[0].split(","))
+    
+    
+    
+    output = f"""% tbl:{label}
+% {title}
+\\begin{{table}}[!h]
+    \\centering
+    \\begin{{tabular}}{{@{{}}{'l'*length}@{{}}}} \\toprule
+"""
+        
+        
+    with open(csv, "r") as file:
+        for i, l in enumerate(file.readlines()):
+            row = []
+            
+            if i == 0 and headers:
+                for j in l.strip().split(","):
+                    row.append(f"\\textbf{{{j}}}")
+                    
+                output += "        " + " & ".join(row) + " \\\\ \\midrule \n"
+            else:
+                row = l.strip().split(",")
+                
+                output += "        " + " & ".join(row) + " \\\\ \n"
+                
+    output += f"""        \\bottomrule
+    \\end{{tabular}}
+    \\caption{{{caption}}}
+    \\label{{tbl:{label}}}
+\\end{{table}}"""
+    
+    return output
+            \end{minted}
+            \caption{CSV2LaTeX function}
+            \label{sc:csv2latex-func}
+        \end{listing}
+
+        \newpage
+        % sc:csv2latex-gui-init-1
+        % CSV2LaTeX GUI constructor
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+import tkinter as tk
+import tkinter.font as tkFont
+from tkinter import filedialog
+from tkinter import messagebox
+
+
+class CSV2LaTeX:
+    def __init__(self, root):
+        #setting title
+        root.title("CSV to LaTeX")
+        #setting window size
+        w = 285
+        h = 190
+        sw = root.winfo_screenwidth()
+        sh = root.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (w, h, (sw - w) / 2, (sh - h) / 2)
+        root.geometry(alignstr)
+        root.resizable(width=False, height=False)
+        
+        
+        self.input = "in.csv"
+        self.output = "out.txt"
+            \end{minted}
+            \caption{CSV2LaTeX GUI constructor}
+            \label{sc:csv2latex-gui-init-1}
+        \end{listing}
+
+        \newpage
+        % sc:csv2latex-gui-init-2
+        % Input/output labels and headers checkbox
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+        self.btn_install = tk.Button(root)
+        self.btn_install["text"] = "Go"
+        self.btn_install.place(x=195,y=155,width=70,height=25)
+        self.btn_install["command"] = self.btn_install_command
+        
+        self.lbl_input = tk.Label(root)
+        self.lbl_input["text"] = "Input:"
+        self.lbl_input.place(x=10,y=10)
+        
+        self.ent_input = tk.Entry(root)
+        self.ent_input.place(x=65,y=10,width=130)
+        self.ent_input.insert(0, self.input)
+        
+        self.btn_browse = tk.Button(root)
+        self.btn_browse["text"] = "Browse"
+        self.btn_browse.place(x=195,y=10,width=70)
+        self.btn_browse["command"] = self.btn_browse_command
+        
+        
+        self.lbl_output = tk.Label(root)
+        self.lbl_output["text"] = "Output:"
+        self.lbl_output.place(x=10,y=30)
+        
+        self.ent_output = tk.Entry(root)
+        self.ent_output.place(x=65,y=30,width=200)
+        self.ent_output.insert(0, self.output)
+        
+        
+        self.check_var = tk.IntVar()
+        self.check_shortcut = tk.Checkbutton(root, variable=self.check_var)
+        self.check_shortcut["text"] = "Headers"
+        self.check_shortcut.place(x=10,y=55)
+            \end{minted}
+            \caption{Input/output labels and headers checkbox}
+            \label{sc:csv2latex-gui-init-2}
+        \end{listing}
+
+        \newpage
+        % sc:csv2latex-gui-init-3
+        % Title, caption, and label entries
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+        self.lbl_title = tk.Label(root)
+        self.lbl_title["text"] = "Title:"
+        self.lbl_title.place(x=10,y=85)
+        
+        self.ent_title = tk.Entry(root)
+        self.ent_title.place(x=65,y=85,width=200)
+        
+        
+        self.lbl_caption = tk.Label(root)
+        self.lbl_caption["text"] = "Caption:"
+        self.lbl_caption.place(x=10,y=105)
+        
+        self.ent_caption = tk.Entry(root)
+        self.ent_caption.place(x=65,y=105,width=200)
+        
+        
+        self.lbl_label = tk.Label(root)
+        self.lbl_label["text"] = "Label:"
+        self.lbl_label.place(x=10,y=125)
+        
+        self.ent_label = tk.Entry(root)
+        self.ent_label.place(x=65,y=125,width=200)
+            \end{minted}
+            \caption{Title, caption, and label entries}
+            \label{sc:csv2latex-gui-init-3}
+        \end{listing}
+
+        \newpage
+        % sc:csv2latex-convert-method
+        % CSV2LaTeX convert method
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+    def btn_go_command(self) -> None:
+        """ Writes to the output file """
+        table = csv_to_latex(
+            csv=self.input,
+            label=self.ent_label.get(),
+            caption=self.ent_caption.get(),
+            title=self.ent_title.get(),
+            headers=self.check_var
+        )
+        
+        # write to the text file
+        with open(self.output, "w") as file:
+            file.write(table)
+            
+        # alert the user (me)
+        messagebox.showinfo("Success", f"Successfully written to {self.output}")
+            \end{minted}
+            \caption{CSV2LaTeX convert method}
+            \label{sc:csv2latex-convert-method}
+        \end{listing}
+
+        \newpage
+        % sc:csv2latex-browse-method
+        % CSV2LaTeX browse for file method
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+    def btn_browse_command(self) -> None:
+        """ Allows the user to select the csv file. """
+        self.input = filedialog.askopenfile()
+
+        self.ent_input.delete(0, tk.END)
+        self.ent_input.insert(0, self.input)
+            \end{minted}
+            \caption{CSV2LaTeX browse for file method}
+            \label{sc:csv2latex-browse-method}
+        \end{listing}
+
+
+        \newpage
+        % sc:fileq-constructor
+        % FileQueue Constructor
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+class FileQueue:
+    def __init__(self, maxLength: int, location: str):
+        self.__maxLength = maxLength
+        self.__location = location
+        
+        self.__front = 0
+        self.__rear = 0
+        
+        # counting the length to set the rear pointer. 
+        # this needs to be set every time this is initially opened
+        with open(location, "r") as file:
+            for i in file:
+                self.__rear += 1
+                
+        # decrement by 1 to make it 0 indexed
+        self.rear -=1
+                
+        # if the file has less than maxLength lines
+        if self.__rear <= maxLength:
+            self.__front = 0
+        else:
+            self.__front = self.__rear - maxLength + 1
+            \end{minted}
+            \caption{FileQueue constructor}
+            \label{sc:fileq-constructor}
+        \end{listing}
+
+        \newpage
+        % sc:fileq-length-method
+        % File Queue length method
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+    def length(self) -> int:
+        """ Returns the amount of the elements in the FileQueue """
+        return self.rear - self.front + 1
+            \end{minted}
+            \caption{FileQueue length method}
+            \label{sc:fileq-length-method}
+        \end{listing}
+
+        \newpage
+        % sc:fileq-deq-method
+        % FileQueue dequeue method
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+    def deq(self) -> str:
+        """ 
+        Increments the front pointer and returns the 
+        element at the front of the FileQueue 
+        """
+        
+        # if the queue is empty raise an exception
+        if self.length() == 0:
+            raise Exception("Queue Underflow")
+        
+        
+        self.front += 1
+        
+        value = ""
+        
+        with open(self.__location, "r") as file:
+            value = file.readlines()[self.front - 1]
+            
+        
+        # stripped to remove whitespace
+        return value.strip()
+            \end{minted}
+            \caption{FileQueue dequeue method}
+            \label{sc:fileq-deq-method}
+        \end{listing}
+
+        \newpage
+        % sc:fileq-enq-method
+        % FileQueue enqueue method
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+    def enq(self, projectDir: str) -> None:
+        """ Adds an item to the back of the FileQueue """
+        # append the new project to the file
+        # this happens regardless of pointers
+        with open(self.__location, "a") as file:
+            file.write(projectDir + "\n")
+        
+        
+        # pointer logic
+        # if the file has enough elements to be considered "full"
+        if self.length() == self.__maxLength:
+                
+            # update front and rear pointers
+            self.rear += 1
+            self.front += 1
+        
+        else:
+            
+            # front does not always need to be considered  
+            # eg maxLength = 4, rear = 1, front = 0
+            # incrementing rear and front results in 
+            # a queue of length 2 still (but should be 3)
+            
+            self.rear += 1
+            
+        # my only gripe with this implementation 
+        # is that it allows for duplicates
+            \end{minted}
+            \caption{FileQueue enqueue method}
+            \label{sc:fileq-enq-method}
+        \end{listing}
+
+        \newpage
+        % sc:fileq-drop-method-og
+        % FileQueue drop method original
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+    def drop(self) -> list:
+        """ Returns all the elements in the FileQueue as a list """
+        temp = []
+        
+        # if it is empty return an empty list
+        if self.length() == 0:
+            return temp
+        
+        
+        # read from the file
+        with open(self.__location, "r") as file:
+            for i in range(self.front, self.rear):
+                temp.append(file.readlines()[i])
+                
+        return temp
+            \end{minted}
+            \caption{FileQueue drop method original}
+            \label{sc:fileq-drop-method-og}
+        \end{listing}
+
+        \newpage
+        % sc:fileq-drop-method
+        % FileQueue drop method
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+    def drop(self) -> list:
+        """ Returns all the elements in the FileQueue as a list """
+        temp = []
+        
+        # if it is empty return an empty list
+        if self.length() == 0:
+            return temp
+        
+        
+        # read from the file
+        with open(self.__location, "r") as file:
+            # problem with calling "file.readlines()" repeatedly
+            lines = file.readlines()
+            for i in range(self.front, self.rear + 1):
+                # print(i)
+                temp.append(lines[i].strip())
+                
+        return temp
+            \end{minted}
+            \caption{FileQueue drop method final}
+            \label{sc:fileq-drop-method-final}
+        \end{listing}
+
+
+        \newpage
+        % sc:avg-filepath-length-file
+        % Script to get average file path length
+        \begin{listing}[!h]
+            \begin{minted}[linenos]{python}
+from os import listdir
+from os.path import isfile, join
+from time import time
+
+global total
+total = 0
+
+global length
+length = 0
+
+root = "C:\\Users\\Lilly"
+
+start = time()
+
+def get_length_of_paths(folder: str) -> None:
+    # access the global variables
+    global total
+    global length
+    
+    try:
+        # loop over every item in a folder 
+        for file in listdir(folder):
+            path = join(folder, file)
+            
+            # if its a file then add the length to 
+            # the length variable and increment total
+            if isfile(path):
+                total += 1
+                length += len(path)
+                print(path)
+            else:
+                # recursion
+                get_length_of_paths(path)
+                
+    except (PermissionError, FileNotFoundError) as e: 
+        # i would get some errors for some weird files
+        # decided to just ignore them 
+        print("Some error")
+            
+            
+get_length_of_paths(root)
+
+#output
+print(f"Total files: {total}")
+print(f"Total length: {length}")
+print(f"Average: {round(length/total, 5)}")
+print(f"Time taken: {(time() - start)/60} min")
+            \end{minted}
+            \caption{Script to get average file path length}
+            \label{sc:avg-filepath-length-file}
+        \end{listing}
+
+        
+
+        % #endregion
+
+
 
 
         

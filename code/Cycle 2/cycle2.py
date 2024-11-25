@@ -51,28 +51,29 @@ class FileQueue:
         self.__maxLength = maxLength
         self.__location = location
         
-        self.front = 0
-        self.rear = 0
+        self.__front = 0
+        self.__rear = 0
         
         # counting the length to set the rear pointer. 
         # this needs to be set every time this is initially opened
         with open(location, "r") as file:
             for i in file:
-                self.rear += 1
+                self.__rear += 1
+                
+        # decrement by 1 to make it 0 indexed
+        self.rear -=1
                 
         # if the file has less than maxLength lines
-        if self.rear <= maxLength:
-            self.front = 0
+        if self.__rear <= maxLength:
+            self.__front = 0
         else:
-            self.front = self.rear - maxLength
+            self.__front = self.__rear - maxLength + 1
             
-        # decrement by 1 to make it 0 indexed
-        self.rear -= 1
 
         
     def length(self) -> int:
         """ Returns the amount of the elements in the FileQueue """
-        return self.rear - self.front + 1
+        return self.__rear - self.__front + 1
         
         
     def deq(self) -> str:
@@ -82,14 +83,13 @@ class FileQueue:
         if self.length() == 0:
             raise Exception("Queue Underflow")
         
-        
-        self.front += 1
-        
         value = ""
         
         with open(self.__location, "r") as file:
-            value = file.readlines()[self.front - 1]
+            value = file.readlines()[self.__front]
             
+
+        self.__front += 1
         
         # stripped to remove whitespace
         return value.strip()
@@ -108,16 +108,17 @@ class FileQueue:
         if self.length() == self.__maxLength:
                 
             # update front and rear pointers
-            self.rear += 1
-            self.front += 1
+            self.__rear += 1
+            self.__front += 1
         
         else:
             
             # front does not always need to be considered  
             # eg maxLength = 4, rear = 1, front = 0
-            # incrementing rear and front results in a queue of length 2 still (but should be 3)
+            # incrementing rear and front results 
+            # in a queue of length 2 still (but should be 3)
             
-            self.rear += 1
+            self.__rear += 1
             
         # my only gripe with this implementation is that it allows for duplicates
             
@@ -135,7 +136,7 @@ class FileQueue:
         with open(self.__location, "r") as file:
             # problem with calling "file.readlines()" repeatedly
             lines = file.readlines()
-            for i in range(self.front, self.rear + 1):
+            for i in range(self.__front, self.__rear + 1):
                 # print(i)
                 temp.append(lines[i].strip())
                 
