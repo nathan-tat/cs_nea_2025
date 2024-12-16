@@ -3,23 +3,33 @@ Implement UI like shown in design
 Implement Project class that does a bunch of stuff
 """
 import shutil
-
+import time
 
 class Project:
-    def __init__(self, name: str, created: int, lastOpened: int, directory: str, type: str) -> None:
+    def __init__(self, name: str, created: int, lastSaved: int, directory: str, type: str) -> None:
         self.__name = name
         self.__created = created
-        self.__lastOpened = lastOpened
+        self.__lastSaved = lastSaved
         self.__directory = directory
         self.__type = type
         
+        # the maximum length for a project name
+        self.maxNameLength = 32
         
-    def __setName__(self, name: str) -> None:
+        
+    def setName(self, name: str) -> None:
+        """ Sets the name attribute of the project, along with validation.
+        \nRaises `ValueError` if `name` exceeds `maxNameLength`"""
+        if len(name) > self.maxNameLength:
+            err = f"'name' is too long (received {len(name)}, expected <= {self.maxNameLength})."
+            raise ValueError(err)
+        
         self.__name = name
     
     
-    def __setLastOpened__(self, opened: int) -> None:
-        self.__lastOpened == opened
+    def setLastSaved(self) -> None:
+        """ Sets the `lastSaved` time to the current UNIX timestamp, to the nearest second """
+        self.__lastSaved = round(time.time())
     
     
     def save(self) -> None:
@@ -72,12 +82,12 @@ class FileQueue:
 
         
     def length(self) -> int:
-        """ Returns the amount of the elements in the FileQueue """
+        """ Returns the amount of the elements in the `FileQueue` """
         return self.__rear - self.__front + 1
         
         
     def deq(self) -> str:
-        """ Increments the front pointer and returns the element at the front of the FileQueue """
+        """ Increments the `front` pointer and returns the element at the front of the `FileQueue` """
         
         # if the queue is empty raise an exception
         if self.length() == 0:
@@ -96,7 +106,7 @@ class FileQueue:
     
     
     def enq(self, projectDir: str) -> None:
-        """ Adds an item to the back of the FileQueue """
+        """ Adds an item to the back of the `FileQueue` """
         # append the new project to the file
         # this happens regardless of pointers
         with open(self.__location, "a") as file:
@@ -124,7 +134,7 @@ class FileQueue:
             
             
     def drop(self) -> list:
-        """ Returns all the elements in the FileQueue as a list """
+        """ Returns all the elements in the `FileQueue as a list """
         temp = []
         
         # if it is empty return an empty list
