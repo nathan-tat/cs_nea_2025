@@ -6,12 +6,20 @@ import shutil
 import time
 
 class Project:
-    def __init__(self, name: str, created: int, lastSaved: int, directory: str, type: str) -> None:
-        self.__name = name
-        self.__created = created
-        self.__lastSaved = lastSaved
-        self.__directory = directory
-        self.__type = type
+    def __init__(
+        self, 
+        directory: str, 
+        name: str, 
+        type: str,
+        created: int, 
+        lastSaved: int
+    ) -> None:
+        
+        self.__name: str = name
+        self.__created: int = created
+        self.__lastSaved: int = lastSaved
+        self.__directory: str = directory
+        self.__type: int = type
         
         # the maximum length for a project name
         self.maxNameLength = 32
@@ -20,16 +28,37 @@ class Project:
     def setName(self, name: str) -> None:
         """ Sets the name attribute of the project, along with validation.
         \nRaises `ValueError` if `name` exceeds `maxNameLength`"""
+        
+        err = "'name' is too long "
+        err += f"(received {len(name)}, expected <= {self.maxNameLength})."
         if len(name) > self.maxNameLength:
-            err = f"'name' is too long (received {len(name)}, expected <= {self.maxNameLength})."
             raise ValueError(err)
         
         self.__name = name
     
+    def getName(self) -> str:
+        """ Returns name """
+        return self.__name
+    
     
     def setLastSaved(self) -> None:
-        """ Sets the `lastSaved` time to the current UNIX timestamp, to the nearest second """
+        """ Sets the `lastSaved` time to the current UNIX timestamp
+        to the nearest second """
         self.__lastSaved = round(time.time())
+        
+    def getLastSaved(self) -> int:
+        """ Returns `lastSaved` """
+        return self.__lastSaved
+    
+    
+    def getType(self) -> str:
+        """ Returns `type` """
+        return self.__type
+    
+    
+    def getCreated(self) -> int:
+        """ Returns `created` """
+        return self.__created
     
     
     def save(self) -> None:
@@ -37,9 +66,8 @@ class Project:
     
     
     def export(self, destination: str) -> None:
-        """ 
-        Saves the directory of the project as a .zip file 
-        to a given destination
+        """ Saves the directory of the project as a .zip 
+        file to a given destination
         """
         # https://stackoverflow.com/a/25650295
         shutil.make_archive(self.__name, "zip", self.__directory, destination)
