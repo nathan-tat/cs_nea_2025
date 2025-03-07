@@ -1,0 +1,56 @@
+\chapter{Overall System Design}
+    I decided to split the system into three sections: project, simulating, building. Within the software, the user will initialise a `project' in a directory. 
+    The program will frequently refer to a `source directory', which will be the user's program files by default. 
+    This source directory will be configurable by the user, but there is no guarantee that the user changing things on their own won't break some of the functionality.
+
+% Overall Hierarchy Diagram FRST
+% \begin{center}
+%     \footnotesize
+%     \begin{forest}
+%         for tree={
+%             align=center,
+%             font=\sffamily,
+%         edge+={thick, -{Stealth[]}},
+%         l sep'+=10pt,
+%         fork sep'=10pt,
+%         },
+%         forked edges,
+%         if level=0{
+%             inner xsep=0pt,
+%             tikz={\draw [thick] (.children first) -- (.children last);}
+%             }{},
+%             [Circuit Builder
+%                 [Project/File Management
+%                     [Initialising
+%                         [Choose to\\make new or\\open file
+%                             [Importing\\all data and\\rendering]
+%                             [Initialising\\necessary files]
+%                         ]
+%                         [Choose working\\directory]
+%                     ]
+%                     [Exporting
+%                         [Data]
+%                         [Project/Circuit\\arrangement]
+%                     ]
+%                 ]
+%                 [Simulating
+%                     [Updating\\attributes of\\components
+%                         [Rendering\\updates]
+%                         [Storing data]
+%                     ]
+%                     [Rendering\\graphs]
+%                 ]
+%                 [Building
+%                     [Placing\\components
+%                         [Choosing\\component]
+%                         [Choosing\\location]
+%                     ]
+%                     [Editing\\attributes
+%                         [Menu\\interactions]
+%                     ]
+%                 ]
+%             ]
+%         \end{forest}
+% \end{center}
+
+Each cycle will be taken on individually. I had to get rid of the overall hierarchy diagram because it wouldn't compile for some reason. (I will add it back later)

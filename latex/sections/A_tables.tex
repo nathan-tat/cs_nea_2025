@@ -1,0 +1,148 @@
+\chapter{Tables}
+
+% tbl:essential_succ_crit
+% Essential Success Criteria TBL
+\begin{table}[!ht]
+    \centering
+    \footnotesize
+    \begin{tabular}{@{}lp{185pt}p{200pt}l@{}} \toprule
+        \textbf{ID} & \textbf{Feature} & \textbf{Justification} & \textbf{Ref.} \\ \midrule
+        A1 & Model electric circuits accurately & This is the main purpose of the system and is something many of the stakeholders said they struggled with. & 1.5 \\ \medskip
+        A2 & Be able to handle 10 or fewer components in a single circuit (excluding multimeters and wires). This requirement will be tested on my specific device, and possibly on others if I get the access to them. & It is very uncommon for circuits studied at GCSE and A-Level to exceed 10 components, and as most of my clients study at that level I felt this number was appropriate. & 1.4 \\ \medskip
+        A3 & Have support for at least the following components: cell, wire, filament bulb, resistor, multimeter, switch. Each should have respective attributes be customisable (e.g. resistivity for wire, E.M.F. for cell) & This comes from analysis of common circuits seen at GCSE and A-Level circuits, which most commonly make use of these components. & 1.4 \\ \medskip
+        A4 & Have general attributes of the circuit displayed, such as total resistance, current, potential difference, and electro-motive forces & These are all useful attributes to know about a circuit when analysing it. &  \\ \medskip
+        A5 & Have a `snapshot' button that would be able to log attributes of all components at the time of the button press. This data could then be exported to a CSV file or similar for independent analysis by the user. & Allowing the user to easily collect data on components would make it easier for them to perform analysis on circuits and practice core skills that are a part of doing a practical at A-Level or GCSE. Building up these skills could allow for working with more complex systems to be easier. & 1.4 \\ \medskip
+        A6 & An intuitive way to add components to a circuit, most likely being able to drag components onto the main stage using the mouse. & This way of interaction seems like the most intuitive way of adding new components. This would allow the user to easily interact with the software and be able to spend more time on learning the content rather than learning how to use the software. & 1.4 \\ \medskip
+        A7 & Charge flow indicators to visualised charge flow around a circuit. Toggle between electron flow, conventional current, and off. & A concept that comes up in A-Level quite frequently is the conservation of charge and the actual movement of electrons and their interactions with circuit components. This feature would make it very easy to see how the electrons actually move about in the circuit, and make ideas like Kirchhoff's Laws much easier to understand. & 1.4 \\ \medskip
+        A8 & Nameable components, for easier management. & If working on more complicated circuits, a way to be able to label components and then search for them would be very beneficial, rather than `component 1', `component 2', and so on, especially for my client Hugo who often works on complex electrical systems. & 1.4 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Essential success criteria}
+    \label{tbl:essential_succ_crit}
+\end{table}
+
+
+\newpage
+% tbl:optional_succ_crit
+% Optional Success Criteria TBL
+\begin{table}[!ht]
+    \centering
+    \footnotesize
+    \begin{tabular}{@{}lp{206pt}p{210pt}@{}}
+        \toprule
+        \textbf{ID} & \textbf{Feature} & \textbf{Justification} \\ \midrule
+        B1 & Be able to handle multiple (two or more) separate circuits running simultaneously. & This feature could be useful when studying more complex electrical systems, however it is more of a way to measure the performance and efficiency of the program, and this is a good target to work towards. \\ \medskip
+        B2 & Have the snapshot button be more customisable, with snapshots possible occurring automatically after a given time period. Could also have the snapshot button only take in certain attributes of certain components rather than all of them. & This feature would allow for easier monitoring of data as well as not having to take in all the data, which could be a lot if the circuit is complex enough. \\ \medskip
+        B3 & Include customisable themes and/or accessibility features such as accounting for different types of colour blindness. & In order to make my solution as accessible as possible to help as many students as possible, being able to change the colour scheme would be a very useful feature. \\ \medskip
+        B4 & Being able to export and import circuit arrangements. & This would allow for easier collaboration, also between students and teachers, which would help as it would be much easier to communicate ideas. \\ \medskip
+        B5 & Adding keyboard shortcuts. & Keyboard shortcuts would heavily streamline the use of a software like this, especially as the user gets more and more accustomed to them over time, as is common in many scientific programs. \\
+        \bottomrule
+    \end{tabular}
+    \caption{Optional success criteria}
+    \label{tbl:optional_succ_crit}
+\end{table}
+
+
+\newpage
+% tbl:succ_crit_c1
+% Success Criteria C1 TBL
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{@{}ll@{}} \toprule
+        \textbf{ID} & \textbf{Feature} \\ \midrule
+        X1 & Install the program from GitHub. \\ 
+        X2 & Be able to uninstall the program safely using the same file. \\ 
+        X3 & Allow the user to decide which directory to install to. \\ 
+        X4 & Create an optional Desktop shortcut for the user. \\ 
+        X5 & Install needed Python libraries for the user. \\
+        \bottomrule
+    \end{tabular}
+    \caption{Cycle 1 success criteria}
+    \label{tbl:succ_crit_c1}
+\end{table}
+
+
+\newpage
+% tbl:data_structs_c1
+% Data structures C1 TBL
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{@{}llp{.5\textwidth}@{}} \toprule
+        \textbf{Variable} & \textbf{Data Type/Structure} & \textbf{Data} \\ \midrule
+        \verb|project_name| & String (var.) & Name of the project (will be used in displays and for organisational purposes) \\ \medskip
+        \verb|working_dir| & String (var.) & The working directory of the project \\ \medskip
+        \verb|source| & String (const.) & Where all the relevant files are initially stored \\ \medskip
+        \verb|location| & String (var.) & Destination folder for exporting, inputted by user \\ \medskip
+        \verb|permissions| & Bool (var.) & True if and only if the instance of the program has been run with administrator privileges. This limits the directories available. \\ \medskip
+        \verb|safety| & Bool (var.) & Set to true if the program is terminated safely by use of the `Cancel' button \\
+        \bottomrule
+    \end{tabular}
+    \caption{Cycle 1 data structures}
+    \label{tbl:data_structs_c1}
+\end{table}
+
+
+\newpage
+% tbl:test_data_before_c1
+% Cycle 1 test data
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{@{}lp{0.25\textwidth}lp{0.2\textwidth}l@{}} \toprule
+        \textbf{ID} & \textbf{Reason} & \textbf{Type} & \textbf{Test Data} & \textbf{Expected Outcome} \\ \midrule
+        I1 & Testing input validation for directories & Normal & Any existing directory & \autoref{fig:install_ui_successful_design_c1} \\ 
+        I2 & Testing input validation for directories & Erroneous & Any non-existing directory & \autoref{fig:installer_ui_design_directory_error} \\ 
+        I3 & Testing how the program handles the directory being deleted/altered during the installation process & Boundary & Any existing directory & \autoref{fig:installer_ui_design_other_error} \\ 
+        I4 & Testing how the program reacts to being terminated without the use of the `Cancel' button & Erroneous & N/A & \autoref{fig:installer_ui_design_unsafe_exit_c1} \\ 
+        I5 & Testing how the program handles being terminated through the use of the `Cancel' button before the installation process & Normal & Pressing the `Cancel' button before pressing the `Install' button & Closing the window \\ 
+        I6 & Testing how the program handles being terminated through the use of the Cancel button after the installation process & Normal & Pressing the `Cancel' button after pressing the `Install' button & Closing the window \\
+        \bottomrule
+    \end{tabular}
+    \caption{Cycle 1 test data}
+    \label{tbl:test_data_before_c1}
+\end{table}
+
+\newpage
+% tbl:succ-crit-c2
+% Cycle 2 success criteria
+\input{tables/cycle02-success-criteria.tex}
+
+\newpage
+% tbl:test-data-cycle2
+% Cycle 2 test data
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{@{}lp{150pt}lp{87pt}p{110pt}@{}} \toprule
+        \textbf{ID} & \textbf{Reason} & \textbf{Type} & \textbf{Test Data} & \textbf{Expected Outcome} \\ \midrule 
+        I7 & Testing FileQueue behaviour when adding items when full & Normal & Any String & \autoref{flow:queue_like_design} \\ 
+        I8 & Testing FileQueue behaviour when adding items when underfull & Normal & Any String & \autoref{flow:fileq-not-full} \\ 
+        I9 & Testing FileQueue behaviour when removing items when not empty & Normal & N/A & Item removed and program continues \\ 
+        I10 & Testing FileQueue behaviour when removing items when empty & Erroneous & N/A & Raise exception \\ 
+        I11 & Dropping items from the FileQueue & Normal & N/A & Return list of items in the FileQueue \\ 
+        I12 & Correct data in JSON to Project class & Normal & JSON file & Project object with correct attributes \\ 
+        I13 & I12 with missing data in JSON file & Erroneous & JSON file & Raise exception \\ 
+        I14 & I12 with wrong data type data in JSON file & Erroneous & JSON file & Raise exception \\ 
+        I15 & Testing export method from Project class & Normal & Any existing directory & A Zip archive at that location \\ 
+        I16 & I15 with non-existing directory & Normal & Any non-existing directory & Folder is created and Zip archive at that location \\ 
+        I17 & I15 with non-directory string & Erroneous & Non-directory String & Raise exception \\ 
+        I18 & Entering project name & Normal & String shorter than 33 characters & JSON file gets written to correctly and program continues \\ 
+        I19 & Entering project name & Erroneous & String longer than 32 characters & User is prompted to re-enter name \\ 
+        \bottomrule
+    \end{tabular}
+    \caption{Cycle 2 test data}
+    \label{tbl:test-data-cycle2}
+\end{table}
+
+\newpage
+% tbl:tbl:succ-crit-c3
+% Cycle 3 success criteria
+\input{tables/cycle03-success-criteria.tex}
+
+\newpage
+% tbl:components-list
+% Components and special considerations
+\input{tables/components.tex}
+
+\newpage
+% tbl:test-data-cycle3
+% Cycle 3 test data
+\input{tables/cycle03-testing.tex}

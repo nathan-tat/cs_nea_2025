@@ -1,0 +1,2402 @@
+\chapter{Source Codes}
+
+
+% #region Cycle 1
+
+% sc:if_name_main_c1
+% if name main for the installer.py 
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+if __name__ == "__main__":
+    if not is_admin():
+        raise Exception("You are not admin.")
+        
+    root = tk.Tk()
+    app = InstallGUI(root)
+    root.mainloop()
+    
+    if safety:
+        print("Program was exited safely")
+    else:
+        print("Program was not exited safely")
+    \end{minted}
+    \caption{Installer program main code}
+    \label{sc:if_name_main_c1}
+\end{listing}
+
+
+\newpage
+% sc:admin_checker
+% is_admin check 
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+def is_admin() -> bool:
+    """
+    Returns 'True' iff the current program is being 
+    run as administrator, else 'False'. 
+    Works on Windows 10 v.22H2 as of 2024-05-10
+    """
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+    \end{minted}
+    \caption{Check for if the program is being run as administrator}
+    \label{sc:admin_checker}
+\end{listing}
+
+
+\newpage
+% sc:install_gui_init_sc_c1
+% InstallGUI class init SC
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+class InstallGUI:
+    def __init__(self, root):
+        #setting title
+        root.title("Installer")
+        #setting window size
+        w = 305
+        h = 160
+        sw = root.winfo_screenwidth()
+        sh = root.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (w, h, (sw - w) / 2, (sh - h) / 2)
+        root.geometry(alignstr)
+        root.resizable(width=False, height=False)
+
+        self.btn_cancel = tk.Button(root)
+        self.btn_cancel["text"] = "Cancel"
+        self.btn_cancel.place(x=20,y=110,width=70,height=25)
+        self.btn_cancel["command"] = self.btn_cancel_command
+
+        self.btn_install = tk.Button(root)
+        self.btn_install["text"] = "Install"
+        self.btn_install.place(x=210,y=110,width=70,height=25)
+        self.btn_install["command"] = self.btn_install_command
+        self.btn_install["state"] = "disabled"
+
+        self.btn_browse = tk.Button(root)
+        self.btn_browse["text"] = "Browse"
+        self.btn_browse.place(x=200,y=60,width=79,height=30)
+        self.btn_browse["command"] = self.btn_browse_command
+
+        self.lbl_dir = tk.Label(root)
+        self.lbl_dir["justify"] = "left"
+        self.lbl_dir["text"] = "Install Directory" # initial text
+        self.lbl_dir.place(x=20,y=60,width=183,height=30)
+
+        self.lbl_welcome = tk.Label(root)
+        self.lbl_welcome["justify"] = "center"
+        self.lbl_welcome["text"] = "This is the installer."
+        self.lbl_welcome.place(x=20,y=20,width=170,height=30)
+        
+        self.filepath = None
+    \end{minted}
+    \caption{InstallGUI constructor}
+    \label{sc:install_gui_init_sc_c1}
+\end{listing}
+
+
+\newpage
+% sc:cancel_and_browse_btns_sc_c1
+% Cancel and Browse buttons SC
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def btn_cancel_command(self) -> None:
+        """ Closes the UI window safely """
+        global safety
+        safety = True
+        print("Exiting...")
+        root.destroy()
+
+    def btn_browse_command(self) -> None:
+        """ Allows the user to select a directory to 
+        install the software into. """
+        self.filepath = filedialog.askdirectory()
+        self.lbl_welcome["text"] = self.filepath
+        self.ent_dir["text"] = self.filepath
+        self.btn_install["state"] = "active"
+    \end{minted}
+    \caption{InstallGUI cancel and browse button methods}
+    \label{sc:cancel_and_browse_btns_sc_c1}
+\end{listing}
+
+
+\newpage
+% sc:install_btn_sc_c1
+% Install btn SC
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def btn_install_command(self) -> None:
+        """ 
+        Installs the software to the given directory. 
+        Probably very not secure. 
+        """
+        # set it equal to eachother <3
+        if self.filepath != self.ent_dir["text"]:
+            self.filepath = self.ent_dir["text"]
+            
+        # if not a real directory
+        if not os.path.isdir(self.filepath):
+            pass
+        
+        # do some fancy stuffs
+        # like turning off some of the buttons
+        self.btn_browse["state"] = "disabled"
+        self.btn_cancel["state"] = "disabled"
+        self.btn_install["state"] = "disabled"
+        
+        self.lbl_welcome["text"] = "Please wait... Downloading..."
+        
+        
+        # this probably works
+        try:
+            install_requirements(REQ)
+            download_from_github(self.filepath)
+        except:
+            self.lbl_welcome["text"] = "something bad happened"
+        else:
+            self.lbl_welcome["text"] = "Thank you. Downloaded. "
+        
+        self.btn_browse["state"] = "active"
+        self.btn_cancel["state"] = "active"
+        self.btn_install["state"] = "active"
+    \end{minted}
+    \caption{InstallGUI `Install' button method}
+    \label{sc:install_btn_sc_c1}
+\end{listing}
+
+
+\newpage
+% sc:dl_from_github_stolen_c1
+% download from github stolen sc 
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+def download(c: ContentFile, out: str):
+    r = requests.get(c.download_url)
+    output_path = f'{out}/{c.path}'
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, 'wb') as f:
+        print(f'downloading {c.path} to {out}')
+        f.write(r.content)
+
+
+def download_folder(repo: Repository, folder: str, out: str, recursive: bool):
+    contents = repo.get_contents(folder)
+    for c in contents:
+        if c.download_url is None:
+            if recursive:
+                download_folder(repo, c.path, out, recursive)
+            continue
+        download(c, out)
+    \end{minted}
+    \caption{Code to download from a specific GitHub folder.}
+    \label{sc:dl_from_github_stolen_c1}
+\end{listing}
+
+
+\newpage
+% sc:final_dl_func_c1
+% the dowload_from_github function that called the functions in sc:dl_from_github_stolen_c1
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+# constants defined elsewhere
+# path to repository
+REPO_NAME: str = "nathan-tat/cs_nea_2025"
+# directory from which the software will be installed from 
+SW_DIR: str = "code/software"
+
+def download_from_github(destination: str) -> None:
+    """ Downloads a given GitHub folder the 'destination' directory """
+    g = Github()
+    repo = g.get_repo(REPO_NAME)
+    download_folder(repo, SW_DIR, destination, True)
+    \end{minted}
+    \caption{The final downloading function.}
+    \label{sc:final_dl_func_c1}
+\end{listing}
+
+
+\newpage
+% sc:install_reqs_fail1_c1
+% install_requirements function fail 1
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+# constant defined elsewhere
+REQ: str = (
+    "https://raw.githubusercontent.com"
+    "/nathan-tat/cs_nea_2025/main/requirements.txt"
+)
+
+def install_requirements(url: str) -> None:
+    """ 
+    Installs the necessary python libraries from a 'requirements.txt' stored  
+    at 'url' using pip
+    """
+    # the command is 
+    # pip install -r /path/to/req.txt
+    
+    os.system(f"py -m pip install -r {url}")
+    \end{minted}
+    \caption{Function to install the required Python libraries}
+    \label{sc:install_reqs_fail1_c1}
+\end{listing}
+
+
+\newpage
+% sc:create_shortcut_c1
+% Procedure to create the desktop shortcut
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+# constant defined elsewhere
+FILE = r"\code\software\main.py"
+
+def create_shortcut(source: str, dest: str) -> None:
+    """ 
+    Creates a file shortcut to source at dest 
+    https://stackoverflow.com/a/60944178
+    """
+    
+    target = source + FILE
+    
+    shell = Dispatch("WScript.Shell")    
+    shortcut = shell.CreateShortCut(dest)
+    shortcut.Targetpath = target
+    
+    shortcut.WorkingDirectory = source
+    shortcut.save()
+    \end{minted}
+    \caption{Procedure to create shortcut}
+    \label{sc:create_shortcut_c1}
+\end{listing}
+
+% #endregion 
+
+% #region CSV2LaTeX
+
+\newpage
+% sc:csv2latex-func
+% CSV2LaTeX
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+def csv_to_latex(
+        csv: str,               # source csv file
+        label: str = None,      # latex label
+        caption: str = None,    # table caption
+        title: str = None,      # table title
+        headers: bool = True,   # does the csv file contain headers
+        auto: bool = False      # auto size columns (not implemented)
+    ) -> str:
+    
+    # get amount of columns
+    length = 0
+    with open(csv, "r") as file:
+        length = len(file.readlines()[0].split(","))
+    
+    
+    
+    output = f"""% tbl:{label}
+% {title}
+\\begin{{table}}[!ht]
+    \\centering
+    \\begin{{tabular}}{{@{{}}{'l'*length}@{{}}}} \\toprule
+"""
+        
+        
+    with open(csv, "r") as file:
+        for i, l in enumerate(file.readlines()):
+            row = []
+            
+            if i == 0 and headers:
+                for j in l.strip().split(","):
+                    row.append(f"\\textbf{{{j}}}")
+                    
+                output += "        " + " & ".join(row) + " \\\\ \\midrule \n"
+            else:
+                row = l.strip().split(",")
+                
+                output += "        " + " & ".join(row) + " \\\\ \n"
+                
+    output += f"""        \\bottomrule
+    \\end{{tabular}}
+    \\caption{{{caption}}}
+    \\label{{tbl:{label}}}
+\\end{{table}}"""
+    
+    return output
+    \end{minted}
+    \caption{CSV2LaTeX function}
+    \label{sc:csv2latex-func}
+\end{listing}
+
+\newpage
+% sc:csv2latex-gui-init-1
+% CSV2LaTeX GUI constructor
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+import tkinter as tk
+import tkinter.font as tkFont
+from tkinter import filedialog
+from tkinter import messagebox
+
+
+class CSV2LaTeX:
+    def __init__(self, root):
+        #setting title
+        root.title("CSV to LaTeX")
+        #setting window size
+        w = 285
+        h = 190
+        sw = root.winfo_screenwidth()
+        sh = root.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (w, h, (sw - w) / 2, (sh - h) / 2)
+        root.geometry(alignstr)
+        root.resizable(width=False, height=False)
+        
+        
+        self.input = "in.csv"
+        self.output = "out.txt"
+    \end{minted}
+    \caption{CSV2LaTeX GUI constructor}
+    \label{sc:csv2latex-gui-init-1}
+\end{listing}
+
+\newpage
+% sc:csv2latex-gui-init-2
+% Input/output labels and headers checkbox
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        self.btn_install = tk.Button(root)
+        self.btn_install["text"] = "Go"
+        self.btn_install.place(x=195,y=155,width=70,height=25)
+        self.btn_install["command"] = self.btn_install_command
+        
+        self.lbl_input = tk.Label(root)
+        self.lbl_input["text"] = "Input:"
+        self.lbl_input.place(x=10,y=10)
+        
+        self.ent_input = tk.Entry(root)
+        self.ent_input.place(x=65,y=10,width=130)
+        self.ent_input.insert(0, self.input)
+        
+        self.btn_browse = tk.Button(root)
+        self.btn_browse["text"] = "Browse"
+        self.btn_browse.place(x=195,y=10,width=70)
+        self.btn_browse["command"] = self.btn_browse_command
+        
+        
+        self.lbl_output = tk.Label(root)
+        self.lbl_output["text"] = "Output:"
+        self.lbl_output.place(x=10,y=30)
+        
+        self.ent_output = tk.Entry(root)
+        self.ent_output.place(x=65,y=30,width=200)
+        self.ent_output.insert(0, self.output)
+        
+        
+        self.check_var = tk.IntVar()
+        self.check_shortcut = tk.Checkbutton(root, variable=self.check_var)
+        self.check_shortcut["text"] = "Headers"
+        self.check_shortcut.place(x=10,y=55)
+    \end{minted}
+    \caption{Input/output labels and headers checkbox}
+    \label{sc:csv2latex-gui-init-2}
+\end{listing}
+
+\newpage
+% sc:csv2latex-gui-init-3
+% Title, caption, and label entries
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        self.lbl_title = tk.Label(root)
+        self.lbl_title["text"] = "Title:"
+        self.lbl_title.place(x=10,y=85)
+        
+        self.ent_title = tk.Entry(root)
+        self.ent_title.place(x=65,y=85,width=200)
+        
+        
+        self.lbl_caption = tk.Label(root)
+        self.lbl_caption["text"] = "Caption:"
+        self.lbl_caption.place(x=10,y=105)
+        
+        self.ent_caption = tk.Entry(root)
+        self.ent_caption.place(x=65,y=105,width=200)
+        
+        
+        self.lbl_label = tk.Label(root)
+        self.lbl_label["text"] = "Label:"
+        self.lbl_label.place(x=10,y=125)
+        
+        self.ent_label = tk.Entry(root)
+        self.ent_label.place(x=65,y=125,width=200)
+    \end{minted}
+    \caption{Title, caption, and label entries}
+    \label{sc:csv2latex-gui-init-3}
+\end{listing}
+
+\newpage
+% sc:csv2latex-convert-method
+% CSV2LaTeX convert method
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def btn_go_command(self) -> None:
+        """ Writes to the output file """
+        table = csv_to_latex(
+            csv=self.input,
+            label=self.ent_label.get(),
+            caption=self.ent_caption.get(),
+            title=self.ent_title.get(),
+            headers=self.check_var
+        )
+        
+        # write to the text file
+        with open(self.output, "w") as file:
+            file.write(table)
+            
+        # alert the user (me)
+        messagebox.showinfo("Success", f"Successfully written to {self.output}")
+    \end{minted}
+    \caption{CSV2LaTeX convert method}
+    \label{sc:csv2latex-convert-method}
+\end{listing}
+
+\newpage
+% sc:csv2latex-browse-method
+% CSV2LaTeX browse for file method
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def btn_browse_command(self) -> None:
+        """ Allows the user to select the csv file. """
+        self.input = filedialog.askopenfile()
+
+        self.ent_input.delete(0, tk.END)
+        self.ent_input.insert(0, self.input)
+    \end{minted}
+    \caption{CSV2LaTeX browse for file method}
+    \label{sc:csv2latex-browse-method}
+\end{listing}
+
+\newpage
+% sc:csv2latex-cli
+% CSV2LaTeX code for CLI
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+""" 
+I would like to use this like a command line tool
+
+csv2latex [input] [caption] [label]
+"""
+
+import sys
+from .funcmodule import csv_to_latex, print_help_message
+
+
+def main() -> None:
+    args = sys.argv
+
+    # expecting 3 arguments    
+    # "csv2latex" counts as the 4th argument
+    if len(args) != 4:
+        if len(args) == 1:
+            print_help_message()
+            return
+        else:
+            err = f"Expected 3 arguments, received {len(args) - 1}"
+            raise ValueError(err)
+
+
+    input: str = args[1]
+    caption: str = args[2] # i will be using the caption as the title
+    label: str = args[3]
+
+    # getting the LaTeX code for the table
+    latex_code = csv_to_latex(input, label, caption, caption)
+
+    # grab everything up to the file extension
+    output = input[:-4] + ".tex"
+    
+    
+    with open(output, "w") as file:
+        file.writelines(latex_code)
+        print(f"Successfully written to '{output}'")
+        # print(os.path.abspath(file.name))
+
+            
+if __name__ == "__main__":
+    main()
+    \end{minted}
+    \caption{CSV2LaTeX code for CLI}
+    \label{sc:csv2latex-cli}
+\end{listing}
+
+\newpage
+% sc:csv2latex-help-msg
+% CSV2LaTeX help message
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+def print_help_message() -> None:
+    """ Prints a help message that describes the inputs """
+    print(
+        "csv2latex [input] [caption] [label]"
+    )
+    \end{minted}
+    \caption{CSV2LaTeX help message}
+    \label{sc:csv2latex-help-msg}
+\end{listing}
+
+% #endregion
+
+% #region FileQueue Class
+
+\newpage
+% sc:fileq-constructor
+% FileQueue Constructor
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+class FileQueue:
+    def __init__(self, maxLength: int, location: str):
+        self.__maxLength = maxLength
+        self.__location = location
+        
+        self.__front = 0
+        self.__rear = 0
+        
+        # counting the length to set the rear pointer. 
+        # this needs to be set every time this is initially opened
+        with open(location, "r") as file:
+            for i in file:
+                self.__rear += 1
+                
+        # decrement by 1 to make it 0 indexed
+        self.rear -=1
+                
+        # if the file has less than maxLength lines
+        if self.__rear <= maxLength:
+            self.__front = 0
+        else:
+            self.__front = self.__rear - maxLength + 1
+    \end{minted}
+    \caption{FileQueue constructor}
+    \label{sc:fileq-constructor}
+\end{listing}
+
+\newpage
+% sc:fileq-length-method
+% File Queue length method
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def length(self) -> int:
+        """ Returns the amount of the elements in the FileQueue """
+        return self.rear - self.front + 1
+    \end{minted}
+    \caption{FileQueue length method}
+    \label{sc:fileq-length-method}
+\end{listing}
+
+\newpage
+% sc:fileq-deq-method
+% FileQueue dequeue method
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def deq(self) -> str:
+        """ 
+        Increments the front pointer and returns the 
+        element at the front of the FileQueue 
+        """
+        
+        # if the queue is empty raise an exception
+        if self.length() == 0:
+            raise Exception("Queue Underflow")
+        
+        
+        self.front += 1
+        
+        value = ""
+        
+        with open(self.__location, "r") as file:
+            value = file.readlines()[self.front - 1]
+            
+        
+        # stripped to remove whitespace
+        return value.strip()
+    \end{minted}
+    \caption{FileQueue dequeue method}
+    \label{sc:fileq-deq-method}
+\end{listing}
+
+\newpage
+% sc:fileq-enq-method
+% FileQueue enqueue method
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def enq(self, projectDir: str) -> None:
+        """ Adds an item to the back of the FileQueue """
+        # append the new project to the file
+        # this happens regardless of pointers
+        with open(self.__location, "a") as file:
+            file.write(projectDir + "\n")
+        
+        
+        # pointer logic
+        # if the file has enough elements to be considered "full"
+        if self.length() == self.__maxLength:
+                
+            # update front and rear pointers
+            self.rear += 1
+            self.front += 1
+        
+        else:
+            
+            # front does not always need to be considered  
+            # eg maxLength = 4, rear = 1, front = 0
+            # incrementing rear and front results in 
+            # a queue of length 2 still (but should be 3)
+            
+            self.rear += 1
+            
+        # my only gripe with this implementation 
+        # is that it allows for duplicates
+    \end{minted}
+    \caption{FileQueue enqueue method}
+    \label{sc:fileq-enq-method}
+\end{listing}
+
+\newpage
+% sc:fileq-drop-method-og
+% FileQueue drop method original
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def drop(self) -> list:
+        """ Returns all the elements in the FileQueue as a list """
+        temp = []
+        
+        # if it is empty return an empty list
+        if self.length() == 0:
+            return temp
+        
+        
+        # read from the file
+        with open(self.__location, "r") as file:
+            for i in range(self.front, self.rear):
+                temp.append(file.readlines()[i])
+                
+        return temp
+    \end{minted}
+    \caption{FileQueue drop method original}
+    \label{sc:fileq-drop-method-og}
+\end{listing}
+
+\newpage
+% sc:fileq-drop-method
+% FileQueue drop method
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def drop(self) -> list:
+        """ Returns all the elements in the FileQueue as a list """
+        temp = []
+        
+        # if it is empty return an empty list
+        if self.length() == 0:
+            return temp
+        
+        
+        # read from the file
+        with open(self.__location, "r") as file:
+            # problem with calling "file.readlines()" repeatedly
+            lines = file.readlines()
+            for i in range(self.front, self.rear + 1):
+                # print(i)
+                temp.append(lines[i].strip())
+                
+        return temp
+    \end{minted}
+    \caption{FileQueue drop method final}
+    \label{sc:fileq-drop-method-final}
+\end{listing}
+
+% #endregion
+
+\newpage
+% sc:avg-filepath-length-file
+% Script to get average file path length
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+from os import listdir
+from os.path import isfile, join
+from time import time
+
+global total
+total = 0
+
+global length
+length = 0
+
+root = "C:\\Users\\Lilly"
+
+start = time()
+
+def get_length_of_paths(folder: str) -> None:
+    # access the global variables
+    global total
+    global length
+    
+    try:
+        # loop over every item in a folder 
+        for file in listdir(folder):
+            path = join(folder, file)
+            
+            # if its a file then add the length to 
+            # the length variable and increment total
+            if isfile(path):
+                total += 1
+                length += len(path)
+                print(path)
+            else:
+                # recursion
+                get_length_of_paths(path)
+                
+    except (PermissionError, FileNotFoundError) as e: 
+        # i would get some errors for some weird files
+        # decided to just ignore them 
+        print("Some error")
+            
+            
+get_length_of_paths(root)
+
+#output
+print(f"Total files: {total}")
+print(f"Total length: {length}")
+print(f"Average: {round(length/total, 5)}")
+print(f"Time taken: {(time() - start)/60} min")
+    \end{minted}
+    \caption{Script to get average file path length}
+    \label{sc:avg-filepath-length-file}
+\end{listing}
+
+
+% #region Project
+
+\newpage
+% sc:project-init
+% Project class constructor
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+class Project:
+    def __init__(
+        self, 
+        directory: str, 
+        name: str, 
+        type: str,
+        created: int, 
+        lastSaved: int
+    ) -> None:
+        
+        self.__name: str = name
+        self.__created: int = created
+        self.__lastSaved: int = lastSaved
+        self.__directory: str = directory
+        self.__type: int = type
+        
+        # the maximum length for a project name
+        self.maxNameLength = 32
+    \end{minted}
+    \caption{Project class constructor}
+    \label{sc:project-init}
+\end{listing}
+
+\newpage
+% sc:project-name-setter
+% Project name setter
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+    def setName(self, name: str) -> None:
+        """ Sets the name attribute of the project, along with validation.
+        \nRaises `ValueError` if `name` exceeds `maxNameLength`"""
+        
+        err = "'name' is too long "
+        err += f"(received {len(name)}, expected <= {self.maxNameLength})."
+        if len(name) > self.maxNameLength:
+            raise ValueError(err)
+        
+        self.__name = name
+    \end{minted}
+    \caption{Project name setter}
+    \label{sc:project-name-setter}
+\end{listing}
+
+\newpage
+% sc:project-name-getter
+% Project name getter
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+    def getName(self) -> str:
+        """ Returns name """
+        return self.__name
+    \end{minted}
+    \caption{Project name getter}
+    \label{sc:project-name-getter}
+\end{listing}
+
+\newpage
+% sc:project-lastsaved-setter
+% Project lastSaved setter
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+    def setLastSaved(self) -> None:
+        """ Sets the `lastSaved` time to the current UNIX timestamp
+        to the nearest second """
+        self.__lastSaved = round(time.time())
+    \end{minted}
+    \caption{Project lastSaved setter}
+    \label{sc:project-lastsaved-setter}
+\end{listing}
+
+\newpage
+% sc:project-lastsaved-getter
+% Project lastSaved getter
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+    def getLastSaved(self) -> int:
+        """ Returns lastSaved """
+        return self.__lastSaved
+    \end{minted}
+    \caption{Project lastSaved getter}
+    \label{sc:project-lastsaved-getter}
+\end{listing}
+
+\newpage
+% sc:project-type-getter
+% Project type getter
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+    def getType(self) -> str:
+        """ Returns type """
+        return self.__type
+    \end{minted}
+    \caption{Project type getter}
+    \label{sc:project-type-getter}
+\end{listing}
+
+\newpage
+% sc:project-created-getter
+% Project created getter
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+    def getCreated(self) -> int:
+        """ Returns created """
+        return self.__created
+    \end{minted}
+    \caption{Project created getter}
+    \label{sc:project-created-getter}
+\end{listing}
+
+\newpage
+% sc:project-save-method
+% Project save method
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+    def save(self) -> None:
+        pass
+    \end{minted}
+    \caption{Project save method}
+    \label{sc:project-save-method}
+\end{listing}
+
+\newpage
+% sc:project-export-method
+% Project export method
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+    def export(self, destination: str) -> None:
+        """ Saves the directory of the project as a .zip 
+        file to a given destination
+        """
+        # https://stackoverflow.com/a/25650295
+        shutil.make_archive(self.__name, "zip", self.__directory, destination)
+    \end{minted}
+    \caption{Project export method}
+    \label{sc:project-export-method}
+\end{listing}
+
+\newpage
+% sc:project-open-method
+% Project open method
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+    def open(self) -> None:
+        pass
+    \end{minted}
+    \caption{Project open method}
+    \label{sc:project-open-method}
+\end{listing}
+
+\newpage
+% sc:project-close-method
+% Project close method
+\begin{listing}[!h]
+    \begin{minted}[linenos]{python}
+    def close(self) -> None:
+        pass
+    \end{minted}
+    \caption{Project close method}
+    \label{sc:project-close-method}
+\end{listing}
+
+% #endregion
+
+% #region Cycle 2 GUI
+
+\newpage
+% sc:fork-gui-constructor
+% ForkGUI menu constructor
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+# button 1 (cancel, etc.)
+BTN1_W = 100
+BTN1_H = 30
+# button 2 (special ones)
+BTN2_W = 250
+BTN2_H = 40
+# window
+WIDTH = 400
+HEIGHT = 200
+# padding
+PAD = 10
+
+
+class ForkOpenGUI:
+    def __init__(self, root: tk.Tk):
+        # setting title
+        root.title("Open project")
+
+        # setting window size
+        w = WIDTH
+        h = HEIGHT
+        sw = root.winfo_screenwidth()
+        sh = root.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (w, h, (sw - w) / 2, (sh - h) / 2)
+        root.geometry(alignstr)
+        root.resizable(width=False, height=False)
+        
+        # `Recently Viewed` label
+        self.lbl_info1 = tk.Label(
+            root, justify="left", text="Recently viewed:"
+        )
+        self.lbl_info1.place(
+            x=PAD, y=PAD, width=100, height=BTN1_H
+        )
+    \end{minted}
+    \caption{ForkGUI menu constructor}
+    \label{sc:fork-gui-constructor}
+\end{listing}
+
+\newpage
+% sc:fork-gui-general-buttons
+% ForkGUI general buttons
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # Cancel button
+        self.btn_cancel = tk.Button(
+            root, text="Cancel", command=self.btn_cancel_command
+        )
+        self.btn_cancel.place(
+            x=WIDTH-PAD-BTN1_W, y=HEIGHT-PAD-BTN1_H, width=BTN1_W, height=BTN1_H
+        )
+        
+        # Open New button
+        self.btn_open_new = tk.Button(
+            root, text="Open new", command=self.btn_open_new_command
+        )
+        self.btn_open_new.place(
+            x=WIDTH-PAD-BTN1_W, y=PAD, width=BTN1_W, height=BTN1_H
+        )
+        
+        # Open Existing button
+        self.btn_open_exist = tk.Button(
+            root, text="Open existing", command=self.btn_open_exist_command
+        )
+        self.btn_open_exist.place(
+            x=WIDTH-PAD-BTN1_W, y=PAD+PAD+BTN1_H, width=BTN1_W, height=BTN1_H
+        )
+    \end{minted}
+    \caption{ForkGUI general buttons}
+    \label{sc:fork-gui-general-buttons}
+\end{listing}
+
+\newpage
+% sc:fork-gui-dynamic-buttons
+% ForkGUI dynamic buttons
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # now setting up the dynamic ones
+        # project 1
+        self.btn_project1 = tk.Button(
+            root, text="Project 1", command=self.btn_project1_command
+        )
+        self.btn_project1.place(
+            x=PAD, y=2*PAD+BTN1_H, width=BTN2_W, height=BTN2_H
+        )
+        
+        # project 2
+        self.btn_project2 = tk.Button(
+            root, text="Project 2", command=self.btn_project2_command
+        )
+        self.btn_project2.place(
+            x=PAD, y=3*PAD+BTN1_H+BTN2_H, width=BTN2_W, height=BTN2_H
+        )
+        
+        # project 3
+        self.btn_project3 = tk.Button(
+            root, text="Project 3", command=self.btn_project3_command
+        )
+        self.btn_project3.place(
+            x=PAD, y=4*PAD+BTN1_H+2*BTN2_H, width=BTN2_W, height=BTN2_H
+        )
+    \end{minted}
+    \caption{ForkGUI dynamic buttons}
+    \label{sc:fork-gui-dynamic-buttons}
+\end{listing}
+
+\newpage
+% sc:forkgui-cancel-method
+% ForkGUI cancel method
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def btn_cancel_command(self) -> None:
+        print("Exiting....")
+        self.root.destroy()
+    \end{minted}
+    \caption{ForkGUI cancel method}
+    \label{sc:forkgui-cancel-method}
+\end{listing}
+
+\newpage
+% sc:createnew-gui-construct
+% CreateNewGUI constructor
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+ENT_H = 25
+        
+        class CreateNewGUI:
+            def __init__(self, root: tk.Tk):
+                # setting title
+                root.title("Create new project")
+                
+                # setting window sizes
+                w = WIDTH
+                h = HEIGHT
+                sw = root.winfo_screenwidth()
+                sh = root.winfo_screenheight()
+                alignstr = '%dx%d+%d+%d' % (w, h, (sw - w) / 2, (sh - h) / 2)
+                root.geometry(alignstr)
+                root.resizable(width=False, height=False)
+        
+                self.root = root
+    \end{minted}
+    \caption{CreateNewGUI constructor}
+    \label{sc:createnew-gui-construct}
+\end{listing}
+
+\newpage
+% sc:createnew-gui-entries-labels
+% CreateNewGUI name and directory entries and labels
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # Project Name
+        # label
+        self.lblName = tk.Label(
+            root, justify="left", text="Project name:"
+        )
+        self.lblName.place(
+            x=PAD, y=PAD, width=75, height=ENT_H
+        )
+        
+        # entry
+        self.entName = tk.Entry(root)
+        self.entName.place(
+            x=PAD, y=2*PAD+ENT_H, width=WIDTH-PAD-PAD, height=BTN1_H 
+        )
+        
+        # Directory
+        # label
+        self.lblDir = tk.Label(
+            root, justify="left", text="Project folder:"
+        )
+        self.lblDir.place(
+            x=PAD, y=3*PAD+BTN1_H+ENT_H, width=75, height=ENT_H
+        )
+        
+        # showing user the directory they chose
+        self.entDir = tk.Entry(root)
+        self.entDir.place(
+            x=PAD, y=4*PAD+BTN1_H+2*ENT_H, 
+            width=WIDTH-PAD-PAD-BTN1_W, height=BTN1_H,
+        )
+    \end{minted}
+    \caption{CreateNewGUI name and directory entries and labels}
+    \label{sc:createnew-gui-entries-labels}
+\end{listing}
+
+\newpage
+% sc:createnew-gui-buttons-init
+% CreateNewGUI buttons
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # browse button
+        self.btnBrowse = tk.Button(
+            root, text="Browse", command=self.btnBrowseCommand
+        )
+        self.btnBrowse.place(
+            x=WIDTH-PAD-BTN1_W, y=4*PAD+BTN1_H+2*ENT_H, 
+            width=BTN1_W, height=BTN1_H
+        )
+        
+        # cancel button
+        self.btnCancel = tk.Button(
+            root, text="Cancel", command=self.btnCancelCommand
+        )
+        self.btnCancel.place(
+            x=PAD, y=HEIGHT-PAD-BTN1_H, 
+            width=BTN1_W, height=BTN1_H
+        )
+        
+        # create button
+        self.btnCreate = tk.Button(
+            root, text="Create", command=self.btnCreateCommand, 
+            state="disabled"
+        )
+        self.btnCreate.place(
+            x=WIDTH-PAD-BTN1_W, y=HEIGHT-PAD-BTN1_H, 
+            width=BTN1_W, height=BTN1_H
+        )
+    \end{minted}
+    \caption{CreateNewGUI buttons}
+    \label{sc:createnew-gui-buttons-init}
+\end{listing}
+
+\newpage
+% sc:createnew-gui-attributes
+% CreateNewGUI attributes
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # the variables needed for l8r 
+        self.projectName: str
+        self.projectDir: str
+    \end{minted}
+    \caption{CreateNewGUI attributes}
+    \label{sc:createnew-gui-attributes}
+\end{listing}
+
+\newpage
+% sc:createnew-gui-browse-method
+% CreateNewGUI `Browse' button method
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def btnBrowseCommand(self) -> None:
+        """ 
+        Allows the user to select a directory to install the software into. 
+        Check permissions. 
+        """
+        self.projectDir = filedialog.askdirectory()
+        
+        # this line was missing
+        self.entDir.delete(0, tk.END)
+        
+        self.entDir.insert(0, self.projectDir)
+        
+        self.btnCreate["state"] = "active"
+    \end{minted}
+    \caption{CreateNewGUI `Browse' button method}
+    \label{sc:createnew-gui-browse-method}
+\end{listing}
+
+\newpage
+% sc:createnew-gui-cancel-method
+% CreateNewGUI `Cancel' button method
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def btnCancelCommand(self) -> None:
+        """ Exits out of the user interface """
+        print("Exiting...")
+        self.root.destroy()
+    \end{minted}
+    \caption{CreateNewGUI `Cancel' button method}
+    \label{sc:createnew-gui-cancel-method}
+\end{listing}
+
+\newpage
+% sc:createnew-gui-create-method
+% CreateNewGUI `Create' method
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def btnCreateCommand(self) -> None:
+        """ This writes the options to a json file somewhere """
+        
+        # catching other exceptions
+        try:
+            # this is what will be written to the json file somewhere 
+            data: dict = {}        
+            
+            # getting the name 
+            self.projectName = self.entName.get()
+            
+            try:
+                check_valid_project_name(self.projectName)
+            except ValueError as e:
+                messagebox.showerror("Error", e)
+                print(self.projectName)
+                return
+            else:
+                data["name"] = self.projectName
+                
+            # getting the directory
+            self.projectDir = self.entDir.get()
+            
+            try:
+                check_valid_project_dir(self.projectDir)
+            except ValueError as e:
+                messagebox.showerror("Error", e)
+                print(self.projectDir)
+                return
+            else:
+                data["directory"] = self.projectDir
+                
+            # setting `type` to none
+            data["type"] = None
+            
+            # setting `created` and `lastSaved` using current time
+            now = round(time.time())
+
+            data["created"] = now
+            data["lastSaved"] = now
+    
+            # writing to the file
+            configFile = self.projectDir + "\\config.json"
+
+            with open(configFile, "w") as file:
+                json.dump(data, file)
+    \end{minted}
+    \caption{CreateNewGUI `Create' method}
+    \label{sc:createnew-gui-create-method}
+\end{listing}
+
+\newpage
+% sc:createnew-gui-create-exceptions
+% CreateNewGUI catching exceptions in `Create' method
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        except Exception as e:
+            # catching any other errors and displaying them to the user
+            messagebox.showerror("Error", e)
+        
+        else:
+            # if no exceptions are caught
+            messagebox.showinfo(
+                "Success!", 
+                f"Success: Created '{self.projectName}' in '{self.projectDir}'"
+            )
+    \end{minted}
+    \caption{CreateNewGUI catching exceptions in `Create' method}
+    \label{sc:createnew-gui-create-exceptions}
+\end{listing}
+
+\newpage
+% sc:project-name-validation
+% Project name validation
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+def check_valid_project_name(string: str) -> None:
+    
+    if len(string) == 0:
+        raise ValueError("Project name cannot have length zero.")
+
+    if len(string) > 32:
+        raise ValueError("Project name length cannot exceed 32.")
+    
+    if string.strip() == "":
+        raise ValueError("Project name cannot be empty.")
+
+
+    allowed: list = list(
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_+= ()"
+    )
+    
+    for c in string:
+        if c not in allowed:
+            raise ValueError(f"Project name cannot contain character '{c}'.")
+    \end{minted}
+    \caption{Project name validation}
+    \label{sc:project-name-validation}
+\end{listing}
+
+\newpage
+% sc:project-dir-validation
+% Project directory validation
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+def check_valid_project_dir(string: str) -> None:
+    if not os.path.isdir(string):
+        raise ValueError("Not a directory.")
+    \end{minted}
+    \caption{Project directory validation}
+    \label{sc:project-dir-validation}
+\end{listing}
+
+\newpage
+% sc:forkgui-opennew-method-final
+% ForkGUI `Open new' method
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def btn_open_new_command(self) -> None:
+        print("Open new")
+        self.root.destroy()
+        
+        # open the other GUI for creating new projects
+        newRoot = tk.Tk()
+        newApp = CreateNewGUI(newRoot)
+        newRoot.mainloop()
+    \end{minted}
+    \caption{ForkGUI `Open new' method}
+    \label{sc:forkgui-opennew-method-final}
+\end{listing}
+
+\newpage
+% sc:fileq-with-gui
+% Accessing most recent projects with a FileQueue
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # getting the most recent projects
+        q: FileQueue = FileQueue("code\\cycle2\\q.txt")
+
+        self.projects: list[Project] = []
+        
+        for i in range(q.length()):
+            self.projects.append(
+                Project(**json_to_dict(q.deq()))
+            )
+    \end{minted}
+    \caption{Accessing most recent projects with a FileQueue}
+    \label{sc:fileq-with-gui}
+\end{listing}
+
+\newpage
+% sc:buttons-with-fileq
+% Initialising the buttons using the most recent projects
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # project 1
+        self.btn_project1 = tk.Button(
+            root, text="-", command=self.btn_project1_command, 
+            state="disabled"
+        )
+        try:
+            self.btn_project1["text"] = self.projects[0].getName()
+            self.btn_project1["state"] = "active"
+        except IndexError:
+            pass
+        finally:
+            self.btn_project1.place(
+                x=PAD, y=2*PAD+BTN1_H, 
+                width=BTN2_W, height=BTN2_H
+            ) 
+        
+        # project 2
+        self.btn_project2 = tk.Button(
+            root, text="-", command=self.btn_project2_command, 
+            state="disabled"
+        )
+        try:
+            self.btn_project2["text"] = self.projects[1].getName()
+            self.btn_project2["state"] = "active"
+        except IndexError:
+            pass
+        finally:
+            self.btn_project2.place(
+                x=PAD, y=3*PAD+BTN1_H+BTN2_H, 
+                width=BTN2_W, height=BTN2_H
+            )
+            
+        # project 3
+        self.btn_project3 = tk.Button(
+            root, text="-", command=self.btn_project3_command, 
+            state="disabled"
+        )
+        try:
+            self.btn_project3["text"] = self.projects[2].getName()
+            self.btn_project3["state"] = "active"
+        except IndexError:
+            pass
+        finally:
+            self.btn_project3.place(
+                x=PAD, y=4*PAD+BTN1_H+2*BTN2_H, 
+                width=BTN2_W, height=BTN2_H
+            )
+    \end{minted}
+    \caption{Initialising the buttons using the most recent projects}
+    \label{sc:buttons-with-fileq}
+\end{listing}
+
+\newpage
+% sc:forkgui-open-existing-method
+% ForkGUI opening an existing project
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def btn_open_exist_command(self) -> None:
+        """ Allows the user to select a config file
+        from which a project will be opened """
+        
+        config: str = filedialog.askopenfilename(
+            filetypes=[("JSON file", ".json")]
+        )
+        print(config)
+        
+        # if a file has been selected
+        if config:
+            self.root.destroy()
+    \end{minted}
+    \caption{ForkGUI opening an existing project}
+    \label{sc:forkgui-open-existing-method}
+\end{listing}
+
+% #endregion
+
+\newpage
+% sc:simgui-init
+% SimulatorGUI initialising window size
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+import tkinter as tk
+
+# default size of the window
+WIDTH = 1280
+HEIGHT= 720
+RIBBON_HEIGHT=25
+
+class SimulatorGUI:
+    def __init__(self, root: tk.Tk, name: str = None):
+        # setting title
+        
+        root.title(name)
+        self.name = name
+
+        # setting window size
+        w = WIDTH
+        h = HEIGHT
+        sw = root.winfo_screenwidth()
+        sh = root.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (w, h, (sw - w) / 2, (sh - h) / 2)
+        root.geometry(alignstr)
+        root.resizable(width=False, height=False)
+        
+        self.root = root
+    \end{minted}
+    \caption{SimulatorGUI initialising window size}
+    \label{sc:simgui-init}
+\end{listing}
+
+\newpage
+% sc:simgui-frames-example
+% SimulatorGUI frames to divide content
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # frames
+        components: tk.Frame = tk.Frame(
+            root, bg="cyan", width=300, height=HEIGHT-RIBBON_HEIGHT
+        )
+        canvas: tk.Frame = tk.Frame(
+            root, bg="red", width=WIDTH-300, height=HEIGHT-RIBBON_HEIGHT
+        )
+        ribbon: tk.Frame = tk.Frame(
+            root, bg="green", width=WIDTH, height=RIBBON_HEIGHT
+        )
+        
+        # aligning them
+        ribbon.pack(side="top")
+        components.pack(side="left")
+        canvas.pack(side="right")
+    \end{minted}
+    \caption{SimulatorGUI frames to divide content}
+    \label{sc:simgui-frames-example}
+\end{listing}
+
+\newpage
+% sc:simgui-placing-canvas-buttons
+% SimulatorGUI iteratively placing buttons
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # how many buttons per row
+        self.countx = floor((WIDTH-300)/SPACING)
+        # how many buttons in a column
+        self.county = floor((HEIGHT-RIBBON_HEIGHT)/SPACING)
+        
+        # the index of the button
+        # from this value you can calculate where on the canvas the button is
+        index = 0
+        
+        # fill out rows first then columns
+        for j in range(self.county):
+            for i in range(self.countx):
+                x = SPACING * (i + 1)
+                y = SPACING * (j + 1)
+                
+                # thank you 
+                # https://stackoverflow.com/a/10865170
+                
+                self.button = tk.Button(
+                    canvas, height=5, width=5, image=self.square, bg="black",
+                    command=lambda index=index: self.lat_button_command(index)
+                )
+                
+                self.button.place(
+                    x=x, y=y
+                )
+                
+                index += 1
+    \end{minted}
+    \caption{SimulatorGUI iteratively placing buttons}
+    \label{sc:simgui-placing-canvas-buttons}
+\end{listing}
+
+\newpage
+% sc:simgui-return-index-method
+% SimulatorGUI method to return index of button
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def lat_button_command(self, index):
+        """ Return which order the button was placed """
+
+        # testing
+        print(index)
+        return index
+    \end{minted}
+    \caption{SimulatorGUI method to return index of button}
+    \label{sc:simgui-return-index-method}
+\end{listing}
+
+\newpage
+% sc:simgui-improved-button-placing
+% SimulatorGUI improved button placing
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # this is an image
+        self.square = tk.PhotoImage("lattice.png")
+        dx = 5
+        dy = 5
+        
+        # fill out rows first then columns
+        for j in range(self.county):
+            for i in range(self.countx):
+                x = SPACING * (i + 1) - dx
+                y = SPACING * (j + 1) - dy
+                
+                # thank you 
+                # https://stackoverflow.com/a/10865170
+                
+                self.button = tk.Button(
+                    canvas, height=dy, width=dx, image=self.square, bg="black",
+                    command=lambda index=index: self.lat_button_command(index)
+                )
+                
+                self.button.place(x=x, y=y)
+                
+                index += 1
+    \end{minted}
+    \caption{SimulatorGUI improved button placing}
+    \label{sc:simgui-improved-button-placing}
+\end{listing}
+
+\newpage
+% sc:simgui-component-buttons
+% SimulatorGUI placing component buttons
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        self.names: list = [
+            "Ammeter",
+            "Wire",
+            "Cell",
+            "Resistor",
+            "Bulb"
+        ]
+        
+        component_height = 100
+        # placing these iteratively as well
+        for n in range(len(self.names)):
+            x = PADDING
+            y = n * (component_height + PADDING) + PADDING
+            text = self.names[n]
+            # print(text)
+            
+            # the text is now working
+            self.button = tk.Button(
+                components, text=self.names[n],
+                command=lambda n=n: self.component_button_command(n)
+            )
+            
+            self.button.place(
+                x=x, y=y, height=component_height, width=300-2*PADDING
+            )    
+    \end{minted}
+    \caption{SimulatorGUI placing component buttons}
+    \label{sc:simgui-component-buttons}
+\end{listing}
+
+\newpage
+% sc:resolution-validation-func
+% Validation for resolution entry
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+def validateResolution(res) -> bool:
+    if str(res) == "":
+        return True
+    
+    if str.isdigit(res):
+        if int(res) <= 8:
+            return True
+        
+    return False
+    \end{minted}
+    \caption{Validation for resolution entry}
+    \label{sc:resolution-validation-func}
+\end{listing}
+
+\newpage
+% sc:id-validation-func
+% Validation for identifier entry
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+def validateIdentifier(identifier):
+    if len(identifier) <= 12:
+        return True
+    
+    return False
+    \end{minted}
+    \caption{Validation for identifier entry}
+    \label{sc:id-validation-func}
+\end{listing}
+
+\newpage
+% sc:metergui-init
+% MeterGUI initialisation
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+class MeterGUI(tk.Toplevel):
+    def __init__(self, root: tk.Tk):
+        # so that it can run from the main window        
+        super().__init__(master=root)
+        
+        # setting window size
+        w = 350
+        h = 200
+        sw = self.winfo_screenwidth()
+        sh = self.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (w, h, (sw - w) / 2, (sh - h) / 2)
+        self.geometry(alignstr)
+        self.resizable(width=False, height=False)
+        self.title("Meter configuration")
+    \end{minted}
+    \caption{MeterGUI initialisation}
+    \label{sc:metergui-init}
+\end{listing}
+
+\newpage
+% sc:metergui-id-lbl-ent
+% MeterGUI identifier label and entry
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # identifier
+        self.lblId = tk.Label(
+            self, text="Identifier:"
+        )
+        self.lblId.place(
+            x=PADDING, y=PADDING
+        )
+        # validation
+        vid = (self.register(validateIdentifier))
+        
+        self.entID = tk.Entry(
+            self, validate="all", validatecommand=(vid, "%P")
+        )
+        self.entID.place(
+            x=PADDING, y=2*PADDING +10, width=350-2*PADDING
+        )
+    \end{minted}
+    \caption{MeterGUI identifier label and entry}
+    \label{sc:metergui-id-lbl-ent}
+\end{listing}
+
+\newpage
+% sc:metergui-units-lbl-menu
+% MeterGUI units label and dropdown
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # units dropdown
+        self.lblUnits = tk.Label(
+            self, text="Units:"
+        )
+        self.lblUnits.place(
+            x=PADDING, y=3*PADDING+20
+        )
+        
+        # options
+        units = [
+            "Kiloamps",
+            "Amps",
+            "Milliamps",
+            "Microamps",
+        ]
+        self.value = tk.StringVar(self)
+        self.value.set("Select units")
+        self.menUnits = tk.OptionMenu(
+            self, self.value, *units
+        )
+        self.menUnits.place(
+            x=PADDING, y=4*PADDING+30, width=350-2*PADDING
+        )
+    \end{minted}
+    \caption{MeterGUI units label and dropdown}
+    \label{sc:metergui-units-lbl-menu}
+\end{listing}
+
+\newpage
+% sc:metergui-res-lbl-ent
+% MeterGUI resolution label and entry
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # resolution
+        self.lblResolution = tk.Label(
+            self, text="Resolution (significant figures):"
+        )
+        self.lblResolution.place(
+            x=PADDING, y=5*PADDING+60
+        )
+        
+        # validation function
+        vres = (self.register(validateResolution))
+        
+        self.entResolution = tk.Entry(
+            self, validate="all", validatecommand=(vres, "%P")
+        )
+        self.entResolution.place(
+            x=PADDING, y=6*PADDING+70, width=350-2*PADDING
+        )
+
+    \end{minted}
+    \caption{MeterGUI resolution label and entry}
+    \label{sc:metergui-res-lbl-ent}
+\end{listing}
+
+
+\newpage
+% sc:metergui-create-btn
+% MeterGUI `Create' button placement
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # create button
+        self.btnCreate = tk.Button(
+            self, text="Create", command=self.btnCreateCommand
+        )
+        
+        self.btnCreate.place(
+            x=350-100-PADDING, y=200-30-PADDING, width=100, height=30
+        )
+    \end{minted}
+    \caption{MeterGUI `Create' button placement}
+    \label{sc:metergui-create-btn}
+\end{listing}
+
+
+\newpage
+% sc:metergui-create-btn-command
+% MeterGUI `Create' button command
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def btnCreateCommand(self):
+        global meter
+
+        # reset
+        meter = {}
+        
+        # dont do anything if any of them havent been selected
+        if self.value.get() == "Select units":
+            return
+        
+        # strip to catch spaces
+        if self.entID.get().strip() == "":
+            return
+        
+        if self.entResolution.get() == "":
+            return
+        
+        
+        # putting it into the dictionary
+        # this is global !!! (to share with the other user interface)
+        meter = {
+            "id": self.entID.get(),
+            "units": self.value.get(),
+            "res": int(self.entResolution.get())
+        }
+        
+        # print(meter)
+        
+        self.destroy()
+    \end{minted}
+    \caption{MeterGUI `Create' button command}
+    \label{sc:metergui-create-btn-command}
+\end{listing}
+
+
+\newpage
+% sc:simgui-declare-flags
+% SimulatorGUI declaring flags
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # flags for later
+
+        self.active = False
+        self.pos = tk.IntVar()
+        self.neg = tk.IntVar()
+        self.count = 0
+        
+        self.pos.set(-1)
+        self.neg.set(-1)
+        
+        # this is the whole circuit
+        self.circuit: dict = {}
+    \end{minted}
+    \caption{SimulatorGUI declaring flags}
+    \label{sc:simgui-declare-flags}
+\end{listing}
+
+\newpage
+% sc:simgui-comp-btn-cmd
+% SimulatorGUI component button command
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def component_button_command(self, index) -> int:
+        # have to finish placing this component before can place another
+        if self.active:
+            print("Button already active")
+            return
+        
+        # setting the flag
+        self.active = True
+        
+        # if its an ammeter
+        global meter
+        if index == 0:
+            app2 = MeterGUI(self.root)
+        else:
+            meter = {}
+        
+        # wait for the second lattice point to be clicked
+        self.root.wait_variable(self.neg)
+        
+        component: dict = {
+            "type": self.names[index].lower(),
+            "pos": self.pos.get(),
+            "neg": self.neg.get(),
+            "data": meter
+        }
+        
+        # reset flags
+        self.pos.set(-1)
+        self.neg.set(-1)
+        self.active = False
+        
+        self.circuit[str(self.count)] = component
+        
+        self.count += 1
+    \end{minted}
+    \caption{SimulatorGUI component button command}
+    \label{sc:simgui-comp-btn-cmd}
+\end{listing}
+
+
+\newpage
+% sc:simgui-lattice-btn-command-real
+% SimulatorGUI lattice button command that uses the flags
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def lat_button_command(self, index) -> int:
+        """ Return which order the button was placed """
+        if not self.active:
+            print("Inactive")
+            return
+        
+        print("active")
+        print(index)
+        
+        if self.pos.get() == -1:
+            self.pos.set(index)
+            return
+        
+        # dont want to select the same one twice
+        if self.pos.get() == index:
+            return
+        
+        if self.neg.get() == -1:
+            self.neg.set(index)
+            return
+    \end{minted}
+    \caption{SimulatorGUI lattice button command that uses the flags}
+    \label{sc:simgui-lattice-btn-command-real}
+\end{listing}
+
+\newpage
+% sc:simgui-quit-btn-command
+% SimulatorGUI `Quit' button command
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def quit(self):
+        print("exiting....")
+        self.root.destroy()
+    \end{minted}
+    \caption{SimulatorGUI `Quit' button command}
+    \label{sc:simgui-quit-btn-command}
+\end{listing}
+
+\newpage
+% sc:simgui-reset-btn-command
+% SimulatorGUI `Reset' button command
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def reset(self):
+        self.circuit = {}
+        self.count = 0
+        print("Circuit cleared")
+    \end{minted}
+    \caption{SimulatorGUI `Reset' button command}
+    \label{sc:simgui-reset-btn-command}
+\end{listing}
+
+\newpage
+% sc:simgui-save-cmd-1
+% SimulatorGUI save command for loop
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def save(self):
+        # this method converts the bad self.component and writes 
+        # the proper one to the json file
+        print("saving...")
+        
+        jsonCircuit: dict = {}
+        
+        for i in range(self.count):
+            # this will have pos, neg, type, and data
+            current = {}
+            
+            # convert to string to get the key
+            k = str(i)
+    \end{minted}
+    \caption{SimulatorGUI save command for loop}
+    \label{sc:simgui-save-cmd-1}
+\end{listing}
+
+\newpage
+% sc:simgui-save-cmd-2
+% SimulatorGUI save command finding positive connections
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+            # finding positive terminal connection
+            pos = self.circuit[k]["pos"]
+            single = 0
+            for j in range(self.count):
+                # skip self
+                if i == j: continue
+                l = str(j)
+                
+                # check if connected to the component
+                if (self.circuit[l]["pos"] == pos or 
+                        self.circuit[l]["neg"] == pos):
+                    current["pos"] = j
+                    single += 1
+                
+            # raise error if no connection or if 
+            # there are too many connections
+            if single == 0:
+                messagebox.showerror(
+                    "No connection !!", 
+                    "No connection found, redo circuit"
+                )
+                self.reset()
+                return
+            
+            if single != 1:
+                messagebox.showerror(
+                    "Too many connections", 
+                    "Too many connections to one point",
+                )
+                self.reset()
+                return
+    \end{minted}
+    \caption{SimulatorGUI save command finding positive connections}
+    \label{sc:simgui-save-cmd-2}
+\end{listing}
+
+\newpage
+% sc:simgui-save-cmd-3
+% SimulatorGUI save command finding negative connections
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+            # finding negative terminal connection
+            neg = self.circuit[k]["neg"]
+            single = 0
+            for j in range(self.count):
+                if i == j: continue
+                l = str(j)
+                
+                # check if connected to neg terminal
+                if (self.circuit[l]["pos"] == neg or 
+                        self.circuit[l]["neg"] == neg):
+                    current["neg"] = j
+                    single += 1
+                    
+            # raise error if not found or if too many found
+            if single == 0:
+                messagebox.showerror(
+                    "No connection !!", 
+                    "No connection found, redo circuit"
+                )
+                self.reset()
+                return
+            
+            if single != 1:
+                messagebox.showerror(
+                    "Too many connections", 
+                    "Too many connections to one point",
+                )
+                self.reset()
+                return
+    \end{minted}
+    \caption{SimulatorGUI save command finding negative connections}
+    \label{sc:simgui-save-cmd-3}
+\end{listing}
+
+\newpage
+% sc:simgui-save-cmd-4
+% SimulatorGUI save command saving to JSON
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+            # add type and data and add to main
+            current["type"] = self.circuit[k]["type"]
+            current["data"] = self.circuit[k]["data"]
+
+            jsonCircuit[k] = current
+            
+        # write dictionary to json file
+        dict_to_json(jsonCircuit, "circuit.json")
+        
+        print("Finished saving")
+    \end{minted}
+    \caption{SimulatorGUI save command saving to JSON}
+    \label{sc:simgui-save-cmd-4}
+\end{listing}
+
+\newpage
+% sc:dict2json-procedure
+% Procedure to write Python dictionary to given JSON file
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+import json
+
+def dict_to_json(d: dict, f: str) -> None:
+    with open(f, "w") as file:
+        json.dump(d, file)
+    \end{minted}
+    \caption{Procedure to write Python dictionary to given JSON file}
+    \label{sc:dict2json-procedure}
+\end{listing}
+
+\newpage
+% sc:normalise-string-function
+% Function to normalise the concatenation of strings
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+def normaliseString(a: str, b: str, maxLen: int = 35, char: str = " ") -> str:
+    """ Returns the concatenation of `a` and `b` with `char` in 
+    between until they reach `maxLen`"""
+    temp = a
+
+    while len(temp) + len(b) < maxLen:
+        temp += char
+
+    return temp+b
+    \end{minted}
+    \caption{Function to normalise the concatenation of strings}
+    \label{sc:normalise-string-function}
+\end{listing}
+
+
+\newpage
+% sc:outputgui-init
+% OutputGUI initialisation
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+class OutputGUI(tk.Toplevel):
+    def __init__(self, master: tk.Tk, meters: list[dict]):
+        super().__init__(master=master)
+        
+        w = 350
+        h = 250
+        sw = self.winfo_screenwidth()
+        sh = self.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (w, h, (sw - w) / 2, (sh - h) / 2)
+        self.geometry(alignstr)
+        self.resizable(width=False, height=False)
+        self.title("Meter output")
+    \end{minted}
+    \caption{OutputGUI initialisation}
+    \label{sc:outputgui-init}
+\end{listing}
+
+\newpage
+% sc:outputgui-total-emf
+% OutputGUI total E.M.F.
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # for alignment purposes
+        maxLen = 35 # characters
+        
+        # showing total emf 
+        totalEMF = readings["emf"]
+        strVal = str(totalEMF) + " V"
+        
+        text = normaliseString(
+            "Total E.M.F.", strVal, maxLen
+        )
+
+        lblEMF = tk.Label(
+            self, text=text, font="TkFixedFont"
+        )
+        lblEMF.place(
+            x=PADDING, y=PADDING
+        )
+    \end{minted}
+    \caption{OutputGUI total E.M.F.}
+    \label{sc:outputgui-total-emf}
+\end{listing}
+
+\newpage
+% sc:outputgui-total-resistance
+% OutputGUI total resistance
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # showing total resistance
+        totalRes = readings["resistance"]
+        strVal = str(totalRes) + " W"
+
+        text = normaliseString(
+            "Total resistance", strVal, maxLen
+        )
+
+        lblRes = tk.Label(
+            self, text=text, font="TkFixedFont"
+        )
+        lblRes.place(
+            x=PADDING, y=15+2*PADDING
+        )
+    \end{minted}
+    \caption{OutputGUI total resistance}
+    \label{sc:outputgui-total-resistance}
+\end{listing}
+
+\newpage
+% sc:outputgui-loop
+% OutputGUI loop
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        for i, m in enumerate(readings["ameters"]):
+            # the reading and id
+            val = m["current"]
+            
+            if val != "infinity":
+                # adjusting reading for prefix
+                if m["units"] == "kA":
+                    val /= 10**3
+                elif m["units"] == "mA":
+                    val *= 10**3
+                elif m["units"] == "uA":
+                    val *= 10**6
+                    
+                # getting the value rounded
+                precision = m["res"]
+                strVal = round_sig_fig(val, precision) + " " + m["units"]
+            else:
+                strVal = val
+            
+            text = normaliseString(
+                m["id"], strVal, maxLen
+            )
+                
+            # create label
+            lblId = tk.Label(
+                self, text=text, font="TkFixedFont"
+            )
+            lblId.place(
+                x=PADDING, y=(i+2)*(15+PADDING)+2*PADDING
+            )
+    \end{minted}
+    \caption{OutputGUI loop}
+    \label{sc:outputgui-loop}
+\end{listing}
+
+\newpage
+% sc:sigfigs-function
+% Function to round number to given amount of significant figures
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+def round_sig_fig(num: float, sf: int) -> str:
+    # normalise mantissa
+    exp = m.floor(m.log10(num))
+    mant = num / (10**exp)
+
+    mant = round(mant, sf-1)
+    rounded = mant * 10**exp
+    
+    s = str(rounded)
+    # special case with no d.p.
+    if sf == 1 and exp == 0:
+        return s[0]
+    
+    # if missing zeroes on the end
+    while len(s) < sf + 1:
+        s += "0"
+    
+    return s
+    \end{minted}
+    \caption{Function to round number to given amount of significant figures}
+    \label{sc:sigfigs-function}
+\end{listing}
+
+\newpage
+% sc:simgui-meter-check
+% SimulatorGUI run command check for meters
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+    def run(self):
+        print("Running program ... ")
+        
+        # grab circuit as a python dictionary        
+        circuit = json_to_dict("circuit.json")
+
+        # checking for ammeters
+        for k in circuit.keys():
+            if "meter" in circuit[k]["type"]:
+                break
+        else:
+            # no meters so no work :p
+            messagebox.showinfo(
+                "No meters found",
+                "No meters have been found in the circuit"
+            )
+            return
+    \end{minted}
+    \caption{SimulatorGUI run command check for meters}
+    \label{sc:simgui-meter-check}
+\end{listing}
+
+\newpage
+% sc:json-to-dict-function
+% Function to return Python dictionary from JSON file
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+def json_to_dict(filename: str) -> dict:
+    with open(filename, "r") as file:
+        return json.load(file)
+    \end{minted}
+    \caption{Function to return Python dictionary from JSON file}
+    \label{sc:json-to-dict-function}
+\end{listing}
+
+\newpage
+% sc:simgui-run-command-total-current
+% SimulatorGUI run command calculating total current
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # this holds info about components e.g. resistance 
+        data: dict = json_to_dict("data.json")
+        
+        # total resistance of circuit
+        # using V = ir
+        total_res: float = 0
+        total_emf: float = 0
+        
+        for k in circuit.keys():
+            type = circuit[k]["type"]
+            
+            res = data[type]["resistance"]
+            emf = data[type]["emf"]
+
+            total_emf += emf
+            total_res += res
+            
+        # this is the total current in the circuit
+        # rearranging ohm's law
+        current = total_emf/total_res if total_res > 0 else "infinity"
+        # every ammeter is reading the same thing
+    \end{minted}
+    \caption{SimulatorGUI run command calculating total current}
+    \label{sc:simgui-run-command-total-current}
+\end{listing}
+
+\newpage
+% sc:data-json-components
+% JSON file with component data
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{json}
+{
+    "ammeter": {
+        "emf": 0,
+        "resistance": 0
+    },
+    "bulb": {
+        "emf": 0,
+        "resistance": 10
+    },
+    "resistor": {
+        "emf": 0,
+        "resistance": 10
+    },
+    "cell": {
+        "emf": 12,
+        "resistance": 0
+    },
+    "wire": {
+        "emf": 0,
+        "resistance": 0
+    }
+}
+    \end{minted}
+    \caption{JSON file with component data}
+    \label{sc:data-json-components}
+\end{listing}
+
+\newpage
+% sc:simgui-run-command-pass-to-outputgui
+% SimulatorGUI run command passing to OutputGUI
+\begin{listing}[!ht]
+    \begin{minted}[linenos]{python}
+        # looping over stuff again
+        # and creating another dictionary on top of that
+        meters: list[dict] = []
+        
+        for k in circuit.keys():
+            # ignore non-meters
+            if "meter" not in circuit[k]["type"]:
+                continue
+            
+            # copy over data
+            m: dict = circuit[k]["data"]
+            # measured in amps
+            m["current"] = current
+            
+            meters.append(m)
+            
+        app = OutputGUI(self.root, meters)
+        
+        print("Finished running")
+    \end{minted}
+    \caption{SimulatorGUI run command passing to OutputGUI}
+    \label{sc:simgui-run-command-pass-to-outputgui}
+\end{listing}

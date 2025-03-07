@@ -1,0 +1,206 @@
+\chapter{Analysis}
+\graphicspath{{figures}}
+
+\section{Problem Identification}
+
+    Often times in physics, complex circuit diagrams have to be drawn and understood, and the opportunity to actually build them is not always available. A solution that could handle custom circuits as well as model and log different attributes quickly, accurately, and efficiently in order to help with building intuition in regard to how complex electrical systems function would be a useful tool that could help solve this issue.
+
+    As I would like to do Mathematics at university, I have decided to do my write-up for my NEA in \LaTeX in order to gain experience. This has added a lot of complexity, as I am relatively new to using \LaTeX, especially regarding formatting my write-up to be readable as well as easy to follow.
+
+\section{Identification of why this problem is solvable by computational methods}
+
+    The key requirements stated above (accuracy, haste, and clarity) lend themselves very well to using computational methods. 
+    Computers are able to make calculations orders of magnitude faster than by hand or by analogue machine, and to a virtually arbitrary degree of accuracy. 
+    Many modern central processing units (CPUs) are also able capable of making use of concurrent processing, further increasing the advantage that a computer would have over a human.
+    Graphical processing units (GPUs) are specifically designed for parallel processing, making them especially useful for graphics, which would allow for high quality renders for the user to be able to see. 
+    Any data that you would need to consider can be displayed in a clear and user-friendly fashion, making it highly customisable to fit the individual person's needs and for many attributes to be studied at the same time.
+
+    % Possible expand on why computer **versus by hand**
+    % Talk about __why__ planning to do abstraction
+    % Thinking ahead; reusable programming components (classes, functions, procedures)
+    % Talk about choice of language 
+    % Thinking concurrently (dual/parallel processing) 
+    % Talk about which methodology you did (agile) 
+    %   Allows for modularity, lends itself to decomposition, etc. 
+    
+    % Visualisation to solve problems (GUI)
+    % Knowledge of how physics works and how computers do physics 
+
+    % Personalised explanation of which computational methods will be used (and how and why)
+    % "Level of application" is required, i.e. how they apply to the solution
+    
+
+\section{Description of the Current System}
+
+    Without using computer simulations, the usual process is to produce a handful of equations by hand that would model the attributes of an object, for example the path it takes in three-dimensional space. 
+    This has the benefit of giving exact values and equations that are very useful when trying to understand the underlying reasons for an event happening. 
+    For example when considering a pendulum, it is clear from the equation $$ T = 2 \pi \sqrt{\frac{L}{g}} $$ that the period of the pendulum $T$ does not depend on the mass of the object doing the swinging. 
+    However, when running computer simulations, such relationships may not be as obvious, and as computers aren't able to analytically solve problems (i.e. through the use of rigorous mathematics), this is a drawback that I will have to consider. 
+    A computer model of a circuit can only be so accurate, as there aren't enough resources or time in order to model every single electron, proton, and neutron and all the intricate interactions they have with each other in real time.
+
+
+\section{Identification of Stakeholders}
+
+    After considering the problem I identified the following groups that could use a solution to this problem, as well as having useful insight on how a program like this should function.
+
+
+    % Identified Groups
+    \begin{itemize}
+        \item \textbf{University Students} often have to deal with complex systems and a way of visualising them would be very beneficial. I have been able to contact a student at the University of Aberdeen doing a masters in electrical and mechanical engineering. Their name is Hugo, and they are 21-years-old.
+        \item \textbf{A-Level Students}, specifically students taking physics,  would be able to greatly further their understanding of core concepts and be able to explore new ideas on their own. I have been able to communicate with Daniel, a year 12 physics student, about being a stakeholder for this project.
+        \item \textbf{Teachers} of A-Level and below could make great use of simulation software in order to make learning much easier with models and demonstrations that are clear and easy to understand. I have been able to contact Dr. Marchesini about being a stakeholder for this project, who teaches physics at Invicta Grammar School.
+    \end{itemize}
+
+\section{Identification of User Needs \& Acceptable Limitations}
+
+    Summary of key takeaways from interviews:
+    \begin{itemize}
+        \item My stakeholders are people who generally enjoy doing physics and find it enjoyable, although they all acknowledge how much work it can be. As such, decreasing workload without completely eliminating need for human input would be important, as that would make it less enjoyable.
+        \item People struggle with abstract concepts, and a common topic seems to be electricity and electricals systems, as well as visualising some key concepts in physics such as waves. Considering a way to visualise circuits and the physics going on in those would be useful all of my stakeholders.
+        \item People find graphs very useful in visualisation and aiding intuition. Some sort of real-time graphing of attributes could be something useful to consider in the final product.
+        \item All my stakeholders are competent in using simulation software, or don't mind spending time to learn how to use one properly. This would mean that accuracy and functionality could be prioritised over general user experience if necessary. 
+    \end{itemize}
+
+\section{Existing Solutions}
+
+    \subsection{Analytic Methods}
+        Analytic methods are very common as they require little cost or set-up and their effectiveness only depends on how well you understand the physics that you are doing. 
+        Since my stakeholders enjoy doing physics and are also quite good at it, they are all well versed in spending time going through calculations in order to achieve a set of mathematical equations that describe the system being modelled. 
+
+        % fig:daniel_working
+        % Daniel's Working FIG
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=.7\textwidth]{s01/daniel_working.jpeg}
+            \caption{A sample of Daniel's working out}
+            \label{fig:daniel_working}
+        \end{figure}
+
+        \textbf{Advantages:}
+        \begin{itemize}
+            \item Very versatile. Paper and pen allows for great customisation in the layout of the work including diagrams and annotations, which allows the user to be able to do things the way they want to do.
+            \item Cheap and easy to use. Little equipment is required and there isn't a need to install anything. 
+            \item Writing things physically on paper usually results in the writer being able to remember it easier, which would help in remembering things when learning. 
+            \item To get effective with analytic methods you require a lot of practice, which develops core skills like manipulation of various equations to achieve a desired result.
+            \item Ability to get exact answers and relationships between objects and attributes. Computers can only approximate exact answers and being able to see the equations of what is happening can greatly aid intuition when tackling future problems.
+            \item Doing hard work to get to a result is rewarding and relaxing. Offloading a lot of that work to a computer would reduce the enjoyment from this process.
+        \end{itemize}
+
+        \textbf{Disadvantages:}
+        \begin{itemize}
+            \item Difficult to organise. You can't save paper notes in a way that is easily shareable and easy to organise on a computer (other than scanning them as PDF files which can take a lot of time and my clients find annoying). It may also be hard to stay consistent with formatting due to how versatile it is, as seen in \autoref{fig:daniel_working}.
+            \item Getting accurate graphs beyond simple sketches is difficult. Performing numerical methods by hand is very time-consuming which decreases the amount of time that can be spent on doing actual work. 
+            \item Scope of problems that can be approached is limited. Not all systems can be solved using analytic methods and sometimes numerical methods are necessary, depending on how simple or complex you choose to make your model.
+            \item Some problems are much harder to approach as the effectiveness of analytic methods is dependent on your ability to manipulate and work with equations, as well as general mathematical ability. Human's also make mistakes and are far less consistent than a computer at doing the same or similar calculations repeatedly.
+        \end{itemize}
+
+    \subsection{Desmos}
+
+        % fig:desmos
+        % Desmos FIG
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=.7\textwidth]{s01/desmos.png}
+            \caption{Desmos graphing software}
+            \label{fig:desmos}
+        \end{figure}
+
+
+        In \autoref{fig:desmos} below, Desmos has been used in order to see how attributes of an object change (specifically the $x$ position and velocity with respect to time of an object experiencing drag). Desmos is great in order to aid intuition and view general trends, however you still need to work through equations in order to have something to graph, and Desmos won't give exact values for solutions, but the final visualisations are still very useful. 
+
+        The simplicity of Desmos allows it to be very versatile, but that also means its more of a jack-of-all-trades and master of none, so it wouldn't be very good for a more specialised application (like the ones being considered).
+
+        \textbf{Advantages:}
+        \begin{itemize}
+            \item Desmos is a very versatile software which means that it can be used for a wide variety of problems. 
+            \item Free and easy to use. Desmos can be accessed by anyone with a computer or mobile device by going to \href{https://www.desmos.com/calculator}{their website}, or by downloading the mobile app.
+            \item Very customisable. Desmos allows for labels within the equation space, as well as changing the names of the labels on the axes. Which allows for some form of documentation within the graphs. The colours and line style are also changeable.
+            \item Easy to share and work on on multiple devices. After you make an account, you are able to save graphs that you've done and access them on whatever device you're signed in on. Graphs can also be shared with links once they're saved which allows for collaboration on projects.
+            \item As of quite recently, Desmos has released a beta for a 3D graphing mode, which is great for modelling some events happening in 3D, such as the trajectory of an object given some initial conditions.
+        \end{itemize}
+
+
+        \textbf{Disadvantages:}
+        \begin{itemize}
+            \item The versatility of Desmos means that in the case of a more specialised system with specific needs, it would be more beneficial to create custom software for that specific system. However, Desmos still manages to cover a wide variety of problems, just not in a lot of depth.
+            \item The accuracy of Desmos is not very customisable, usually giving answers to two or three decimal places, and it is only able to give exact answers in some circumstances (values are usually given in terms of $\pi$ when working with trigonometric functions).
+            \item Circuits diagrams often end up messy and obviously not functional as they are on a piece of paper.
+        \end{itemize}
+
+
+    % do another one later
+
+    \subsection{Online Circuit Builder}
+        I searched for some online JavaScript based circuit builders and I found this \href{https://www.falstad.com/circuit/}{Circuit Simulator Applet}. 
+        Although none of my clients have used this before, and I don't personally have a lot of experience with it, I can see that there are a lot of good features in this solution. 
+        The use of circuit symbols instead of renders of components allows students to familiarise themselves with them, as when actually drawing out circuit diagrams that's what they would use. 
+        Furthermore, as circuits get more and more complex and components get smaller, it may not even be practical or useful to look at a real life version of the circuit. 
+
+        % fig:circuit_builder_ss1
+        % Circuit Builder SS FIG
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=.7\textwidth]{s01/circuit_builder_1.png}
+            \caption{A simple circuit made on the circuit builder}
+            \label{fig:circuit_builder_ss1}
+        \end{figure}
+
+
+        % fig:circuit_builder_ss2
+        % Circuit Builder graphs screenshot
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=.7\textwidth]{s01/circuit_builder_graphs.png}
+            \caption{Graphs of attributes changing with respect to time and each other}
+            \label{fig:circuit_builder_ss2}
+        \end{figure}
+
+
+        \textbf{Advantages:}
+        \begin{itemize}
+            \item The use of standard circuit symbols, which are 2D and quite simple shapes, instead of renders or images of actual components makes the program more efficient and increases performance, as no advanced rendering is necessary. 
+            \item Charge flow indicators in the form of yellow circles that represent electrons help visualise the flow of charge around a circuit for students. 
+            \item Including colour indicators do distinguish between places with negative and positive potential difference adds another level of interaction for the user, and this is something that could be quite hard to visualise and notice even with a real life version of the circuit available.
+            \item The simulation can be freely paused and unpaused in order to be able to see how a circuit appears at a specific point in time, which would be difficult with a real life version. 
+            \item The ability to plot real time graphs akin to an oscilloscope is as useful as having a real life oscilloscope, which is great when used to see how attributes change with respect to time and each other. See \autoref{fig:circuit_builder_ss2}.
+            \item The ability to export and import circuit arrangements is very useful as it allows for easier collaboration.
+        \end{itemize}
+
+
+        \textbf{Disadvantages:}
+        \begin{itemize}
+            \item Although it contains a myriad of different components and pre-made circuits, some "features" are missing. For example, you can't set the internal resistance of a cell, and you also can't choose custom wires where you can alter the resistivity and length more precisely, which would make the simulation more accurate.
+            \item I found the system for placing new components in to be quite clunky and frustrating to get used to. Drawing the components is a good system, but the way it was implemented felt annoying to place in new components, it felt like you had to already know where you want to place components beforehand, which limits the freedom the user has to experiment with new arrangements. 
+        \end{itemize}
+
+\section{Success Criteria of the Proposed System}
+    See \autoref{tbl:essential_succ_crit} for a table of essential success criteria for the system. 
+
+
+    See \autoref{tbl:optional_succ_crit} for a table of optional criteria for the solution, that would still benefit the users but aren't essential for it to be deemed functional and are mostly quality of life features.
+
+
+% \section{Data Source(s)}
+% \section{Volumetrics - Data Volumes}
+% \section{Analysis Data Dictionary}
+% \section{Data Flow Diagrams for Existing and Proposed System}
+
+\section{Justification of Chosen Solution}
+    My proposed solution is to create a piece of software that functions as an electrical circuit builder allowing the user to place different components on a main board and then connect them using wires. Then the software would simulate what is happening at each component as well as allow those attributes to be viewed and logged by the user within the software. 
+    Circuits wouldn't be able to be edited while they are being simulated, as the two modes would be completely separate from each other.
+
+    This solution would be very good as it would allow for a concept that a lot of students struggle with to be visualised. 
+    A lot of students do not have access to circuit components at home, and so trying to study circuits independently can be very challenging for some. 
+    A much larger proportion of students own a computer with a mouse and keyboard at their home, so a piece of software would be more accessible to most if not all students. 
+    Also, as education shifts more and more into digital, a way of collaborating on circuits through the internet (with just being able to send an exported file to another person) greatly aids student understanding and ability to learn.
+
+\section{Hardware \& Software}
+    The system will only require a computer with a working mouse and display to work properly, but the functionality for keyboard shortcuts is a possibility in the future. 
+    Regarding software, only the actual program is would be necessary, and distributing it to the end user would be a trivial task.
+
+\section{Limitations}
+    I only have experience with GUI elements while using Python, however the complexity and amount of processing needed for the project may exceed the capabilities of Python. 
+    As such careful consideration into how features are implemented would have to be taken as I need the program to be as efficient as possible. 
+
+% \section{Entity-Relationship Models}
+% \section{Identification of Objects and Object Analysis Diagrams}
