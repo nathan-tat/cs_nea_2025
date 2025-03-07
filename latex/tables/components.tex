@@ -1,0 +1,20 @@
+% tbl:components-list
+% Components and special considerations
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{@{}ll@{}} \toprule
+        \textbf{Component} & \textbf{Special considerations} \\ \midrule 
+        Resistor & N/A \\ 
+        Wire & Resistivity and length attributes \\ 
+        Bulb & Two states (on and off) \\ 
+        Node & Three input/outputs \\ 
+        Cell & EMF (will be ignoring internal resistance) \\ 
+        Switch & Interactive \\ 
+        Ammeter & Zero resistance; user output \\ 
+        Voltmeter & Infinite resistance; user output \\ 
+        Connection & Zero resistance; inaccessible to user \\ 
+        \bottomrule
+    \end{tabular}
+    \caption{Components and special considerations}
+    \label{tbl:components-list}
+\end{table}

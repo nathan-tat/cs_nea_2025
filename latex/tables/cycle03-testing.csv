@@ -1,0 +1,6 @@
+﻿ID,Reason,Type,Test Data,Expected Outcome
+I20,Placing circuit components,Normal,User action (clicking on two points),Correct component is shown connected between the two points
+I21,Configuring meters,Normal,User enters acceptable identifier and is able to choose units and resolution with help of the interface,Success
+I22,Configuring meters,Erroneous,User enters an identifier that is too long,User is prompted to re-enter identifier
+I23,Accuracy of simulation,Normal,Theoretically valid circuit,Meter readings as expected from calculations by hand/real life readings from reconstructed circuit
+I24,Accuracy of simulation,Erroneous,Theoretically invalid circuit,Meter readings as expected from calculations by hand/real life readings from reconstructed circuit

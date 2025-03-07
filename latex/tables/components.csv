@@ -1,0 +1,10 @@
+﻿Component,Special considerations
+Resistor,N/A
+Wire,Resistivity and length attributes
+Bulb,Two states (on and off)
+Node,Three input/outputs
+Cell,EMF (will be ignoring internal resistance)
+Switch,Interactive
+Ammeter,Zero resistance; user output
+Voltmeter,Infinite resistance; user output
+Connection,Zero resistance; inaccessible to user

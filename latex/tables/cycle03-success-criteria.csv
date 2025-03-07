@@ -1,0 +1,8 @@
+﻿ID,Feature
+A1,Model electric circuits accurately
+A2,Be able to handle 10 or fewer components in a single circuit
+A3,"Have support for at least the following components: cell, wire, filament bulb, resistor, multimeter, switch. Each should have respective attributes be customisable."
+A4,"Have general attributes of the circuit displayed, such as total resistance, current, potential difference, and electro-motive forces"
+A6,"An intuitive way to add components to a circuit, most likely being able to drag components onto the main stage using the mouse"
+A7,"Charge flow indicators to visualise charge flow around the circuit. Toggle between electron flow, conventional current, and off."
+A8,Nameable components for easier management.
