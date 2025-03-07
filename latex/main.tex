@@ -1,31 +1,13 @@
-\documentclass[11pt]{article}
+\documentclass[twoside]{report}
+\input{preamble.tex}
 
-\usepackage{preamble}
-
-% \includeonly{sections/04/cycle2}
 
 \begin{document}
     \pagestyle{fancy}
-    \setlength{\headheight}{13.6pt}
+    \pagenumbering{roman}
 
     % Title page
-    \begin{titlepage}
-        \begin{center}
-            \vspace*{1cm}
-            \Huge
-            \textbf{Computer Science NEA 2025} \\
-            \vspace*{2cm}
-            \LARGE
-            \textbf{Nathan Tatkowski}
-
-            \vfill
-            \includegraphics*[width=0.4\textwidth]{figures/igsLogo.jpg} \\
-            \Large
-            Invicta Grammar School \\
-            Centre Number: 61721 \\
-            Candidate Number: 8324
-        \end{center}
-    \end{titlepage}
+    \input{preamble/title.tex}
 
     \tableofcontents
 
@@ -39,23 +21,28 @@
     \lstlistoflistings
 
     \newpage
-    \fancyhead[L]{Nathan Tatkowski}
 
+    \pagenumbering{arabic}
 
-    \include{sections/01/analysis}
+    \include{sections/01_analysis}
 
-    \include{sections/02/system-design}
+    \include{sections/02_system-design}
 
-    \include{sections/03/cycle1}
+    \include{sections/03_cycle1}
 
-    \include{sections/04/cycle2}
+    \include{sections/04_cycle2}
 
-    \include{sections/05/cycle3}
+    \include{sections/05_cycle3}
+
+    \include{sections/06_eval}
+
+    \include{sections/07_testing}
+
 
     \appendix
     
-    \include{sections/A/tables}
-    
-    \include{sections/B/snippets}
+    \include{sections/A_tables}
+
+    \include{sections/B_snippets}
 
 \end{document}
