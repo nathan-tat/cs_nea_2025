@@ -1,15 +1,10 @@
-import ctypes
-from github import Github, Repository, ContentFile
 import os
-import sys
-import requests
 import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import filedialog
 from tkinter import messagebox
 
-import winshell
-from win32com.client import Dispatch
+from funcmodule import install_requirements, download_from_github, create_shortcut
 
 
 # the requirements.txt which has all the necessary pip libraries to run the program 
@@ -29,86 +24,12 @@ FILE = r"\code\software\main.py"
 # if im testing stuff 
 testing = False
 
-
 admin_flag = True
 
 safety = False
 
-
-
-def download(c: ContentFile, out: str):
-    """ https://github.com/Nordgaren/Github-Folder-Downloader/tree/master """
-    r = requests.get(c.download_url)
-    output_path = f'{out}/{c.path}'
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    with open(output_path, 'wb') as f:
-        print(f'downloading {c.path} to {out}')
-        f.write(r.content)
-
-
-def download_folder(repo: Repository, folder: str, out: str, recursive: bool):
-    """ https://github.com/Nordgaren/Github-Folder-Downloader/tree/master """
-    contents = repo.get_contents(folder)
-    for c in contents:
-        if c.download_url is None:
-            if recursive:
-                download_folder(repo, c.path, out, recursive)
-            continue
-        download(c, out)
-
-
-def is_admin() -> bool:
-    """
-    Returns 'True' iff the current program is being run as administrator, else 'False'. 
-    Works on Windows 10 v.22H2 as of 2024-05-10
-    https://stackoverflow.com/q/130763
-    """
-    if admin_flag: return admin_flag
-    try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
-
-
-def download_from_github(destination: str) -> None:
-    """ Downloads a given GitHub folder from 'url' to the 'destination' directory """
-    g = Github()
-    repo = g.get_repo(REPO_NAME)
-    download_folder(repo, SW_DIR, destination, True)
-
-
-def install_requirements(url: str) -> None:
-    """ 
-    Installs the necessary python libraries from a 'requirements.txt' stored  
-    at 'url' using pip
-    """
-    # the command is 
-    # pip install -r /path/to/req.txt
-    
-    os.system(f"py -m pip install -r {url}")
-
-
-def create_shortcut(source: str, dest: str) -> None:
-    """ 
-    Creates a file shortcut to source at dest 
-    https://stackoverflow.com/a/60944178
-    """
-    
-    target = source + FILE
-    
-    shell = Dispatch("WScript.Shell")    
-    shortcut = shell.CreateShortCut(dest)
-    shortcut.Targetpath = target
-    
-    shortcut.WorkingDirectory = source
-    shortcut.save()
-    
-    print("Desktop shortcut created")
-
-    
-
 class InstallGUI:
-    def __init__(self, root):
+    def __init__(self, root: tk.Tk):
         #setting title
         root.title("Installer")
         #setting window size
@@ -157,6 +78,8 @@ class InstallGUI:
         # self.lbl_shortcut.place(x=35,y=90)
         
         self.filepath = None
+        
+        self.root = root
 
 
     def btn_cancel_command(self) -> None:
@@ -164,7 +87,7 @@ class InstallGUI:
         global safety
         safety = True
         print("Exiting...")
-        root.destroy()
+        self.root.destroy()
 
 
     def btn_install_command(self) -> None:
@@ -222,26 +145,3 @@ class InstallGUI:
         # self.lbl_welcome["text"] = self.filepath
         self.lbl_dir["text"] = self.filepath
         self.btn_install["state"] = "active"
-
-
-
-
-if __name__ == "__main__":
-    if not is_admin():
-    #     # brings up UAC pop-up
-    #     ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
-        
-    #     # if the user denied admin privilages
-    #     if not is_admin():
-    #         # this doesn't work 
-    #         raise PermissionError("Program is not being run as Administrator")
-        raise Exception("You are not admin.")
-        
-    root = tk.Tk()
-    app = InstallGUI(root)
-    root.mainloop()
-    
-    if safety:
-        print("Program was exited safely")
-    else:
-        messagebox.showerror("Error", "You have not exited safely.")

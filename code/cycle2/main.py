@@ -1,17 +1,24 @@
-from cycle2 import FileQueue
+import time
+import tkinter as tk
+from classmodule import Project, ForkOpenGUI, CreateNewGUI
+from funcmodule import json_to_dict
+
+# file = "code/cycle2/config.json"
+# data = json_to_dict(file)
+
+# testing_project: Project = Project(**data)
+
+# print(testing_project.getName())
+# testing_project.setLastSaved()
+# print(testing_project.getLastSaved())
+# time.sleep(5)
+# testing_project.setLastSaved()
+# print(testing_project.getLastSaved())
 
 
-q = FileQueue(4, "q.txt")
 
-q.enq("Hello")
-q.enq("World")
-q.enq("!!!")
-q.enq("Nathan")
-q.enq("Ta")
+root = tk.Tk()
+app = ForkOpenGUI(root)
+# app = CreateNewGUI(root)
+root.mainloop()
 
-q.deq()
-q.deq()
-
-
-
-print(q.drop())

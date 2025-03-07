@@ -1,7 +1,7 @@
 {
-    "directory": "C:\\users\\...",
-    "name": "this is a project name",
-    "type": "project type",
-    "created": "UNIX timestamp",
-    "lastSaved": "UNIX timestamp"
+    "directory": "config.json",
+    "name": "testing",
+    "type": "",
+    "created": "1734622449",
+    "lastSaved": "1734622449"
 }

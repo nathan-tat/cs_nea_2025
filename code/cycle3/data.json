@@ -1,0 +1,22 @@
+{
+    "ammeter": {
+        "emf": 0,
+        "resistance": 0
+    },
+    "bulb": {
+        "emf": 0,
+        "resistance": 10
+    },
+    "resistor": {
+        "emf": 0,
+        "resistance": 10
+    },
+    "cell": {
+        "emf": 12,
+        "resistance": 0
+    },
+    "wire": {
+        "emf": 0,
+        "resistance": 0
+    }
+}

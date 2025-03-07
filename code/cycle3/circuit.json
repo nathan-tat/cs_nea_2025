@@ -1,0 +1,1 @@
+{"0": {"pos": 3, "neg": 1, "type": "cell", "data": {}}, "1": {"pos": 0, "neg": 2, "type": "resistor", "data": {}}, "2": {"pos": 1, "neg": 3, "type": "ammeter", "data": {"id": "foobar", "units": "mA", "res": 4}}, "3": {"pos": 2, "neg": 0, "type": "wire", "data": {}}}
