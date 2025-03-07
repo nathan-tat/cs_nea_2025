@@ -1,0 +1,126 @@
+% LTeX: enabled=false
+\usepackage[edges]{forest}
+\usepackage{pgf-umlcd}
+\usepackage{tikz}
+\usepackage{pgfopts}
+\usepackage{circuitikz}
+\usepackage{dirtree}
+\usepackage{calc}
+
+% https://perso.ensta-paris.fr/%7Ekielbasi/tikzuml/var/files/doc/tikzumlmanual.pdf
+% 2024-10-16 Class Diagrams
+
+\usetikzlibrary{shapes.geometric, arrows}
+\usetikzlibrary{arrows.meta} % for the hierarchy diagrams i think
+
+% Defining tikz styles for the flowcharts
+\tikzstyle{startstop} = [
+    rectangle, 
+    rounded corners, 
+    minimum width=3cm, 
+    minimum height=1.2cm,
+    text centered, 
+    draw=black
+]
+
+\tikzstyle{io} = [
+    trapezium, 
+    trapezium left angle=70, 
+    trapezium right angle=110, 
+    text width=3cm,
+    minimum height=1cm,
+    text centered,
+    draw=black,
+    trapezium stretches=true
+]
+
+\tikzstyle{process} = [
+    rectangle, 
+    minimum width=3cm, 
+    minimum height=1.2cm, 
+    text centered, 
+    draw=black
+]
+
+\tikzstyle{decision} = [
+    diamond, 
+    minimum width=3cm, 
+    minimum height=1.2cm, 
+    text centered, 
+    draw=black
+]
+
+\tikzset{%
+    subprocess/.style = {rectangle, draw=black, fill=orange!30,
+                         minimum width=3cm, minimum height=1cm, inner xsep=3mm,
+                         text width =\pgfkeysvalueof{/pgf/minimum width}-2*\pgfkeysvalueof{/pgf/inner xsep},
+                         align=flush center,
+                         path picture={\draw 
+        ([xshift =2mm] \ppbb.north west) -- ([xshift= 2mm] \ppbb.south west)
+        ([xshift=-2mm] \ppbb.north east) -- ([xshift=-2mm] \ppbb.south east);
+                                      },% end of path picture
+                        }
+}
+
+\tikzstyle{arrow} = [
+    thick,
+    ->,
+    >=stealth
+]
+
+\tikzstyle{darrow} = [
+    dashed,
+    ->,
+    >=stealth
+]
+
+% These are for the directory trees which are pretty 
+\definecolor{folderbg}{RGB}{124,166,198}
+\definecolor{folderborder}{RGB}{110,144,169}
+\newlength\Size
+\setlength\Size{4pt}
+\tikzset{%
+    folder/.pic={%
+        \filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);
+        \filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+    },
+    file/.pic={%
+        \filldraw [draw=folderborder, top color=folderbg!5, bottom color=folderbg!10] (-\Size,.4*\Size+5pt) coordinate (a) |- (\Size,-1.2*\Size) coordinate (b) -- ++(0,1.6*\Size) coordinate (c) -- ++(-5pt,5pt) coordinate (d) -- cycle (d) |- (c) ;
+    },
+}
+
+\forestset{%
+    declare autowrapped toks={pic me}{},
+    declare boolean register={pic root},
+    pic root=0,
+    pic dir tree/.style={%
+        for tree={%
+            folder,
+            font=\ttfamily,
+            grow'=0,
+            directory,
+            fit=band
+        },
+        before typesetting nodes={%
+            for tree={%
+                edge label+/.option={pic me},
+            },
+            if pic root={
+                tikz+={
+                    \pic at ([xshift=\Size].west) {folder};
+                },
+                align={l}
+            }{},
+        },
+    },
+    pic me set/.code n args=2{%
+        \forestset{%
+            #1/.style={%
+                inner xsep=2\Size,
+                pic me={pic {#2}},
+            }
+        }
+    },
+    pic me set={directory}{folder},
+    pic me set={file}{file},
+}

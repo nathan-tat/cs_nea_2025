@@ -1,0 +1,20 @@
+% LTeX: enabled=false
+\usepackage{fancyhdr}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage[export]{adjustbox}
+\usepackage{parskip}
+\usepackage[normalem]{ulem}
+
+% \setlength{\parindent}{0pt}
+% \setlength{\parskip}{5pt}
+% \setlength{\baselineskip}{2pt}
+\setlength{\headheight}{13.6pt}
+
+% Resets to not be upper case
+\renewcommand{\chaptermark}[1]{ \markboth{#1}{} }
+\renewcommand{\sectionmark}[1]{ \markright{#1}{} }
+
+% headers
+\fancyhead[LO,RE]{\textsc{Nathan Tatkowski}}
+\fancyhead[RO]{\scshape\leftmark}
+\fancyhead[LE]{\scshape\rightmark}

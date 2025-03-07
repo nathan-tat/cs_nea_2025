@@ -1,0 +1,35 @@
+% LTeX: enabled=false
+% Tables
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+
+% Images
+\usepackage{graphics}
+
+
+% General 
+\usepackage{caption}
+
+
+% Code Snippets
+\usepackage[newfloat]{minted}
+\usepackage{listings}
+\usepackage{newfloat} % https://tex.stackexchange.com/questions/95631/defining-a-new-type-of-floating-environment 2024-10-14
+\usepackage{subcaption}
+
+\renewcommand{\lstlistlistingname}{List of Code Fragments}
+\DeclareFloatingEnvironment[fileext=frm,placement={!ht},name=Code]{code}
+
+% Types of floats: 
+%   FIG     - Figure or Image file
+%   PC      - Pseudocode snippet
+%   SC      - Sourcecode snippet
+%   TBL     - Table
+%   FLOW    - Flowchart
+%   FOR     - Forest
+%   DIR     - Directory Tree
+
+% for labels use this convention: 
+% {sensible_identifier}-{type}{numbering(if necessary)}-{cycle/section_name}
