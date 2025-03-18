@@ -2,7 +2,7 @@
 \graphicspath{{figures}}
 
 
-Below is the hierarchy diagram for this cycle. Note that here "program" is used to refer to the entire program, and not just the installer covered in this cycle.
+Below is the hierarchy diagram for this cycle. Note that here `program' is used to refer to the entire program, and not just the installer covered in this cycle.
 
 % for:hierarchy_diagram_c1
 % Cycle 1 Hierarchy diagram
@@ -45,7 +45,8 @@ Below is the hierarchy diagram for this cycle. Note that here "program" is used 
 \end{figure}
 
 \section{Brief Outline}
-    In this cycle I will create a way to install the program onto the user's computer using Python. This will also include an uninstallation program which will allow the user to safely uninstall the program if they wish to do so.
+    In this cycle I will create a way to install the program onto the user's computer using Python. 
+    This will also include an uninstallation program which will allow the user to safely uninstall the program if they wish to do so.
 
     \subsection{Success Criteria}
         See \autoref{tbl:succ_crit_c1}.
@@ -54,7 +55,8 @@ Below is the hierarchy diagram for this cycle. Note that here "program" is used 
     % Need to do UI and testing here, as well as talk more about how this is going to be implemented
 
     \subsection{User Interface}
-        User interface (UI) windows will be implemented as classes that then have individual elements such as buttons, entries, and labels implemented as attributes of the class that can be edited as needed. Buttons will call methods in the class as their functions, allowing them to refer to other UI elements in the same window easily. See \autoref{fig:install_gui_class_diagram_c1}.
+        User interface (UI) windows will be implemented as classes that then have individual elements such as buttons, entries, and labels implemented as attributes of the class that can be edited as needed. 
+        Buttons will call methods in the class as their functions, allowing them to refer to other UI elements in the same window easily. See \autoref{fig:install_gui_class_diagram_c1}.
 
         % fig:install_gui_class_diagram_c1
         % InstallGUI Class Diagram FIG
@@ -78,7 +80,9 @@ Below is the hierarchy diagram for this cycle. Note that here "program" is used 
             \label{fig:install_gui_class_diagram_c1}
         \end{figure}
 
-        In \autoref{fig:installer_gui_design_c1}, I have made a design for the graphical user interface of the installer part of this cycle. The user will be able to enter a directory on their computer in the white entry box, and then press the "Install" button which will then validate this input as well as download the files to the specified folder. The cancel button will quit the installer and no further processing will occur.
+        In \autoref{fig:installer_gui_design_c1}, I have made a design for the graphical user interface of the installer part of this cycle. 
+        The user will be able to enter a directory on their computer in the white entry box, and then press the "Install" button which will then validate this input as well as download the files to the specified folder. 
+        The cancel button will quit the installer and no further processing will occur.
 
         % fig:installer_gui_design_c1
         % design for the installer gui 
@@ -89,7 +93,9 @@ Below is the hierarchy diagram for this cycle. Note that here "program" is used 
             \label{fig:installer_gui_design_c1}
         \end{figure}
 
-        I chose the colours that I did for the button, as they were suggested to have high contrast with the black text on them, see \autoref{fig:high_contrast_ppt_pf_c1}. This aids accessibility, making it easier to see the text on each button. I believe that the text on each button also sufficiently describes their function, leaving no room for ambiguity, and the user can be confident in what each press will do. 
+        I chose the colours that I did for the button, as they were suggested to have high contrast with the black text on them, see \autoref{fig:high_contrast_ppt_pf_c1}. 
+        This aids accessibility, making it easier to see the text on each button. 
+        I believe that the text on each button also sufficiently describes their function, leaving no room for ambiguity, and the user can be confident in what each press will do. 
 
         % fig:high_contrast_ppt_pf_c1
         % Screenshot from ppt showing the "high-contrast only" toggle
@@ -100,7 +106,9 @@ Below is the hierarchy diagram for this cycle. Note that here "program" is used 
             \label{fig:high_contrast_ppt_pf_c1}
         \end{figure}
 
-        I want to be able to communicate to the user if an error occurs, with a special case for if the user inputs an invalid directory. I used text coloured red, which has negative connotations, that was also marked as high contrast, as well as messages that told the user that the input was invalid, or a message saying that an unknown error occurred, see \autoref{fig:installer_ui_design_errors_c1}. I don't think that other errors will need to be treated specially, as any that occur would be with the downloading process and out of the user's control.
+        I want to be able to communicate to the user if an error occurs, with a special case for if the user inputs an invalid directory. 
+        I used text coloured red, which has negative connotations, that was also marked as high contrast, as well as messages that told the user that the input was invalid, or a message saying that an unknown error occurred, see \autoref{fig:installer_ui_design_errors_c1}. 
+        I don't think that other errors will need to be treated specially, as any that occur would be with the downloading process and out of the user's control.
 
         % fig:installer_ui_design_errors_c1
         %       fig:installer_ui_design_directory_error
@@ -123,7 +131,8 @@ Below is the hierarchy diagram for this cycle. Note that here "program" is used 
             \label{fig:installer_ui_design_errors_c1}
         \end{figure}
 
-        In the event of a successful installation, I would also like to notify the user. To do this I used the word "Success!" coloured in high contrast green, which is a colour with positive connotations, shown in \autoref{fig:install_ui_successful_design_c1}.
+        In the event of a successful installation, I would also like to notify the user. 
+        To do this I used the word "Success!" coloured in high contrast green, which is a colour with positive connotations, shown in \autoref{fig:install_ui_successful_design_c1}.
 
         % fig:install_ui_successful_design_c1
         % installation ui after a successful installation
@@ -137,7 +146,11 @@ Below is the hierarchy diagram for this cycle. Note that here "program" is used 
 
     \subsection{Data Structures}
 
-        The user may not always have permissions to save into/export into the directory they have selected. When doing file management using for example the file explorer on Windows 10, the operating system will handle telling the user that they have invalid permissions. However, when attempting operations on files with invalid permissions through a programming language such as Python, the error will be raised in the program. Due to this I have included a \verb|permissions| variable that checks whether the program has permissions to write to a given directory to prevent this. See \autoref{tbl:data_structs_c1} for a table of data structures.
+        The user may not always have permissions to save into/export into the directory they have selected. 
+        When doing file management using for example the file explorer on Windows 10, the operating system will handle telling the user that they have invalid permissions. 
+        However, when attempting operations on files with invalid permissions through a programming language such as Python, the error will be raised in the program. 
+        Due to this I have included a \verb|permissions| variable that checks whether the program has permissions to write to a given directory to prevent this. 
+        See \autoref{tbl:data_structs_c1} for a table of data structures.
 
     \subsection{Algorithms}
         I decided to plan some of my key algorithms for this cycle, namely the algorithms responsible for exporting files, initialising a project, and installing the program.
@@ -183,7 +196,8 @@ endprocedure
         \end{figure}
 
 
-        The file running the procedure above will need to be in the same location as the folder it is copying from. To make the file easier to access, the program could make a shortcut to this file and add it to the desktop for the user.
+        The file running the procedure above will need to be in the same location as the folder it is copying from. 
+        To make the file easier to access, the program could make a shortcut to this file and add it to the desktop for the user.
         
 
         % pc:install_software_ps_c1
@@ -203,9 +217,14 @@ endprocedure
         \end{figure}
 
 
-        The installer will copy files from a GitHub repository, where all the files necessary for the program to run will be stored, into a folder specified by the user on the user's computer. This folder will then be referred to as \verb|source| (see \autoref{tbl:data_structs_c1}). This will hopefully be done through the use of an external library.
+        The installer will copy files from a GitHub repository, where all the files necessary for the program to run will be stored, into a folder specified by the user on the user's computer. 
+        This folder will then be referred to as \verb|source|, see \autoref{tbl:data_structs_c1}. 
+        This will hopefully be done through the use of an external library.
 
-        Having multiple directories with the program downloaded or having broken installations could cause undesired outcomes. Due to this, I would like the user to use the "Close" button in order to terminate the program, and so I will include a check for this. A Python file will not necessarily terminate after a GUI window is closed, so it is still possible to do some processing after this. In the method written for the "Close" button, I will have a variable \verb|safety| set to \verb|True| and then check its value afterwards, alerting the user if this condition isn't met and possibly giving them some advice on how they can go forwards to guarantee that everything will work later on, see 
+        Having multiple directories with the program downloaded or having broken installations could cause undesired outcomes. 
+        Due to this, I would like the user to use the "Close" button in order to terminate the program, and so I will include a check for this. 
+        A Python file will not necessarily terminate after a GUI window is closed, so it is still possible to do some processing after this. 
+        In the method written for the "Close" button, I will have a variable \verb|safety| set to \verb|True| and then check its value afterwards, alerting the user if this condition isn't met and possibly giving them some advice on how they can go forwards to guarantee that everything will work later on, see \autoref{fig:installer_ui_design_unsafe_exit_c1}.
 
         % fig:installer_ui_design_unsafe_exit_c1
         % Little design for when the user doesn't exit the program safely. 
@@ -264,7 +283,8 @@ endprocedure
     \end{figure}
 
     In the function tied to the `Install' button, see \autoref{sc:install_btn_sc_c1}, there are two functions called.
-    The \verb|install_requirements| function installs all the necessary Python modules onto the user's device referencing a text file that contains the names and version numbers of said modules, shown in \autoref{fig:requirements-txt-c1}. At first, I had some trouble with this function as I wasn't calling the command with the correct flags, shown in \autoref{sc:install_reqs_fail1_c1}. 
+    The \verb|install_requirements| function installs all the necessary Python modules onto the user's device referencing a text file that contains the names and version numbers of said modules, shown in \autoref{fig:requirements-txt-c1}. 
+    At first, I had some trouble with this function as I wasn't calling the command with the correct flags, shown in \autoref{sc:install_reqs_fail1_c1}. 
     The \verb|download_from_github| function copies the files from a folder in a GitHub repository. 
     % The former of these makes sure that the user has all the necessary Python libraries installed on their device, so that the program can function properly. 
     % Originally, I was planning to completely make use of a Python library that would have allowed me to interact with the GitHub API, but I could not find one that would do that for me and work, instead I managed to find code that would do the same thing, which is shown in \autoref{sc:dl_from_github_stolen_c1}, courtesy of GitHub user \href{https://github.com/Nordgaren/Github-Folder-Downloader/tree/master}{Nordgaren}.
@@ -293,7 +313,8 @@ endprocedure
     \end{figure}
 
     % I need to test it
-    I then decided to implement the function in order to create a desktop shortcut, shown in \autoref{sc:create_shortcut_c1}. For this I also made the change of adding a checkbox to the user interface that would allow the user to decide whether to add a desktop shortcut, shown in \autoref{fig:checkbox-installer-gui}. 
+    I then decided to implement the function in order to create a desktop shortcut, shown in \autoref{sc:create_shortcut_c1}. 
+    For this I also made the change of adding a checkbox to the user interface that would allow the user to decide whether to add a desktop shortcut, shown in \autoref{fig:checkbox-installer-gui}. 
 
 
     % fig:checkbox-installer-gui
@@ -338,4 +359,5 @@ endprocedure
 
 
 \section{Evaluation}
-    In this cycle I have managed to reach all of my success criteria listed in \autoref{tbl:succ_crit_c1} except for being able to uninstall the program with the same file. I have decided to move the development of this function to a later cycle, after the main program has been developed as I need a clearer view of how the program file structure will look like. 
+    In this cycle, I have managed to reach all of my success criteria listed in \autoref{tbl:succ_crit_c1} except for being able to uninstall the program with the same file. 
+    I have decided to move the development of this function to a later cycle, after the main program has been developed as I need a clearer view of how the program file structure will look like. 

@@ -50,7 +50,8 @@
     % If an existing project then the user will navigate to the project file inside the project folder, select it, and then it will use that to open everything necessary
     % If a new project then the user will select the DIRECTORY where they want the project file to be in. They will also decide on a name. I might also decide to include a drop down menu to select some kind of "type" or something.
 
-    The idea of this cycle is that it will use one program, which is the one that the installer creates a shortcut to, from which the user will be able to decide whether to open a new or existing project. If the user chooses the former, then they will be prompted to select the \textit{directory} in which they would like to initialise their project, and if the latter then they will be prompted to select the \textit{project file} for their project. 
+    The idea of this cycle is that it will use one program, which is the one that the installer creates a shortcut to, from which the user will be able to decide whether to open a new or existing project. 
+    If the user chooses the former, then they will be prompted to select the \textit{directory} in which they would like to initialise their project, and if the latter then they will be prompted to select the \textit{project file} for their project. 
     The user will initially start on one user interface screen and depending on their choice go to one of two other user interface screens.
 
     \subsection{Data Structures}
@@ -143,10 +144,13 @@
         % Didnt use SQL/database because i dont need them to be connected in any way and there is only a small amount of data involved
 
 
-        Each directory that contains a project will include a configuration JSON file that will inform the main program on how to treat the project. I have decided to use JSON as it integrates nicely with Python (using the JSON module), as well as allowing me to create a template that each project can follow. 
+        Each directory that contains a project will include a configuration JSON file that will inform the main program on how to treat the project. 
+        I have decided to use JSON as it integrates nicely with Python (using the JSON module), as well as allowing me to create a template that each project can follow. 
 
 
-        As shown in \autoref{ps:json-proj-config-example}, multiple properties regarding the project will be stored. Some of these will be set at the beginning and not changed again, such as \verb|directory|, and others are able to change even after the project's initial creation, in particular \verb|last_opened| will need to updated whenever the project is opened. Note that double backwards slashes are used for the \verb|directory| attribute, as a backwards slash is used as an escape character in the JSON file format.
+        As shown in \autoref{ps:json-proj-config-example}, multiple properties regarding the project will be stored. 
+        Some of these will be set at the beginning and not changed again, such as \verb|directory|, and others are able to change even after the project's initial creation, in particular \verb|last_opened| will need to updated whenever the project is opened. 
+        Note that double backwards slashes are used for the \verb|directory| attribute, as a backwards slash is used as an escape character in the JSON file format.
 
         % ps:json-proj-config-example
         % Example for the JSON config file for a project
@@ -237,7 +241,10 @@
             \label{fig:menu_1_design_c2}
         \end{figure}
 
-        A change I have made in \autoref{fig:menu_2_design_c2} compared to \autoref{fig:menu_1_design_c2} is moving the `Cancel' button to the bottom left corner instead of keeping it in the bottom right corner. I decided this was better as it stayed consistent with the previous cycle, see \autoref{fig:installer_gui_design_c1}, and that that is how people tend to read (the order being top left, top right, bottom left, bottom right, according to \href{https://www.interaction-design.org/literature/article/visual-hierarchy-organizing-content-to-follow-natural-eye-movement-patterns}{the Interaction Design Foundation}). As part of my reflection from the first cycle, I have decided to include a `Browse' button, which will allow the user to select a directory using the familiar user interface of their operating system, as opposed to being forced to type in their directory manually. This is better as it increases usability. 
+        A change I have made in \autoref{fig:menu_2_design_c2} compared to \autoref{fig:menu_1_design_c2} is moving the `Cancel' button to the bottom left corner instead of keeping it in the bottom right corner. 
+        I decided this was better as it stayed consistent with the previous cycle, see \autoref{fig:installer_gui_design_c1}, and that that is how people tend to read (the order being top left, top right, bottom left, bottom right, according to \href{https://www.interaction-design.org/literature/article/visual-hierarchy-organizing-content-to-follow-natural-eye-movement-patterns}{the Interaction Design Foundation}). 
+        As part of my reflection from the first cycle, I have decided to include a `Browse' button, which will allow the user to select a directory using the familiar user interface of their operating system, as opposed to being forced to type in their directory manually. 
+        This is better as it increases usability. 
 
         % \clearpage
         % fig:menu_2_design_c2
@@ -250,7 +257,10 @@
         \end{figure}
 
         % \newpage
-        In \autoref{fig:init_new_proj_ui_design_c2}, I have designed the user interface for initialising a new project. The user will be allowed to select the name of the project and the directory in which the project is stored. I have also decided to include a dropdown selection box that would allow the user to select the "type" of project. At this time, I am not certain of what that exactly refers to. However, in the future I could use it for something. For example, the user being able to choose from a selection of pre-made circuits as a demonstration of the software.
+        In \autoref{fig:init_new_proj_ui_design_c2}, I have designed the user interface for initialising a new project. The user will be allowed to select the name of the project and the directory in which the project is stored. I have also decided to include a dropdown selection box that would allow the user to select the "type" of project. 
+        At this time, I am not certain of what that exactly refers to. 
+        However, in the future I could use it for something. 
+        For example, the user being able to choose from a selection of pre-made circuits as a demonstration of the software.
 
         % fig:init_new_proj_ui_design_c2
         % design for the ui for initialising a new project
@@ -269,7 +279,8 @@
         % I'll need an algorithm to initiate a configuration file
         % I'll also need to think about how I will be able to lead from one UI element to another, something like this https://stackoverflow.com/questions/19473072/show-another-ui-file-on-button-click
 
-        For this cycle I have decided to plan some key algorithms. These include algorithms to initiate a configuration file, opening a project, and updating the queue-like data structure.
+        For this cycle I have decided to plan some key algorithms. 
+        These include algorithms to initiate a configuration file, opening a project, and updating the queue-like data structure.
 
         % pc:init_config_file_c2
         % Pseudocode to initiate the configuration file in a project folder from UI
@@ -311,7 +322,9 @@ def length(self):
             \label{pc:fileq-length-method}
         \end{figure}
 
-        Note that in \autoref{fig:file-q-class-diagram} the \verb|length()| method is not a getter, as there is no length attribute defined in the class, which may be different to other implementations. For example in Python where \verb|len()| is an in-built function that takes in any iterable object, or in JavaScript where \verb|length| is an attribute. This method will mostly be used in order make some checks for the other functions in order to catch some edge cases. 
+        Note that in \autoref{fig:file-q-class-diagram} the \verb|length()| method is not a getter, as there is no length attribute defined in the class, which may be different to other implementations. 
+        For example in Python where \verb|len()| is an in-built function that takes in any iterable object, or in JavaScript where \verb|length| is an attribute. 
+        This method will mostly be used in order make some checks for the other functions in order to catch some edge cases. 
 
         % pc:enq-for-file-q
         % Code to enqueue to file queue
@@ -332,7 +345,8 @@ def enqueue(self, project_id):
             \label{pc:enq-for-file-q}
         \end{figure}
 
-        In \autoref{pc:enq-for-file-q}, the amount of items in the queue is checked in order to make sure the pointers are changed properly. For example an edge case that could be considered is when an item is added to the FileQueue and there is no need to remove the oldest item as the FileQueue is not full, illustrated in \autoref{flow:fileq-not-full}.
+        In \autoref{pc:enq-for-file-q}, the amount of items in the queue is checked in order to make sure the pointers are changed properly. 
+        For example an edge case that could be considered is when an item is added to the FileQueue and there is no need to remove the oldest item as the FileQueue is not full, illustrated in \autoref{flow:fileq-not-full}.
 
         % flow:fileq-not-full
         % FileQueue when not full
@@ -450,10 +464,12 @@ words,words,words,words
         \end{figure}
 
         First I wrote a function to work from a CSV file and write the \LaTeX code from there, shown in \autoref{sc:csv2latex-func}. 
-        It takes in the path to the CSV input file, the desired label, caption, and title, and whether the CSV file includes the table headers or not. Using that, I formatted the data from the CSV file by following \LaTeX code I had previously written. 
+        It takes in the path to the CSV input file, the desired label, caption, and title, and whether the CSV file includes the table headers or not. 
+        Using that, I formatted the data from the CSV file by following \LaTeX code I had previously written. 
         This function returns the \LaTeX code as a string, not yet writing it to an output text file. 
 
-        Working with just this function within a Python file would have been fine, however in order to account for maintainability, I tried to make it as easy as possible for people other than me to create new tables, taking into consideration that \LaTeX is specialist knowledge. For example in the case where multiple people are working on the documentation, they should use the same table formatting in order to stay consistent. 
+        Working with just this function within a Python file would have been fine, however in order to account for maintainability, I tried to make it as easy as possible for people other than me to create new tables, taking into consideration that \LaTeX is specialist knowledge. 
+        For example in the case where multiple people are working on the documentation, they should use the same table formatting in order to stay consistent. 
         This prompted me to develop a GUI front-end to the script, shown in \autoref{fig:csv2latex-gui}.
 
         I again decided to use a class for the main GUI element and implement button functionality as methods of the class, the constructor of the class (where labels, entries, and buttons are defined) are shown in \autoref{sc:csv2latex-gui-init-1}, \autoref{sc:csv2latex-gui-init-2}, and \autoref{sc:csv2latex-gui-init-3}. 
@@ -465,7 +481,8 @@ words,words,words,words
         The Python script is installed as a pip module, pip being the library manager for Python, making it callable from a command line as pip makes sure to add the correct files to the PATH environmental variable.  
         The user is able to type \verb|csv2latex [input] [caption] [label]| and the program will work the same as if from the GUI. 
         The code to handle arguments from the command line is shown in \autoref{sc:csv2latex-cli}.
-        This makes the script faster to use, as although the GUI is easy to use, it is slower as there are more steps to using it, also since the terminal is accessible from within most IDEs, it makes it very easy to create \LaTeX tables quickly while editing the document. An example of the CLI version being used is shown in \autoref{pc:csv2latex-cli-output}.
+        This makes the script faster to use, as although the GUI is easy to use, it is slower as there are more steps to using it, also since the terminal is accessible from within most IDEs, it makes it very easy to create \LaTeX tables quickly while editing the document. 
+        An example of the CLI version being used is shown in \autoref{pc:csv2latex-cli-output}.
 
         The main purpose for this script is to increase maintainability of the project. 
         Since the documentation is written in \LaTeX, which is a tool that not everyone may have experience with, a dedicated tool to convert easy-to-work-with CSV tables into \LaTeX code would be very useful. 
@@ -499,9 +516,11 @@ Successfully written to 'tables\forces.tex'
         I decided to implement the FileQueue first, as it was more standalone than the Project class and so better to do first. 
 
         % \vspace{10pt}
-        The constructor method for the FileQueue is shown in \autoref{sc:fileq-constructor}. The attributes have remained the same as in the design, shown in \autoref{fig:file-q-class-diagram}, \verb|__maxLength| and \verb|__location| are defined from the parameters, and \verb|rear| and \verb|front| are first defined as 0. 
+        The constructor method for the FileQueue is shown in \autoref{sc:fileq-constructor}. 
+        The attributes have remained the same as in the design, shown in \autoref{fig:file-q-class-diagram}, \verb|__maxLength| and \verb|__location| are defined from the parameters, and \verb|rear| and \verb|front| are first defined as 0. 
 
-        Since the items in the FileQueue are read from a source text file, it follows that the initial values for the front and rear pointers depend on the state of the source at the time of initialisation. This only affects the front pointer, as the rear pointer always points to the last item in the source. 
+        Since the items in the FileQueue are read from a source text file, it follows that the initial values for the front and rear pointers depend on the state of the source at the time of initialisation. 
+        This only affects the front pointer, as the rear pointer always points to the last item in the source. 
 
         % flow:fileq-front-ptr-init-bad
         % Showing how the front pointer gets initialised
@@ -531,21 +550,28 @@ Successfully written to 'tables\forces.tex'
             \label{flow:fileq-front-ptr-init-bad}
         \end{figure}
 
-        \autoref{flow:fileq-front-ptr-init-bad} shows how the front pointer could be mistakenly initialised to a negative value if the source has not yet got \verb|maxLength| items, which would cause unwanted behaviour later (in Python, accessing the $n$th index, where $n$ is negative, results in the $n$th to last item being returned, i.e. not raise an exception, which would make it hard to debug). Similar precautions were taken when implementing the enqueue method (the front pointer need not be decremented if the FileQueue has not reached \verb|maxLength|).
+        \autoref{flow:fileq-front-ptr-init-bad} shows how the front pointer could be mistakenly initialised to a negative value if the source has not yet got \verb|maxLength| items, which would cause unwanted behaviour later (in Python, accessing the $n$th index, where $n$ is negative, results in the $n$th to last item being returned, i.e. not raise an exception, which would make it hard to debug). 
+        Similar precautions were taken when implementing the enqueue method (the front pointer need not be decremented if the FileQueue has not reached \verb|maxLength|).
 
         % \vspace{10pt}
-        Since the behaviour of other methods depended on the amount of items in the FileQueue, the length method was the first to be implemented, shown in \autoref{sc:fileq-length-method}. It is only one line, and returns the amount of items calculated with the front and rear pointers. 
+        Since the behaviour of other methods depended on the amount of items in the FileQueue, the length method was the first to be implemented, shown in \autoref{sc:fileq-length-method}. 
+        It is only one line, and returns the amount of items calculated with the front and rear pointers. 
 
 
         % DEQUEUE METHOD
 
         % \vspace{10pt}
-        The next method to be implemented was the dequeue method, shortened to \verb|deq| as it was easier to type, the code for which is shown in \autoref{sc:fileq-deq-method}. The first thing to check is the current length of the FileQueue; you can't remove items from an empty queue. The method raises a generic exception with a message explaining what happened, which I deemed descriptive enough to help in future debugging and maintainability.
+        The next method to be implemented was the dequeue method, shortened to \verb|deq| as it was easier to type, the code for which is shown in \autoref{sc:fileq-deq-method}. 
+        The first thing to check is the current length of the FileQueue; you can't remove items from an empty queue. 
+        The method raises a generic exception with a message explaining what happened, which I deemed descriptive enough to help in future debugging and maintainability.
 
-        Next the method accesses the value located at the rear pointer and sets it to a variable to be returned later. I have decided to use a Python \verb|with| statement to access the file, as it is safer than the usual \verb|file.open()| and \verb|file.close()|. With statements will automatically close the file and manage resources, whereas without it if an exception occurs before the closing statement is processed, the file will not close safely, which could lead to unwanted behaviour in the future. 
+        Next the method accesses the value located at the rear pointer and sets it to a variable to be returned later. 
+        I have decided to use a Python \verb|with| statement to access the file, as it is safer than the usual \verb|file.open()| and \verb|file.close()|. 
+        With statements will automatically close the file and manage resources, whereas without it if an exception occurs before the closing statement is processed, the file will not close safely, which could lead to unwanted behaviour in the future. 
 
         % \vspace{10pt}
-        Notice that at no point is the item actually deleted from the text file, the front pointer is incremented to simulate this, and it saves on having to think about working with text files further. One obvious downside to this implementation is that the source file will keep growing and taking up storage, however this will not be a big issue. 
+        Notice that at no point is the item actually deleted from the text file, the front pointer is incremented to simulate this, and it saves on having to think about working with text files further. 
+        One obvious downside to this implementation is that the source file will keep growing and taking up storage, however this will not be a big issue. 
 
         % \vspace{10pt}
         Assuming an average file path length of $l$ characters and the text file having $n$ lines the formula to calculate how much storage space $S$ it would use is as follows
@@ -554,7 +580,8 @@ Successfully written to 'tables\forces.tex'
             \implies n &= \frac{S}{8l}
         \end{align*}
         % Do a calculation to show why it isn't an issue. 
-        I wrote a Python script to find the average length of a file path on my computer, see \autoref{sc:avg-filepath-length-file}, which gave the output shown in \autoref{fig:avg-filepath-output}. I will use the value $123.37202$ as my value for $l$. 
+        I wrote a Python script to find the average length of a file path on my computer, see \autoref{sc:avg-filepath-length-file}, which gave the output shown in \autoref{fig:avg-filepath-output}. 
+        I will use the value $123.37202$ as my value for $l$. 
 
         % fig:avg-filepath-output
         % Output from avg filepath script
@@ -580,7 +607,8 @@ Time taken: 4.143689362208049 min
             \label{fig:steam-hw-survey-storage}
         \end{figure}
 
-        This means that to use up 5 \si{GB} of storage, the file would have to be written to almost 5.1 million times, which is clearly far beyond a reasonable amount. Thus, I conclude that the contents of the file never being deleted would not be an issue to the average user, but in the case that it is, the user is welcome to remove the contents manually. 
+        This means that to use up 5 \si{GB} of storage, the file would have to be written to almost 5.1 million times, which is clearly far beyond a reasonable amount. 
+        Thus, I conclude that the contents of the file never being deleted would not be an issue to the average user, but in the case that it is, the user is welcome to remove the contents manually. 
 
 
         % ENQUEUE METHOD
@@ -588,17 +616,22 @@ Time taken: 4.143689362208049 min
         % \vspace{10pt}
         The method that was implemented next was the enqueue method, again shortened to \verb|enq| as it was easier to type, the code for which is shown in \autoref{sc:fileq-enq-method}. 
 
-        The method takes in a string, which is the ID code or directory of a project, and the first thing that happens is the string being written to the file stored at \verb|__location|. A newline character is also written to make sure that they're written to different lines. 
+        The method takes in a string, which is the ID code or directory of a project, and the first thing that happens is the string being written to the file stored at \verb|__location|. 
+        A newline character is also written to make sure that they're written to different lines. 
 
-        When an item is enqueued, the pointers need to be correctly adjusted, and whether the \verb|front| pointer gets incremented depends on if the FileQueue is full. The code is commented in order to explain why and when which pointers are incremented. 
+        When an item is enqueued, the pointers need to be correctly adjusted, and whether the \verb|front| pointer gets incremented depends on if the FileQueue is full. 
+        The code is commented in order to explain why and when which pointers are incremented. 
 
 
         % DROP METHOD 
 
         % \vspace{10pt}
-        The final method for this class was \verb|drop|, the code for which is shown in \autoref{sc:fileq-drop-method-final}. In order to save resources, the method checks the length before opening the text file and returns an empty list if the length is zero. 
+        The final method for this class was \verb|drop|, the code for which is shown in \autoref{sc:fileq-drop-method-final}. 
+        In order to save resources, the method checks the length before opening the text file and returns an empty list if the length is zero. 
 
-        There were originally issues with this method, and the original code is shown in \autoref{sc:fileq-drop-method-og}. Firstly, the arguments passed to the for-loop were incorrect, which resulted in not all the items being printed. However, the bigger issue stemmed from calling \verb|file.readlines()| at every iteration. 
+        There were originally issues with this method, and the original code is shown in \autoref{sc:fileq-drop-method-og}. 
+        Firstly, the arguments passed to the for-loop were incorrect, which resulted in not all the items being printed. 
+        However, the bigger issue stemmed from calling \verb|file.readlines()| at every iteration. 
 
         % pc:mult-readlines-showcase-bad
         % Outcome of repeatedly calling the readlines method
@@ -646,7 +679,8 @@ Time taken: 4.143689362208049 min
     \subsection{Project Class}
         The immediate issue that made itself apparent was that there weren't any projects to populate the JSON files. Despite this, the implementation continued as far as it could in this cycle, and shortcomings will be addressed in the evaluation of this cycle. 
 
-        The first method written for this class was the constructor, shown in \autoref{sc:project-init}. Note that the input parameters to the \verb|__init__| method have the same identifiers as the ones shown in \autoref{ps:json-proj-config-example}, this is so that the JSON file can be used to initialise a class in a much simpler way through the use of key word arguments, evidence of which is shown in \autoref{fig:project-class-read-from-file}.
+        The first method written for this class was the constructor, shown in \autoref{sc:project-init}. 
+        Note that the input parameters to the \verb|__init__| method have the same identifiers as the ones shown in \autoref{ps:json-proj-config-example}, this is so that the JSON file can be used to initialise a class in a much simpler way through the use of key word arguments, evidence of which is shown in \autoref{fig:project-class-read-from-file}.
         Then the attributes for the class are defined from the inputs, as well as the attribute \verb|maxNameLength| defined to be 32 as described in the design. 
         The validation for the inputs were omitted from the constructor of the class, as it was decided to factor that in with the user interface for inputting the data. 
 
@@ -681,7 +715,8 @@ Time taken: 4.143689362208049 min
 
         % lastSaved
         The next methods that were written were the setters and getters for the \verb|lastSaved| method, which was also declared private. 
-        The setter, shown in \autoref{sc:project-lastsaved-setter}, sets the attribute to be equal to the current time (given as time to the nearest second since 1970-01-01). This is a useful format for the time to be in, since it is independent of location on the globe (unlike say, local time), which means that developers from multiple places on Earth can agree on what the time is, as well as being in an easy format to manipulate and store. 
+        The setter, shown in \autoref{sc:project-lastsaved-setter}, sets the attribute to be equal to the current time (given as time to the nearest second since 1970-01-01). 
+        This is a useful format for the time to be in, since it is independent of location on the globe (unlike say, local time), which means that developers from multiple places on Earth can agree on what the time is, as well as being in an easy format to manipulate and store. 
         The getter, shown in \autoref{sc:project-lastsaved-getter}, returns the value of the attribute. 
         Evidence for both of these methods working is shown in \autoref{fig:project-lastsaved-getter-setter-pf}.
 
@@ -807,7 +842,8 @@ Time taken: 4.143689362208049 min
             \label{fig:error-communication-working}
         \end{figure}
 
-        If all the user inputs pass the validation then a file `config.json' is created inside the given directory and written to. The user is notified, and the file is written to. Evidence for this is shown in \autoref{fig:project-config-creation-success} and \autoref{fig:project-json-file-written-to}. 
+        If all the user inputs pass the validation then a file `config.json' is created inside the given directory and written to. The user is notified, and the file is written to. 
+        Evidence for this is shown in \autoref{fig:project-config-creation-success} and \autoref{fig:project-json-file-written-to}. 
 
 
         % Will put this in a subfigure as well 
@@ -830,7 +866,9 @@ Time taken: 4.143689362208049 min
             \label{fig:project-json-file-written-to}
         \end{figure}
 
-        Initially, the challenge of linking two GUI elements together was anticipated, but it ended up being almost trivial. After quitting from the original menu, the subsequent GUI menu is started as normal, and the method for the `Open new' button is shown in \autoref{sc:forkgui-opennew-method-final}. The evidence for this working is shown in \url{https://youtu.be/iVopl7ceLng}.
+        Initially, the challenge of linking two GUI elements together was anticipated, but it ended up being almost trivial. 
+        After quitting from the original menu, the subsequent GUI menu is started as normal, and the method for the `Open new' button is shown in \autoref{sc:forkgui-opennew-method-final}. 
+        The evidence for this working is shown in \url{https://youtu.be/iVopl7ceLng}.
 
         % fig:fileq-with-gui
         % FileQueue integrated with user interface
@@ -864,7 +902,8 @@ Time taken: 4.143689362208049 min
     
     % I think I'm going to tweak my success criteria so that theres actually stuff to tick off/cross off, because looking back they dont seem particularly relevant to the cycle
 
-    \textbf{Analysis of success criteria:}
+    \subsection{Analysis of Success Criteria}
+    
     \begin{itemize}
         \item B4: Being able to export and import circuit arrangements
         \begin{itemize}

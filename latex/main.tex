@@ -1,14 +1,18 @@
 \documentclass[twoside]{report}
 \input{preamble.tex}
 
+% \includeonly{
+%     sections/06_testing,
+%     sections/07_eval
+% }
 
 \begin{document}
     \pagestyle{fancy}
-    \pagenumbering{roman}
-
+    
     % Title page
     \input{preamble/title.tex}
-
+    
+    \pagenumbering{roman}
     \tableofcontents
 
     \newpage
@@ -34,9 +38,9 @@
 
     \include{sections/05_cycle3}
 
-    \include{sections/06_eval}
+    \include{sections/06_testing}
 
-    \include{sections/07_testing}
+    \include{sections/07_eval}
 
 
     \appendix
