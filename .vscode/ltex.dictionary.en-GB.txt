@@ -8,3 +8,5 @@ Kerbal
 InstallGUI
 Bool
 const
+FileQueue
+Tkinter
