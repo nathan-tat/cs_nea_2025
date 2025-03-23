@@ -3,17 +3,15 @@
 
 
 \section{Brief Outline}
-    This cycle will cover initialising and opening ``projects'', which will be how the user will be able to save their work and access it at a later time. 
+    This cycle will cover initialising and opening `projects', which will be how the user will be able to save their work and access it at a later time. 
 
     % for:hierarchy_diagram_c2
     % Cycle 2 Hierarchy diagram
     \begin{figure}[!ht]
         \centering
-        \footnotesize
         \begin{forest}
             for tree={
                 align=center,
-                font=\sffamily,
             edge+={thick, -{Stealth[]}},
             l sep'+=10pt,
             fork sep'=10pt,
@@ -405,15 +403,13 @@ def enqueue(self, project_id):
 
         \newpage
 
-\section{Testing}
-    See \autoref{tbl:test-data-cycle2}.
 
-    \newpage
+
 \section{Implementation}
 
     \subsection{CSV2LaTeX}
         % Include a screenshot of the GUI please
-        In the middle of creating \autoref{tbl:test-data-cycle2}, I found it very tedious to type in the data manually straight into \LaTeX code, which prompted me to consider other methods. 
+        In the middle of creating \autoref{tbl:test-data-cycle2}, I found it very tedious to type in the data manually straight into \LaTeX, which prompted me to consider other methods. 
         Since I find the user interface of Microsoft Excel quite easy to work with and well suited to manipulating tabular data, as well as CSV files easy to manipulate in Python, I wrote a Python script (including GUI) that would take in a CSV file and output a formatted table in \LaTeX. 
 
         % pc:csv2latex-example-input-csv
@@ -896,11 +892,17 @@ Time taken: 4.143689362208049 min
         % At this point im not sure whether scale is better than width for maintainability
         % Width is probably better now that i think about it bc it gives more consistent sizes
 
+\section{Testing}
+    See \autoref{tbl:test-data-cycle2}.
+
+    % \newpage
+
+    % I should actually do the real tests 
 
 \section{Evaluation}
     The implementation so far is now going to be evaluated against the success criteria declared at the beginning of this cycle, shown in \autoref{tbl:succ-crit-c2}. 
     
-    % I think I'm going to tweak my success criteria so that theres actually stuff to tick off/cross off, because looking back they dont seem particularly relevant to the cycle
+    % I think I'm going to tweak my success criteria so that there's actually stuff to tick off/cross off, because looking back they don't seem particularly relevant to the cycle
 
     \subsection{Analysis of Success Criteria}
     

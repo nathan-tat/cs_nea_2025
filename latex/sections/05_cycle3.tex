@@ -10,15 +10,52 @@
 
     This cycle will address the simulation of electrical circuits as well as how the user will interact with creation of circuits as well as information being communicated to the user.
     
-    Will draw the hierarchy diagram in LaTeX at some point
-
     % Include hierarchy diagram here
+
+    % tree:cycle3-hierarchy
+    % Cycle 3 Hierarchy diagram
+    \begin{figure}[!ht]
+        \centering
+        \begin{forest}
+            for tree={
+                align=center,
+            edge+={thick, -{Stealth[]}},
+            l sep'+=10pt,
+            fork sep'=10pt,
+            },
+            forked edges,
+            if level=0{
+                inner xsep=0pt,
+                tikz={\draw [thick] (.children first) -- (.children last);}
+                }{},
+                [Simulation \& Building
+                    [Simulating
+                        [Updating\\attributes of\\components
+                            [Rendering\\updates]
+                            [Storing data]
+                        ]
+                        [Rendering\\graphs]
+                    ]
+                    [Building
+                        [Placing\\components
+                            [Choosing\\component]
+                            [Choosing\\location]
+                        ]
+                        [Editing\\attributes
+                            [Menu\\interactions]
+                        ]
+                    ]
+                ]
+        \end{forest}
+        \caption{Cycle 3 hierarchy diagram}
+        \label{tree:cycle3-hierarchy}
+    \end{figure}
 
     % Should probably draw it out and plan it on paper first
 
     % and have a REAL idea of what I want to complete in this cycle
 
-    % Will have to address the circtuit simulation aspect
+    % Will have to address the circuit simulation aspect
     % and linking all the previous cycles together and how it will all work 
 
 
@@ -129,7 +166,7 @@
         % The definition of a `valid circuit' will be implicitly defined by the following conditions, and is based on my own understanding of circuits in a physics context. 
 
         % Suppose we have a graph \(G(V, E)\), where \(V \) and \(E \) form the vertex and edge set of the graph respectively.
-        % A graph \(G \) forms a cycle graph if and only if it consistis of a single cycle, a cycle being a path that start and ends at the same vertex 
+        % A graph \(G \) forms a cycle graph if and only if it consists of a single cycle, a cycle being a path that start and ends at the same vertex 
         % In the case that the degree of each vertex is limited to 2, \(G \) forms a valid circuit if and only if \(G \) forms a cycle graph. An algorithm to check whether or not a graph \(G \) where the vertices of \(G \) all have degree of 2 forms a cycle graph is shown below. 
 
         % \textbf{Determining whether a graph forms a cycle graph}
@@ -258,10 +295,7 @@
         % I think i do that later though 
 
 
-\newpage
-\section{Testing}
 
-    The testing table is shown in \autoref{tbl:test-data-cycle3}.
 
 \section{Implementation}
 
@@ -576,6 +610,10 @@
 
     Finally, the list of ammeters is created by once-more looping over all the components in the circuit, this time making sure to ignore any non-meter components.
     An extra entry is made to store the reading of the meter before they are passed to the aforementioned \verb|OutputGUI|.
+
+\section{Testing}
+
+    The testing table is shown in \autoref{tbl:test-data-cycle3}.
 
 \section{Evaluation}
     The implementation so far is now going to be evaluated against the success criteria declared at the beginning of this cycle, shown in \autoref{tbl:succ-crit-c3}. 
